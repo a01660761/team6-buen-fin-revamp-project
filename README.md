@@ -1,32 +1,42 @@
-# test-admin
+# El Buen Fin — Web Revamp
 
-## Installation
+Redesign and functional expansion of the official 'El Buen Fin' web platform.
 
-Install the application dependencies by running:
+## Project
 
-```sh
-npm install
-```
+This project is developed in collaboration with the Secretaría de Economía,
+as part of an academic project.
 
-## Development
+The system focuses on improving the existing 'El Buen Fin' website through
+a modern web interface and additional functionality for consumers,
+participating companies and administrators.
 
-Start the application in development mode by running:
+## Technologies
 
-```sh
-npm run dev
-```
+### Frontend
+- React
+- React-Admin
+- TypeScript
+- Vite
 
-## Production
+### Backend
+- Node.js
+- MongoDB (TBFD)
 
-Build the application in production mode by running:
+## Main Modules
 
-```sh
-npm run build
-```
+- Users
+- Companies
+- Branches
+- Products
+- Offers
+- Job Board
+- Government Services
+- Administrative Dashboard
 
-## DataProvider
+## Repository Structure
 
-The included data provider use [ra-data-json-server](https://github.com/marmelab/react-admin/tree/master/packages/ra-data-json-server). It fits REST APIs powered by [JSON Server](https://github.com/typicode/json-server), such as [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
-
-You'll find an `.env` file at the project root that includes a `VITE_JSON_SERVER_URL` variable. Set it to the URL of your backend. By default, we set it to targets [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
-
+```text
+frontend/
+backend/
+docs/
