@@ -1,0 +1,35 @@
+/* Light Theme*/
+
+.light {
+    --background-color: #F9ECE5;
+
+    /* Topbar css */
+    --topbar-background-color: #AC0000;
+    --default-text-color: #FFFFFF;
+
+    /* Bottoms */ 
+    --bottoms-background-color: #870E0E;
+    
+    /* Toggle */
+    --toggle-background-color: #68150A;
+
+    /*Cambiar el nombre - Circle colours */
+    --carrousel-circles-color: #9D2C2C;
+
+    /*Cronometro*/
+    --background-cronometro-color: #B01515;
+    --elise-background-color: #EDE1DA;
+    --contrast-color: #7D0606;
+    --cronometro-text-color: #420303;
+
+    /* Detail, cards-notifications */
+    --rectangle-back-color: #E2D6CE;
+    --default-text-color-2: #080707;
+
+    
+
+
+
+
+
+}
