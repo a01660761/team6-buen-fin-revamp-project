@@ -26,10 +26,45 @@
     --rectangle-back-color: #E2D6CE;
     --default-text-color-2: #080707;
 
+    /* Cards colors */
+    --card-title-background-color: #D9CDC7;
+    --card-background: #EDE1DA;
+    --card-middle-background-color: #E1D5CE;
+    --card-text-color: #1B2427;
+    --card-line-color: #CBB9AF;
+
+    --card-bottom-color: #161D20;
+    --card-text-color: #F9ECE5;
     
+    /* Section */
+    --title-background-color: #ADB7BA;
+    --section-background-color: #1B2427;
+    --section-contrast-color: #374144;
+    --searching-background-color: #ADB7BA;
 
+    --button-background-color:#5D747B;
+    --button-text-color: #000000;
 
+    /* Mergue Component */
+    --mergue-background-color: #E1D5CE;
+    --mergue-bottom-line-color-: #CCC4C0;
+    --merge-top-line-color: #161C1E;
 
+    /* Contrast card */
+    --contrast-card-background-color: #E3D5CE;
+    --square-card-background-color: #972222;
+    --strok-button-color: #8A0707;
 
+    /* Info colors */
+    --info-background-color: #E7D9D1;
+    --infro-title-background-color: #DAC9C0;
 
+    /* Mergue sponsors --Cambiar el nombre--*/
+    --alies-background-color: #E9DED8;
+
+    /* Chatbot-colors*/
+    --chatbot-buton-background-color: #1B2427;
+
+    /* Banner colors */
+    --baner-background-color: #640714;
 }
