@@ -23,5 +23,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  /*Borrar cuando ya se tengas las paginas, de momento solo se estan usando como guia*/
+  "exclude":[
+    "src/album.tsx",
+    "src/comment.tsx",
+    "src/photo.tsx",
+    "src/post.tsx",
+    "src/to_do.tsx",
+    "src/users.tsx"
+  ]
 }
