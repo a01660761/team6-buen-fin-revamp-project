@@ -25,7 +25,7 @@ export function Registro(){
 
             <div className="grid gap-2">
                 <label htmlFor="apellido" className="font-semibold">
-                    Apellido
+                    Apellidos
                 </label>
                 <input type="text" id="apellido" name="apellido" placeholder="Ingresa tu apellido" className="w-full roundend-lg border p-3"/>
             </div>
