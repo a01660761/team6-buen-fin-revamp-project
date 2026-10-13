@@ -1,8 +1,10 @@
-import { Button } from '@/components/ui/button'
-import { Card,CardContent} from '@/components/ui/card'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel'
-
+import { Registro } from '@/components/auth/Registro';
+import { Login } from '@/components/auth/Login';
+import { Card,CardContent} from '@/components/ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel';
+import { useState } from "react";
 import {Topbar} from "@/components/layout/Topbar";
+import { Countdown } from '@/components/layout/Countdown';
 
 const advertisements = Object.values(
     import.meta.glob<string>(
@@ -16,6 +18,16 @@ const advertisements = Object.values(
 );
 
 export default function Landing() {
+    const[mostrarRegistro, setMostrarRegistro] = useState(false);
+    if (mostrarRegistro){
+        return <Registro/>
+    }
+    
+    const[mostrarLogin, setMostrarLogin] = useState(false);
+    if (mostrarLogin){
+        return <Login/>
+    }
+
     return (
         <div className= "min-h-screen bg-[var(--background-color)]">
             <Topbar/>
@@ -51,9 +63,7 @@ export default function Landing() {
                             <CardContent>
                             <h2> ¡Cada día más cerca</h2>
                             <h2> El Buen Fin 2026 </h2>
-
-                            {/* Agregar el contador*/}
-
+                            <Countdown/>
                             </CardContent>
                         </Card>
 
@@ -63,13 +73,18 @@ export default function Landing() {
                                 <h2 className= "text-xl font-bold">
                                     ¿Quieres participar en el Buen Fin 2026?
                                 </h2>
-
                                 <p className= "mt-2 text-sm">
                                     Crea una cuenta o inicia sesión para registrar tu empresa
                                 </p>
 
                                 <div className="mt-4 flex-wrap grap-3">
-                                    {/*Iniciar Y crear cuenta */}
+                                    <button type="button" onClick={() => {setMostrarRegistro(true)}} className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                                        Crear una cuenta
+                                    </button>
+                                    
+                                    <button type="button" onClick={() => {setMostrarLogin(true)}} className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                                        Iniciar sesión
+                                    </button>
                                 </div>
                             </CardContent>
                         </Card>
