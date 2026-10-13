@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Registro } from "@/components/auth/Registro";
-import { href } from "react-router";
 
 export function Login(){
     // Add the connection with the backend here
@@ -53,7 +52,7 @@ export function Login(){
             <hr className="flex-1 border-[var(--card-bottom-color)]" />
 
             <button type="button" onClick={() => {setMostrarRegistro(true)}} className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
-                Crear una cuentra
+                Crear una cuenta
             </button>
             <p>
                 Después de crear tu cuenta, inicia sesión y registra una o más empresas
