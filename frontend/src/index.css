@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "./styles/theme/light.css";
-@import "./styles/theme/dark.css";
+@import "./styles/themes/light.css";
+@import "./styles/themes/dark.css";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
@@ -134,11 +134,11 @@
 
 /* El Buen Fin -Light Theme */
 html.light { 
-  --background: var(--background-color)
+  --background: var(--background-color);
   --foreground: var(--default-text-color-2);
   
   --card: var(--cardbackground);
-  --card-foreground: var(--default-text-color-2)
+  --card-foreground: var(--default-text-color-2);
   
   --poppover: var(--card-background);
   --popover-foreground: var(--default-text-color-2);
