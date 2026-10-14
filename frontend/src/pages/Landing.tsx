@@ -1,9 +1,11 @@
 // import { useState } from 'react';
 import { Card,CardContent} from '@/components/ui/card';
+import { UserRoundGroup, CalendarCheck, TrendingUp } from "lucide-react";
 import {Topbar} from "@/components/layout/Topbar";
 import { Countdown } from '@/components/layout/Countdown';
 import { CarouselPromotion} from '@/components/layout/Carousel'
 import { AuthDialog } from '@/components/auth/AuthDialog';
+import { FlipCard } from '@/components/layout/FlipCard';
 
 export default function Landing() {
     return (
@@ -48,9 +50,47 @@ export default function Landing() {
                 </section>
                 
                 { /* Secciones */ }
-                <section>
+                <section className="mt-12 w-full bg-[var(--card-title-background-color)]">
+                    <h2 className="px-10 py-5 text-2xl font-extrabold text-[var(--section-background-color)] lg:text-2xl">
+                        Comercios
+                    </h2>
+                    <div className="grid grid-col-2 lg:grid-cols-3">
+                        <div className="bg-[var(--card-background)] p-6">
+                            <FlipCard 
+                                title="Forma parte de El Buen Fin"
+                                icon={<UserRoundGroup size={64}/>}
+                                description="Impulsa las ventas de tu comercio durante el fin de semana más dinámico para el mercado doméstico mexicano. 
+                                Regístrate a partir del 8 de septiembre del 2026, es totalmente gratuito."
+                                href='' //Todavía no se tiene el apartado de Recursos 
+                                name='Recursos'
+                            />
+                        </div>
 
-                </section>
+                        <div className='bg-[var(--card-middle-background-color)] p-6'>
+                            <FlipCard 
+                                title="Gana con el Sorte El Buen Fin"
+                                icon={<CalendarCheck size={64}/>}
+                                description="Aprovecha los premios que el Servicio de Administración Tributaria ofrece a los comercios participantes.
+                                Hay $100,000,000 pesos en premios."
+                                href='' //Todavía no se tiene el apartado de Recursos 
+                                name="Leer las bases"
+                            />
+                        </div>
+
+                        <div className="bg-[var(--card-background)] p-6">
+                            <FlipCard 
+                                title="Haz crecer tu comercio"
+                                icon={<TrendingUp size={64}/>}
+                                description="Utiliza las herramientas gratuitas y de dominio público que el programa MIPYMES MX de la Secretaría de Economía ha preparado para ti."
+                                href='' //Todavía no se tiene el apartado de Recursos 
+                                name="Ir a MIPyMES MX"
+                            />
+                        </div>
+
+
+                    </div>
+                    
+                </section >
 
             </main>
         </div>
