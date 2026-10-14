@@ -1,4 +1,4 @@
-import { Admin, Resource, ListGuesser, ShowGuesser } from "react-admin";
+/* import { Admin, Resource, ListGuesser, ShowGuesser } from "react-admin";
 import { Layout } from "./Layout";
 import { dataProvider } from "./dataProvider";
 import { UserList, UserEdit, UserCreate } from "./users";
@@ -29,3 +29,10 @@ export const App = () => (
     <Resource name="todos" list={ToDoList} edit={ToDoEdit} create={ToDoCreate} icon={TodoIcon} />
   </Admin>
 );
+ */
+
+import Landing from "@/pages/Landing";
+
+export const App = () => {
+  return <Landing />;
+};
