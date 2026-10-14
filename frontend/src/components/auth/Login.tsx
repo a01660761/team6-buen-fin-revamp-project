@@ -10,7 +10,7 @@ export function Login(){
     }
 
     return(
-        <form className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background)] p-8 text-[var(--default-text-color-2)]">
+        <form className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-var(--button-text-color)]">
             <h2 className="text-center text-3xl font-bold"> 
                 Accede al registro de empresas
             </h2>
@@ -21,21 +21,21 @@ export function Login(){
             </p>
 
             
-            <div className="grid gap-2">
-                <label htmlFor="email" className="font-semibold">
+            <div className="grid gap-2 ">
+                <label htmlFor="email" className="font-bold">
                     Correo Electrónico
                 </label>
-                <input type="email" id="email" name="email" placeholder="Ingresa tu correo electronico" className="w-full rounded-lg border p-3"/>
+                <input type="email" id="email" name="email" placeholder="Ingresa tu correo electronico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
-                <label htmlFor="contrasena" className="font-semibold">
+                <label htmlFor="contraseña" className="font-bold">
                     Contraseña
                 </label>
-                <input type="password" required autoComplete="new-password" id="password" name="password" placeholder="Ingresa tu contraseña" className="w-full rounded-lg border p-3"/>
+                <input type="password" required autoComplete="new-password" id="password" name="password" placeholder="Ingresa tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
-            <p> 
+            <p className="text-sm font-medium"> 
                 ¿Olvidaste tu contraseña?
             </p>
 
@@ -45,7 +45,7 @@ export function Login(){
 
             <hr className="flex-1 border-[var(--card-bottom-color)]" />
             
-            <p className="text-center text-xs">
+            <p className="text-center text-sm font-semibold">
                 ¿Aún no tienes una cuenta?
             </p>
 
@@ -54,7 +54,7 @@ export function Login(){
             <button type="button" onClick={() => {setMostrarRegistro(true)}} className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
                 Crear una cuenta
             </button>
-            <p>
+            <p className="text-center">
                 Después de crear tu cuenta, inicia sesión y registra una o más empresas
             </p>
         </form>
