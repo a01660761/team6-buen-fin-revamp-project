@@ -1,4 +1,4 @@
-import { useState } from "react";
+//import { useState } from "react";
 
 export function Registro(){
     // Add the connection with the backend here
