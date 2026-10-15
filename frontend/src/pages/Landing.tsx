@@ -49,18 +49,18 @@ export default function Landing() {
                     </div>
                 </section>
                 
-                { /* Secciones */ }
+                { /* Sección Comercios*/ }
                 <section className="mt-12 w-full bg-[var(--card-title-background-color)]">
                     <h2 className="px-10 py-5 text-2xl font-extrabold text-[var(--section-background-color)] lg:text-2xl">
                         Comercios
                     </h2>
-                    <div className="grid grid-col-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-2 lg:grid-cols-3">
                         <div className="bg-[var(--card-background)] p-6">
                             <FlipCard 
                                 title="Forma parte de El Buen Fin"
                                 icon={<UserRoundGroup size={64}/>}
                                 description="Impulsa las ventas de tu comercio durante el fin de semana más dinámico para el mercado doméstico mexicano. 
-                                Regístrate a partir del 8 de septiembre del 2026, es totalmente gratuito."
+                                Regístrate a partir del 8 de septiembre del 2026, es totalmente gratuito."
                                 href='' //Todavía no se tiene el apartado de Recursos 
                                 name='Recursos'
                             />
@@ -86,11 +86,47 @@ export default function Landing() {
                                 name="Ir a MIPyMES MX"
                             />
                         </div>
-
-
                     </div>
                     
+                    <p className="px-10 py-4 text-m font-semibold italic"> 
+                        Gira las tarjetas {""}
+                        <a className='font-normal'>
+                            para obtener más información 
+                        </a> 
+                    </p>
                 </section >
+
+                <section className="mt-4 w-full bg-[var(--searching-background-color)]">
+                    <h2 className="px-10 py-5 text-2xl font-extrabold text-[var(--section-background-color)] lg:text-2xl">
+                        Consumidores
+                    </h2>
+
+                    <div className="bg-[var(--section-background-color)] text-center">
+                        <div className="mx-auto grid max-w-3xl gap-4 px-5 py-10">
+                            <h1 className="text-xl font-extrabold text-[var(--default-text-color)] ">
+                                Buscador de comercios participantes
+                            </h1>
+                            <label htmlFor="store" className="font-bold text-[var(--default-text-color)]">
+                                Ingresa el nombre de la {" "}
+                                <a className="underline font-bold">
+                                    tienda fisica 
+                                </a> {" "} o {" "}
+                                <a className="underline font-bold">
+                                    en línea
+                                </a>
+                            </label>
+                            <div className="flex item-center gap-4">
+                                <input type="text" id="store" name="store" placeholder="Ej. Aeromexico ..." className="min-w-0 flex-1 rounded-lg border p-4 bg-[var(--title-background-color)] text-[var(--section-background-color)]"/>
+                                <button type="button" className="shrink-0 w-28 rounded-xl bg-[var(--button-bakcgorund-color-2)] p-3 font-semibold text-[var(--button-text-color)] border p-0.5 border-[var(--button-background-color)]">
+                                    Buscar
+                                </button>
+                            </div>      
+                        </div>
+                    </div>
+                </section>
+
+                {/* Merge Component*/}
+
 
             </main>
         </div>
