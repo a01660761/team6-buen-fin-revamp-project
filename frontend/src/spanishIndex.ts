@@ -418,6 +418,16 @@ const spanishMessages: TranslationMessages = {
                 completed: "Completada",
             },
         },
+
+        businesses: {
+            name: "Comercio |||| Comercios",
+            fields: {
+                id: "ID",
+                name: "Nombre",
+                category: "Categoría",
+                physicalStore: "Tienda física",
+            },
+        },
     },
 
     dashboard: {
@@ -425,6 +435,24 @@ const spanishMessages: TranslationMessages = {
         loading_posts: "Cargando publicaciones...",
         error_loading_posts: "Error al cargar las publicaciones.",
         total_posts: "Total de publicaciones: %{total}",
+    },
+
+    directory: {
+        title: "Buscador de comercios participantes",
+        demo_notice: "Datos de demostración: estos comercios no son reales ni oficiales.",
+        search_business: "Buscar comercio",
+        physical_store: "Tienda física",
+        category: "Categoría",
+        all: "Todas",
+        yes: "Sí",
+        no: "No",
+        search: "Buscar",
+        loading: "Cargando comercios...",
+        error: "No pudimos cargar los comercios. Intenta de nuevo más tarde.",
+        empty: "No encontramos comercios con esa búsqueda.",
+        page: "Página",
+        go: "Ir",
+        go_to_page: "Ir a la página",
     },
 };
 
