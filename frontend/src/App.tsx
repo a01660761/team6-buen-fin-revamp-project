@@ -1,5 +1,5 @@
-import { Admin, Resource, ListGuesser, ShowGuesser } from "react-admin";
-import { Layout } from "./Layout";
+import { Admin, Resource, ShowGuesser } from "react-admin"; // ListGuesser removed|
+// import { Layout } from "./Layout";
 import { dataProvider } from "./dataProvider";
 import { UserList, UserEdit, UserCreate } from "./users";
 import { PostList, PostEdit, PostCreate } from "./post";

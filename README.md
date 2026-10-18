@@ -21,13 +21,13 @@ participating companies and administrators.
 
 ### Backend
 - Node.js
-- MongoDB (TBFD)
+- MongoDB
+- Express
 
 ## Main Modules
 
 - Users
 - Companies
-- Branches
 - Products
 - Offers
 - Job Board
@@ -40,3 +40,18 @@ participating companies and administrators.
 frontend/
 backend/
 docs/
+```
+
+```markdown
+## Development Documentation
+
+### NOTE: All of these were curated with the use of ChatGPT - please check their respective declarations.
+
+- [Development setup, conventions and technical decisions](docs/development-guide.md)
+- [Minimum MongoDB data model](docs/data-model.md)
+- [Minimum API contract](docs/api-contract.md)
+- [Initial backend audit](backend/README.md)
+
+The API contract describes target behavior. See the development guide for
+reported validation, pending integration work, and known limitations.
+```
