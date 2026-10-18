@@ -42,7 +42,7 @@ backend/
 docs/
 ```
 
-```markdown
+
 ## Development Documentation
 
 ### NOTE: All of these were curated with the use of ChatGPT - please check their respective declarations.
@@ -54,4 +54,3 @@ docs/
 
 The API contract describes target behavior. See the development guide for
 reported validation, pending integration work, and known limitations.
-```
