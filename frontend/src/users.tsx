@@ -1,7 +1,6 @@
-import { List, DataTable, ReferenceField, 
-    EditButton, Edit, SimpleForm, ReferenceInput, 
-    TextInput, BooleanField, BooleanInput, Create, useNotify, useRefresh, 
-    useRedirect, EmailField, SimpleList 
+import { List, DataTable, EditButton, Edit,
+    SimpleForm, TextInput, Create,
+    EmailField, SimpleList
 } from "react-admin";
 
 // export const UserList = () => (
@@ -23,7 +22,7 @@ import { List, DataTable, ReferenceField,
 
 /* export const UserList = () => (
     <List>
-        <SimpleList 
+        <SimpleList
             primaryText={(record) => record.name}
             secondaryText={(record) => record.username}
             tertiaryText={(record) => record.email}
@@ -38,11 +37,11 @@ export const UserList = () => {
     return (
         <List>
             {isSmall ? (
-               <SimpleList 
+               <SimpleList
                     primaryText={(record) => record.name}
                     secondaryText={(record) => record.username}
                     tertiaryText={(record) => record.email}
-                /> 
+                />
             ) : (
                 <DataTable>
                     <DataTable.Col source="id" />
