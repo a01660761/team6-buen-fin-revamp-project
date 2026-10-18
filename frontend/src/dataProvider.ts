@@ -3,11 +3,11 @@ import type { DataProvider } from "react-admin";
 
 const jsonProvider = jsonServerProvider(import.meta.env.VITE_JSON_SERVER_URL);
 
-// NUEVO (issue #19): alias de recurso definido en docs/api-contract.md, sección 9.
-// El frontend usa el recurso "businesses", pero las lecturas públicas van a /public/companies.
-// Solo cubre getList, getOne y getMany; no hay escrituras públicas.
+// NUEVO: nombres de la app -> rutas públicas del contrato (docs/api-contract.md, sección 9)
 const publicAliases: Record<string, string> = {
   businesses: "public/companies",
+  catalogProducts: "public/products",
+  catalogOffers: "public/offers",
 };
 
 const resolveResource = (resource: string): string =>
@@ -23,9 +23,4 @@ export const dataProvider: DataProvider = {
     jsonProvider.getMany(resolveResource(resource), params),
 };
 
-/* 
-export const dataProivedr = jsonServerProvider(
-  'http://jsonplaceholder.typicode.com'
-);
-
-*/
+/* export const dataProivedr = jsonServerProvider('http://jsonplaceholder.typicode.com'); */

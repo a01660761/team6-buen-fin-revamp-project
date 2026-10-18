@@ -1,4 +1,5 @@
 // Issue #19 (US-03.2): Buscador de comercios participantes (listado) y detalle público (provisional).
+// Issue #34 (US-08.2): catálogo de productos y ofertas dentro del detalle del comercio (provisional).
 // Basado en el prototipo de Figma "Buscador de comercios participantes".
 // Cada bloque indica si sigue el patrón del equipo (React-Admin) o si es una adición nueva.
 
@@ -6,8 +7,9 @@ import { useState } from "react"; // Hook de React para guardar lo que el usuari
 import type { FormEvent } from "react"; // NUEVO: tipo de TypeScript para el evento del formulario ("import type" no existía en el código del equipo)
 import {
     BooleanField, EmailField, Link, List, Show, SimpleShowLayout,
-    TextField as FieldText, UrlField, useListContext, useTranslate
-} from "react-admin"; // Patrón del equipo: componentes de React-Admin (List, Show, campos). FieldText es el TextField de React-Admin; se renombra porque TextField de MUI ya se usa en los filtros
+    TextField as FieldText, UrlField, useGetList, useListContext,
+    useRecordContext, useTranslate
+} from "react-admin"; // Patrón del equipo: componentes de React-Admin (List, Show, campos) y useGetList (como en Dashboard.tsx). FieldText es el TextField de React-Admin; se renombra porque TextField de MUI ya se usa en los filtros
 import type { RaRecord } from "react-admin"; // Tipo base de un registro de React-Admin
 import {
     Alert,
@@ -40,6 +42,29 @@ interface Business extends RaRecord {
     category: string; // Categoría (Alimentos, Moda, etc.)
     physicalStore: boolean; // true si tiene tienda física
 }
+
+// NUEVO (issue #34): forma de un producto y de una oferta (docs/data-model.md, secciones 5 y 6).
+interface Product extends RaRecord {
+    name: string; // Nombre del producto
+    description: string; // Descripción del producto
+    category: string; // Categoría del producto
+    priceCents: number; // Precio en centavos (129900 = $1,299.00)
+    currency: string; // Moneda; solo MXN por ahora
+}
+
+interface Offer extends RaRecord {
+    title: string; // Título de la oferta
+    description: string; // Descripción de la oferta
+    priceCents: number; // Precio de la oferta en centavos
+    currency: string; // Moneda; solo MXN por ahora
+    endsAt: string; // Fecha de fin de la oferta (ISO 8601)
+    terms: string; // Términos y condiciones
+    sellerUrl: string; // Enlace externo al vendedor
+}
+
+// NUEVO (issue #34): convierte centavos a pesos con formato de moneda. Ej.: 129900 -> "$1,299.00"
+const formatPrice = (priceCents: number, currency: string): string =>
+    (priceCents / 100).toLocaleString("es-MX", { style: "currency", currency });
 
 // NUEVO: categorías escritas a mano. Cuando exista el backend deberían venir de los datos.
 const CATEGORIES = ["Alimentos", "Moda", "Electrónica", "Hogar", "Servicios", "Salud"];
@@ -328,6 +353,219 @@ export const BusinessList = () => {
     );
 };
 
+// NUEVO (issue #34, PROVISIONAL): catálogo de productos y ofertas de un comercio.
+// Va dentro del detalle del comercio. Busca con "q" y filtra productos por categoría,
+// leyendo /public/products y /public/offers (docs/api-contract.md) con useGetList.
+const BusinessCatalog = () => {
+    const translate = useTranslate();
+    const record = useRecordContext<Business>(); // Comercio que se está viendo
+    const [name, setName] = useState<string>(""); // Texto escrito en el buscador
+    const [category, setCategory] = useState<string>("all"); // "all" o el nombre de la categoría
+    const [filters, setFilters] = useState<Record<string, string>>({}); // Filtros aplicados al pulsar "Buscar"
+
+    // Los filtros se aplican al pulsar "Buscar", igual que en el listado de comercios.
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); // Evita que el formulario recargue la página
+        const newFilters: Record<string, string> = {};
+        if (name.trim() !== "") {
+            newFilters.q = name.trim(); // Solo se manda el texto si no está vacío
+        }
+        if (category !== "all") {
+            newFilters.category = category;
+        }
+        setFilters(newFilters);
+    };
+
+    // Productos del comercio, con búsqueda y categoría. 50 por página por ahora (el máximo de la API es 100).
+    const products = useGetList<Product>(
+        "catalogProducts",
+        {
+            pagination: { page: 1, perPage: 50 },
+            sort: { field: "name", order: "ASC" },
+            filter: { companyId: record?.id, ...filters },
+        },
+        { enabled: !!record },
+    );
+
+    // Ofertas del comercio. Solo usan la búsqueda de texto: las ofertas no tienen categoría.
+    const offers = useGetList<Offer>(
+        "catalogOffers",
+        {
+            pagination: { page: 1, perPage: 50 },
+            sort: { field: "endsAt", order: "ASC" },
+            filter: { companyId: record?.id, ...(filters.q ? { q: filters.q } : {}) },
+        },
+        { enabled: !!record },
+    );
+
+    return (
+        <Box sx={{ p: 2 }}>
+            <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+                {translate("directory.catalog_title")} {/* "Catálogo del comercio" */}
+            </Typography>
+
+            {/* Barra de búsqueda del catálogo: texto y categoría */}
+            <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", md: "row" }, // En celular en columna, en pantalla grande en fila
+                    gap: 2,
+                    p: 2,
+                    mb: 3,
+                    backgroundColor: COLORS.searchBand,
+                }}
+            >
+                <TextField
+                    size="small"
+                    fullWidth
+                    label={translate("directory.search_catalog")} // "Buscar producto u oferta"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    sx={{ backgroundColor: "#ffffff" }}
+                />
+                <TextField
+                    select
+                    size="small"
+                    label={translate("directory.category")} // "Categoría"
+                    value={category}
+                    onChange={(event) => setCategory(event.target.value)}
+                    sx={{ minWidth: 180, backgroundColor: "#ffffff" }}
+                >
+                    <MenuItem value="all">{translate("directory.all")}</MenuItem>
+                    {CATEGORIES.map((item) => (
+                        <MenuItem key={item} value={item}>
+                            {item}
+                        </MenuItem>
+                    ))}
+                </TextField>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                        backgroundColor: COLORS.darkRed,
+                        "&:hover": { backgroundColor: COLORS.red },
+                    }}
+                >
+                    {translate("directory.search")} {/* "Buscar" */}
+                </Button>
+            </Box>
+
+            {/* Productos: estados de carga, error y vacío, y cuadrícula de resultados */}
+            <Typography variant="h6" component="h3" sx={{ mb: 2 }}>
+                {translate("directory.products_title")} {/* "Productos" */}
+            </Typography>
+            {products.isPending ? (
+                <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+                    <CircularProgress aria-label={translate("directory.loading")} />
+                </Box>
+            ) : products.error ? (
+                <Alert severity="error">{translate("directory.catalog_error")}</Alert>
+            ) : !products.data || products.data.length === 0 ? (
+                <Alert severity="info">{translate("directory.catalog_empty")}</Alert>
+            ) : (
+                <Box
+                    sx={{
+                        display: "grid",
+                        gap: 2,
+                        gridTemplateColumns: {
+                            xs: "repeat(1, 1fr)", // 1 columna en celular
+                            sm: "repeat(2, 1fr)", // 2 columnas en pantalla mediana
+                            md: "repeat(3, 1fr)", // 3 columnas en pantalla grande
+                        },
+                    }}
+                >
+                    {products.data.map((product) => (
+                        <Box
+                            key={product.id}
+                            component="article"
+                            sx={{ backgroundColor: "#ffffff", borderRadius: 1, p: 2 }}
+                        >
+                            <Typography variant="subtitle1" fontWeight="bold">
+                                {product.name}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                                {product.category}
+                            </Typography>
+                            <Typography variant="body2" sx={{ my: 1 }}>
+                                {product.description}
+                            </Typography>
+                            <Typography variant="h6" sx={{ color: COLORS.red }}>
+                                {formatPrice(product.priceCents, product.currency)}
+                            </Typography>
+                        </Box>
+                    ))}
+                </Box>
+            )}
+
+            {/* Ofertas: mismos estados que los productos */}
+            <Typography variant="h6" component="h3" sx={{ mt: 4, mb: 2 }}>
+                {translate("directory.offers_title")} {/* "Ofertas" */}
+            </Typography>
+            {offers.isPending ? (
+                <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+                    <CircularProgress aria-label={translate("directory.loading")} />
+                </Box>
+            ) : offers.error ? (
+                <Alert severity="error">{translate("directory.catalog_error")}</Alert>
+            ) : !offers.data || offers.data.length === 0 ? (
+                <Alert severity="info">{translate("directory.offers_empty")}</Alert>
+            ) : (
+                <Box
+                    sx={{
+                        display: "grid",
+                        gap: 2,
+                        gridTemplateColumns: {
+                            xs: "repeat(1, 1fr)",
+                            md: "repeat(2, 1fr)",
+                        },
+                    }}
+                >
+                    {offers.data.map((offer) => (
+                        <Box
+                            key={offer.id}
+                            component="article"
+                            sx={{ backgroundColor: "#ffffff", borderRadius: 1, p: 2 }}
+                        >
+                            <Typography variant="subtitle1" fontWeight="bold">
+                                {offer.title}
+                            </Typography>
+                            <Typography variant="body2" sx={{ my: 1 }}>
+                                {offer.description}
+                            </Typography>
+                            <Typography variant="h6" sx={{ color: COLORS.red }}>
+                                {formatPrice(offer.priceCents, offer.currency)}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary" display="block">
+                                {translate("directory.valid_until")}{" "}
+                                {new Date(offer.endsAt).toLocaleDateString("es-MX")}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+                                {offer.terms}
+                            </Typography>
+                            {/* Enlace externo al vendedor; se abre en otra pestaña */}
+                            <Button
+                                href={offer.sellerUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                variant="contained"
+                                size="small"
+                                sx={{
+                                    backgroundColor: COLORS.darkRed,
+                                    "&:hover": { backgroundColor: COLORS.red },
+                                }}
+                            >
+                                {translate("directory.view_offer")} {/* "Ver oferta" */}
+                            </Button>
+                        </Box>
+                    ))}
+                </Box>
+            )}
+        </Box>
+    );
+};
+
 // NUEVO (PROVISIONAL): detalle público de un comercio, con los componentes de React-Admin.
 // Aún no hay diseño en Figma; muestra los campos públicos de docs/data-model.md (sección 4).
 // Se registra en App.tsx con <Resource name="businesses" list={BusinessList} show={BusinessShow} />.
@@ -355,6 +593,7 @@ export const BusinessShow = () => {
                         <FieldText source="contactPhone" />
                         <UrlField source="websiteUrl" />
                     </SimpleShowLayout>
+                    <BusinessCatalog /> {/* NUEVO (issue #34): catálogo del comercio */}
                 </Show>
             </Box>
         </ThemeProvider>
@@ -362,6 +601,7 @@ export const BusinessShow = () => {
 };
 
 // PENDIENTE (fuera de este PR):
-// - El diseño final del detalle público (el actual es provisional).
+// - El diseño final del detalle público y del catálogo (el actual es provisional).
+// - Paginación del catálogo (por ahora se piden hasta 50 productos y 50 ofertas).
 // - Encabezado y pie del sitio (issue #1): la pantalla se ve dentro del layout de React-Admin.
 // - mock/db.json (json-server) es solo para pruebas locales; no son comercios reales ni oficiales.

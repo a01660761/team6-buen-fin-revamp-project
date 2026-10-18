@@ -459,6 +459,15 @@ const spanishMessages: TranslationMessages = {
         go: "Ir",
         go_to_page: "Ir a la página",
         back: "Volver al buscador",
+        catalog_title: "Catálogo del comercio",
+        search_catalog: "Buscar producto u oferta",
+        products_title: "Productos",
+        offers_title: "Ofertas",
+        catalog_error: "No pudimos cargar el catálogo. Intenta de nuevo más tarde.",
+        catalog_empty: "No encontramos productos con esa búsqueda.",
+        offers_empty: "No encontramos ofertas con esa búsqueda.",
+        valid_until: "Válida hasta el",
+        view_offer: "Ver oferta",
     },
 };
 
