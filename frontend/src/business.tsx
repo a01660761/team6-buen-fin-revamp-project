@@ -1,9 +1,13 @@
-// Issue #19 (US-03.2): Buscador de comercios participantes (listado).
+// Issue #19 (US-03.2): Buscador de comercios participantes (listado) y detalle público (provisional).
 // Basado en el prototipo de Figma "Buscador de comercios participantes".
+// Cada bloque indica si sigue el patrón del equipo (React-Admin) o si es una adición nueva.
 
 import { useState } from "react"; // Hook de React para guardar lo que el usuario escribe en los filtros
 import type { FormEvent } from "react"; // NUEVO: tipo de TypeScript para el evento del formulario ("import type" no existía en el código del equipo)
-import { List, useListContext, useTranslate } from "react-admin"; // Patrón del equipo: List, useListContext y useTranslate de React-Admin
+import {
+    BooleanField, EmailField, Link, List, Show, SimpleShowLayout,
+    TextField as FieldText, UrlField, useListContext, useTranslate
+} from "react-admin"; // Patrón del equipo: componentes de React-Admin (List, Show, campos). FieldText es el TextField de React-Admin; se renombra porque TextField de MUI ya se usa en los filtros
 import type { RaRecord } from "react-admin"; // Tipo base de un registro de React-Admin
 import {
     Alert,
@@ -180,27 +184,33 @@ const BusinessGrid = () => {
                     component="article" // Cada comercio es un <article> (mejor accesibilidad)
                     sx={{ textAlign: "center" }}
                 >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            height: 120,
-                            backgroundColor: "#ffffff", // Recuadro blanco donde iría el logo
-                            borderRadius: 1,
-                        }}
+                    {/* NUEVO: toda la tarjeta es un enlace al detalle público (/businesses/:id/show) */}
+                    <Link
+                        to={`/businesses/${business.id}/show`}
+                        style={{ textDecoration: "none", color: "inherit" }}
                     >
-                        <Typography
-                            variant="h4"
-                            color="text.secondary"
-                            aria-hidden="true" // Decorativo: el nombre ya se lee debajo
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                height: 120,
+                                backgroundColor: "#ffffff", // Recuadro blanco donde iría el logo
+                                borderRadius: 1,
+                            }}
                         >
-                            {getInitials(business.name)}
+                            <Typography
+                                variant="h4"
+                                color="text.secondary"
+                                aria-hidden="true" // Decorativo: el nombre ya se lee debajo
+                            >
+                                {getInitials(business.name)}
+                            </Typography>
+                        </Box>
+                        <Typography variant="body2" fontWeight="bold" sx={{ mt: 1 }}>
+                            {business.name}
                         </Typography>
-                    </Box>
-                    <Typography variant="body2" fontWeight="bold" sx={{ mt: 1 }}>
-                        {business.name}
-                    </Typography>
+                    </Link>
                 </Box>
             ))}
         </Box>
@@ -318,7 +328,40 @@ export const BusinessList = () => {
     );
 };
 
+// NUEVO (PROVISIONAL): detalle público de un comercio, con los componentes de React-Admin.
+// Aún no hay diseño en Figma; muestra los campos públicos de docs/data-model.md (sección 4).
+// Se registra en App.tsx con <Resource name="businesses" list={BusinessList} show={BusinessShow} />.
+export const BusinessShow = () => {
+    const translate = useTranslate();
+    return (
+        <ThemeProvider theme={lightTheme}>
+            <Box
+                sx={{
+                    p: 3,
+                    backgroundColor: COLORS.pageBackground,
+                    color: "text.primary",
+                }}
+            >
+                <Link to="/businesses">{translate("directory.back")}</Link> {/* "Volver al buscador" */}
+                <Show title={false} actions={false} disableAuthentication>
+                    {/* disableAuthentication: el detalle es público, igual que el listado */}
+                    <SimpleShowLayout>
+                        <FieldText source="name" />
+                        <FieldText source="category" />
+                        <BooleanField source="physicalStore" />
+                        <FieldText source="address" />
+                        <FieldText source="description" />
+                        <EmailField source="contactEmail" />
+                        <FieldText source="contactPhone" />
+                        <UrlField source="websiteUrl" />
+                    </SimpleShowLayout>
+                </Show>
+            </Box>
+        </ThemeProvider>
+    );
+};
+
 // PENDIENTE (fuera de este PR):
-// - Vista pública de detalle del comercio (resto de US-03.2): aún sin diseño.
+// - El diseño final del detalle público (el actual es provisional).
 // - Encabezado y pie del sitio (issue #1): la pantalla se ve dentro del layout de React-Admin.
 // - mock/db.json (json-server) es solo para pruebas locales; no son comercios reales ni oficiales.

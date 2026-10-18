@@ -49,7 +49,7 @@ const spanishMessages: TranslationMessages = {
         boolean: {
             true: "Sí",
             false: "No",
-            null: " ",
+            null: " ",
         },
 
         page: {
@@ -426,6 +426,11 @@ const spanishMessages: TranslationMessages = {
                 name: "Nombre",
                 category: "Categoría",
                 physicalStore: "Tienda física",
+                description: "Descripción",
+                address: "Dirección",
+                contactEmail: "Correo de contacto",
+                contactPhone: "Teléfono de contacto",
+                websiteUrl: "Sitio web",
             },
         },
     },
@@ -453,6 +458,7 @@ const spanishMessages: TranslationMessages = {
         page: "Página",
         go: "Ir",
         go_to_page: "Ir a la página",
+        back: "Volver al buscador",
     },
 };
 

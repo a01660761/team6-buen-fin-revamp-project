@@ -7,7 +7,7 @@ import { CommentList, CommentEdit, CommentCreate } from "./comment";
 import { AlbumList, AlbumEdit, AlbumCreate } from "./album";
 import { PhotoList, PhotoEdit, PhotoCreate } from "./photo";
 import { ToDoList, ToDoEdit, ToDoCreate } from "./to_do";
-import { BusinessList } from "./business"; // NUEVA
+import { BusinessList, BusinessShow } from "./business"; // NUEVA
 import { Dashboard } from "./Dashboard";
 import { authProvider } from './AuthProvider';
 import { i18nProvider } from "./i18nProvider";
@@ -29,6 +29,6 @@ export const App = () => (
     <Resource name="albums" list={AlbumList} edit={AlbumEdit} create={AlbumCreate} icon={AlbumIcon} />
     <Resource name="photos" list={PhotoList} edit={PhotoEdit} create={PhotoCreate} icon={PhotoIcon} />
     <Resource name="todos" list={ToDoList} edit={ToDoEdit} create={ToDoCreate} icon={TodoIcon} />
-    <Resource name="businesses" list={BusinessList} icon={StoreIcon} /> {/* NUEVA */}
+    <Resource name="businesses" list={BusinessList} show={BusinessShow} icon={StoreIcon} /> {/* NUEVA */}
   </Admin>
 );
