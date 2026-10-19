@@ -1,7 +1,7 @@
 // import { useState } from 'react';
-import { Card,CardContent} from '@/components/ui/card';
-import { UserRoundGroup, CalendarCheck, TrendingUp, ShoppingBag, Scale, ShoppingCart, Lightbulb, BellRing, Megaphone} from "lucide-react";
-import {Topbar} from "@/components/layout/Topbar";
+import { Card,CardContent } from '@/components/ui/card';
+import { UserRoundGroup, CalendarCheck, TrendingUp, ShoppingBag, Scale, ShoppingCart, Lightbulb, BellRing, Megaphone } from "lucide-react";
+import { Topbar} from "@/components/layout/Topbar";
 import { Footer } from '@/components/layout/Footer';
 import { Countdown } from '@/components/layout/Countdown';
 import { CarouselPromotion} from '@/components/layout/Carousel'
