@@ -31,8 +31,25 @@ export const App = () => (
 );
  */
 
+import { Routes, Route } from "react-router-dom";
 import Landing from "@/pages/Landing";
+import Consumidores from "@/pages/Consumidores";
+import Comercios from "@/pages/Comercios";
+import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
+import CompraSegura from "@/pages/CompraSegura";
+import AcercaBuenFin from "@/pages/AcercaBuenFin";
+//import Avisos from "@/pages/Avisos";
 
-export const App = () => {
-  return <Landing />;
-};
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/acerca" element={<AcercaBuenFin />} />
+      <Route path="/consumidores" element={<Consumidores />} />
+      <Route path="/comercios" element={<Comercios />} />
+      <Route path="/preguntas-frecuentas"element={<PreguntasFrecuentes/>} />
+      <Route path="/compra-segura" element={<CompraSegura />} />
+      {/*<Route path="/avisos" element={<Avisos />} /> */}
+    </Routes>
+  );
+}
