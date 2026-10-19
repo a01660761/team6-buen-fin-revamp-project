@@ -1,6 +1,6 @@
 // import { useState } from 'react';
 import { Card,CardContent } from '@/components/ui/card';
-import { UsersRound,BadgePercent, ShieldCheck, QrCode, LockKeyhole, ShieldAlert, Underline } from "lucide-react";
+import { UsersRound,BadgePercent, ShieldCheck, QrCode, LockKeyhole, ShieldAlert } from "lucide-react";
 import { Topbar } from "@/components/layout/Topbar";
 import { Footer } from '@/components/layout/Footer';
 import sorteophoto from '@/assets/photos_promotion/sorteo.png';
