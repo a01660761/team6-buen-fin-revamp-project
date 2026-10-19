@@ -1,26 +1,5 @@
-import path from "node:path"
+import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  plugins: [react(),tailwindcss()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  server: {
-    host: true,
-  },
-  build: {
-    sourcemap: mode === "development",
-  },
-  base: "./",
-}));
-*/
-
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import { readFileSync } from "node:fs"; // For reading TLS key and certificate files
@@ -55,8 +34,13 @@ export default defineConfig(({ command, mode }) => {
       } : undefined; // Read the TLS key and certificate files if HTTPS is enabled.
 
   return {
-    plugins: [react()],
+    plugins: [react(),tailwindcss()],
 
+    resolve:{
+      alias:{
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
     server: {
       host: "localhost",
       port,
