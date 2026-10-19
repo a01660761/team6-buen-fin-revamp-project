@@ -1,6 +1,6 @@
 // import { useState } from 'react';
 import { Card,CardContent } from '@/components/ui/card';
-import { UsersRound,BadgePercent, ShieldCheck, QrCode, LockKeyhole, ShieldAlert } from "lucide-react";
+import { UsersRound,BadgePercent, ShieldCheck, QrCode, LockKeyhole, ShieldAlert, Underline } from "lucide-react";
 import { Topbar } from "@/components/layout/Topbar";
 import { Footer } from '@/components/layout/Footer';
 import sorteophoto from '@/assets/photos_promotion/sorteo.png';
@@ -120,13 +120,13 @@ export default function Consumidores(){
 
                     <ol className="list-decimal space-y-6 pl-9 text-xl font-semibold leading-relaxed lg:text-2xl">
                         <li>
-                            <a href="https://www.elbuenfin.org/assets/documents/F_Infografico_Conciliaexpres.pdf">Descarga el infográfico con el paso a paso.</a>
+                            <a href="https://www.elbuenfin.org/assets/documents/F_Infografico_Conciliaexpres.pdf" className='hover:underline'>Descarga el infográfico con el paso a paso.</a>
                         </li>
                         <li>
-                            <a href='https://telefonodelconsumidor.gob.mx/jsp/requerimientos-llamada.jsp'>Revisa la lista de proveedores inscritos.</a>
+                            <a href='https://telefonodelconsumidor.gob.mx/jsp/requerimientos-llamada.jsp' className='hover:underline'>Revisa la lista de proveedores inscritos.</a>
                         </li>
                         <li>
-                            <a href='https://consumidoras.profeco.gob.mx/conciliaexpress/solicitud.php'>Llena el formulario de solicitud de conciliación.</a>
+                            <a  href='https://consumidoras.profeco.gob.mx/conciliaexpress/solicitud.php' className='hover:underline'>Llena el formulario de solicitud de conciliación.</a>
                         </li>
                     </ol>
                 </div>
