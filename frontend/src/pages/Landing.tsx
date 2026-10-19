@@ -64,7 +64,7 @@ export default function Landing() {
                                 icon={<UserRoundGroup size={64}/>}
                                 description="Impulsa las ventas de tu comercio durante el fin de semana más dinámico para el mercado doméstico mexicano. 
                                 Regístrate a partir del 8 de septiembre del 2026, es totalmente gratuito."
-                                href='' //Todavía no se tiene el apartado de Recursos 
+                                href='/comercios' 
                                 name='Recursos'
                             />
                         </div>
@@ -75,7 +75,7 @@ export default function Landing() {
                                 icon={<CalendarCheck size={64}/>}
                                 description="Aprovecha los premios que el Servicio de Administración Tributaria ofrece a los comercios participantes.
                                 Hay $100,000,000 pesos en premios."
-                                href='' //Todavía no se tiene el apartado de Recursos 
+                                href='https://www.sat.gob.mx/minisitio/SorteoElBuenFin/index.html'
                                 name="Leer las bases"
                             />
                         </div>
@@ -85,7 +85,7 @@ export default function Landing() {
                                 title="Haz crecer tu comercio"
                                 icon={<TrendingUp size={64}/>}
                                 description="Utiliza las herramientas gratuitas y de dominio público que el programa MIPYMES MX de la Secretaría de Economía ha preparado para ti."
-                                href='' //Todavía no se tiene el apartado de Recursos 
+                                href='https://mipymes.economia.gob.mx'
                                 name="Ir a MIPyMES MX"
                             />
                         </div>
@@ -157,9 +157,9 @@ export default function Landing() {
                             </Card>
 
                             <div className="flex justify-center">
-                                <button type="button" className="rounded-full border-2 border-[var(--contrast-color)] bg-[var(--topbar-background-color)] px-8 py-2 font-bold text-[var(--default-text-color)]">
+                                <a href='/consumidores' className="rounded-full border-2 border-[var(--contrast-color)] bg-[var(--topbar-background-color)] px-8 py-2 font-bold text-[var(--default-text-color)]">
                                     Todo sobre conciliación
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -178,8 +178,7 @@ export default function Landing() {
                         <div className="flex flex-col items-center gap-4 bg-[var(--square-card-background-color)] p-6 text-center text-[var(--default-text-color)]">
                             <ShoppingBag size={64}/>
                             <h3 className="font-extrabold">Tus compras entran en el Sorteo El Buen Fin</h3>
-                            {/* a href="" className */}
-                            <a href="" className="mt-auto rounded-full bg-[var(--bottoms-background-color)] px-6 py-2 font-semibold">
+                            <a href="https://www.sat.gob.mx/minisitio/SorteoElBuenFin/index.html" className="mt-auto rounded-full bg-[var(--bottoms-background-color)] px-6 py-2 font-semibold">
                                 Descubre cómo ganar
                             </a>
                         </div>
@@ -188,8 +187,7 @@ export default function Landing() {
                         <div className="flex flex-col items-center gap-4 bg-[var(--topbar-background-color)] p-6 text-center text-[var(--default-text-color)]">
                             <Scale size={64}/>
                             <h3 className="font-extrabold">Conoce tus derechos como consumidor</h3>
-                            {/* a href="" className */}
-                            <a href="" className="mt-auto rounded-full bg-[var(--bottoms-background-color)] px-6 py-2 font-semibold">
+                            <a href="https://www.elbuenfin.org/assets/documents/E_Infografico_Derechos_del_Consumidor.png" className="mt-auto rounded-full bg-[var(--bottoms-background-color)] px-6 py-2 font-semibold">
                                 Descubrir
                             </a>
                         </div>
@@ -198,8 +196,7 @@ export default function Landing() {
                         <div className="flex flex-col items-center gap-4 bg-[var(--square-card-background-color)] p-6 text-center text-[var(--default-text-color)]">
                             <ShoppingCart size={64}/>
                             <h3 className="font-extrabold">Aprende a comprar de forma segura</h3>
-                            {/* a href="" className */}
-                            <a href="" className="mt-auto rounded-full bg-[var(--bottoms-background-color)] px-6 py-2 font-semibold">
+                            <a href="/compra-segura" className="mt-auto rounded-full bg-[var(--bottoms-background-color)] px-6 py-2 font-semibold">
                                 Descubrir
                             </a>
                         </div>
@@ -215,20 +212,20 @@ export default function Landing() {
                         </div>
                     </div>
                     
-                    <a href='' className="mt-5 block w-full bg-[var(--bottoms-background-color)] px-8 py-4 text-lg font-bold text-[var(--default-text-color)] hover:opacity-90">
+                    <a href='/consumidores' className="mt-0 block w-full bg-[var(--bottoms-background-color)] px-8 py-4 text-lg font-bold text-[var(--default-text-color)] hover:opacity-90">
                         Recursos para consumidores
                     </a>
                 </section >
 
                 {/* Todo sobre el Buen Fin*/}
                 <section className="mt-4 w-full bg-[var(--infro-title-background-color)]">
-                    <h2 className="bg-[var(--infro-title-background-color)] px-10 py-5 text-2xl font-extrabold text[var(--section-background-color)]">
+                    <h2 className="bg-[var(--infro-title-background-color)] px-10 py-5 text-2xl font-extrabold text-[var(--section-background-color)]">
                         Todo sobre El Buen Fin
                     </h2>
 
                     <div className="grid gap-6 p-6 md:grid-cols-2 bg-[var(--info-background-color)]">
                         {/* Acerca del programa*/}
-                        <Card className="gap-0 rounded-3xl border-2 bg-[var(--card-background) py-0 shadow-none">
+                        <Card className="gap-0 rounded-3xl border-2 bg-[var(--card-background)] py-0 shadow-none">
                             <CardContent className="flex h-full flex-col items-center gap-3 p-6 text-center bg-[var(--infro-title-background-color)]">
                                 <BellRing size={56}/>
                                 <h3 className="text-xl font-extrabold">
@@ -238,14 +235,14 @@ export default function Landing() {
                                     Conoce más sobre la campaña comercial más importante de México, donde miles de negocios ofrecen descuentos especiales
                                     para incentivar las compras y reactivar la economía.
                                 </p>
-                                <a href='' className="mt-auto rounded-full bg-[var(--section-background-color)] px-6 py-2 font-semibold text-[var(--default-text-color)]"> 
+                                <a href='/acerca' className="mt-auto rounded-full bg-[var(--section-background-color)] px-6 py-2 font-semibold text-[var(--default-text-color)]"> 
                                     Más sobre El Buen Fin
                                 </a>
                             </CardContent>
                         </Card>
 
                         {/* Avisos*/}
-                        <Card className="gap-0 rounded-3xl border-2 bg-[var(--card-background) py-0 shadow-none">
+                        <Card className="gap-0 rounded-3xl border-2 bg-[var(--card-background)] py-0 shadow-none">
                             <CardContent className="flex h-full flex-col items-center gap-3 p-6 text-center bg-[var(--infro-title-background-color)]">
                                 <Megaphone size={56}/>
                                 <h3 className="text-xl font-extrabold">
@@ -254,7 +251,7 @@ export default function Landing() {
                                 <p className='text-sm font-semibold'>
                                     Mantente informado con las últimas novedades, comunicados y actualizaciones oficiales relacionadas con El Buen Fin.
                                 </p>
-                                <a href='' className="mt-auto rounded-full bg-[var(--section-background-color)] px-6 py-2 font-semibold text-[var(--default-text-color)]"> 
+                                <a href='/avisos' className="mt-auto rounded-full bg-[var(--section-background-color)] px-6 py-2 font-semibold text-[var(--default-text-color)]"> 
                                     Ver avisos y noticias
                                 </a>
                             </CardContent>
