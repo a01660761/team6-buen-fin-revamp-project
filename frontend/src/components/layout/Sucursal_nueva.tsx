@@ -1,0 +1,65 @@
+//import { useState } from "react";
+
+export function Nueva_Surcursal(){
+    // Add the connection with the backend here
+
+    return(
+        <form className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-[var(--button-text-color)]">
+            <h2 className="text-center text-3xl font-bold"> 
+                Agregar nueva Sucursal
+            </h2>
+            <hr className="border-[var(--card-bottom-color)]"/>
+            
+            <p className="text-sm font-medium">
+                Para registrar una nueva sucursal, ingresa los siguientes datos
+                <br/>
+                Los campos marcados con un asterisco * son obligatorios.
+            </p>
+
+            <div className="grid gap-2">
+                <label htmlFor="nombre_sucursal" className="font-bold">
+                    Nombre de la sucursal * 
+                </label>
+                <input type="text" id="nombre_sucursal" name="nombre_sucursal" placeholder="Ingresa el nombre de tu sucursal" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+            </div>
+
+            
+            <div className="grid gap-2">
+                <label htmlFor="entidad" className="font-bold">
+                    Entidad * 
+                </label>
+                <select id="entidad" name="entidad" defaultValue="" required className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]">
+                    <option value="" disabled>Selecciona una entidad</option>
+                    <option value="administrador">Testing</option>
+                    <option value="empleado">Testing</option>
+                    <option value="cliente">Testing</option>
+                    <option value="otro">Otra entidad</option>
+                </select>
+            </div>
+
+            <div className="grid gap-2">
+                <label htmlFor="telefono" className="font-bold">
+                    Teléfono * 
+                </label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ingresa tu número telefónico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+            </div>
+
+
+            <div className="grid gap-2">
+                <label htmlFor="direccion" className="font-bold">
+                    Dirección *
+                </label>
+                <input type="text" id="direccion" name="direccion" placeholder="Ingresa la dirección" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+            </div>
+
+            <div>
+                <button className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                    Regresar
+                </button>
+                <button className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                    Guardar Sucursal
+                </button>
+            </div>
+        </form>
+    )
+}

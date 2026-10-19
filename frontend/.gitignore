@@ -4,6 +4,8 @@ node_modules/
 # Build output
 dist/
 dist-ssr/
+build/
+coverage/
 
 # Logs
 logs/
@@ -16,6 +18,7 @@ lerna-debug.log*
 
 # Environment variables / credentials
 .env
+.env.*
 .env.local
 .env.*.local
 
