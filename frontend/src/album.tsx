@@ -1,7 +1,6 @@
-import { List, DataTable, ReferenceField, 
-    EditButton, Edit, SimpleForm, ReferenceInput, 
-    TextInput, Create, useNotify, useRefresh, 
-    useRedirect, EmailField, SimpleList 
+import { List, DataTable, ReferenceField,
+    EditButton, Edit, SimpleForm, ReferenceInput,
+    TextInput, Create, SimpleList
 } from "react-admin";
 import { useMediaQuery, Theme } from "@mui/material";
 
@@ -10,11 +9,11 @@ export const AlbumList = () => {
     return (
         <List>
             {isSmall ? (
-               <SimpleList 
+               <SimpleList
                     primaryText={(record) => record.userId}
                     secondaryText={(record) => record.id}
                     tertiaryText={(record) => record.title}
-                /> 
+                />
             ) : (
                 <DataTable>
                     <DataTable.Col source="userId">

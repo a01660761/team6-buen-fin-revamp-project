@@ -1,7 +1,6 @@
-import { List, DataTable, ReferenceField, 
-    EditButton, Edit, SimpleForm, ReferenceInput, 
-    TextInput, BooleanField, BooleanInput, Create, useNotify, useRefresh, 
-    useRedirect, EmailField, SimpleList, SelectInput 
+import { List, DataTable, ReferenceField,
+    EditButton, Edit, SimpleForm, ReferenceInput,
+    TextInput, BooleanField, BooleanInput, Create, SimpleList, SelectInput
 } from "react-admin";
 import { useMediaQuery, Theme } from "@mui/material";
 
@@ -18,11 +17,11 @@ export const ToDoList = () => {
     return (
         <List filters={toDoFilters}>
             {isSmall ? (
-               <SimpleList 
+               <SimpleList
                     primaryText={(record) => record.userId}
                     secondaryText={(record) => record.title}
                     tertiaryText={(record) => record.completed ? "Completed" : "Not Completed"}
-                /> 
+                />
             ) : (
                 <DataTable>
                     <DataTable.Col source="userId">
