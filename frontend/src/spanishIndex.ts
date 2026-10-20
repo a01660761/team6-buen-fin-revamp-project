@@ -49,7 +49,7 @@ const spanishMessages: TranslationMessages = {
         boolean: {
             true: "Sí",
             false: "No",
-            null: " ",
+            null: " ",
         },
 
         page: {
@@ -418,6 +418,21 @@ const spanishMessages: TranslationMessages = {
                 completed: "Completada",
             },
         },
+
+        businesses: {
+            name: "Comercio |||| Comercios",
+            fields: {
+                id: "ID",
+                name: "Nombre",
+                category: "Categoría",
+                physicalStore: "Tienda física",
+                description: "Descripción",
+                address: "Dirección",
+                contactEmail: "Correo de contacto",
+                contactPhone: "Teléfono de contacto",
+                websiteUrl: "Sitio web",
+            },
+        },
     },
 
     dashboard: {
@@ -425,6 +440,34 @@ const spanishMessages: TranslationMessages = {
         loading_posts: "Cargando publicaciones...",
         error_loading_posts: "Error al cargar las publicaciones.",
         total_posts: "Total de publicaciones: %{total}",
+    },
+
+    directory: {
+        title: "Buscador de comercios participantes",
+        demo_notice: "Datos de demostración: estos comercios no son reales ni oficiales.",
+        search_business: "Buscar comercio",
+        physical_store: "Tienda física",
+        category: "Categoría",
+        all: "Todas",
+        yes: "Sí",
+        no: "No",
+        search: "Buscar",
+        loading: "Cargando comercios...",
+        error: "No pudimos cargar los comercios. Intenta de nuevo más tarde.",
+        empty: "No encontramos comercios con esa búsqueda.",
+        page: "Página",
+        go: "Ir",
+        go_to_page: "Ir a la página",
+        back: "Volver al buscador",
+        catalog_title: "Catálogo del comercio",
+        search_catalog: "Buscar producto u oferta",
+        products_title: "Productos",
+        offers_title: "Ofertas",
+        catalog_error: "No pudimos cargar el catálogo. Intenta de nuevo más tarde.",
+        catalog_empty: "No encontramos productos con esa búsqueda.",
+        offers_empty: "No encontramos ofertas con esa búsqueda.",
+        valid_until: "Válida hasta el",
+        view_offer: "Ver oferta",
     },
 };
 

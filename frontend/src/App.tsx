@@ -7,6 +7,7 @@ import { CommentList, CommentEdit, CommentCreate } from "./comment";
 import { AlbumList, AlbumEdit, AlbumCreate } from "./album";
 import { PhotoList, PhotoEdit, PhotoCreate } from "./photo";
 import { ToDoList, ToDoEdit, ToDoCreate } from "./to_do";
+import { BusinessList, BusinessShow } from "./business"; // NUEVA
 import { Dashboard } from "./Dashboard";
 import { authProvider } from './AuthProvider';
 import { i18nProvider } from "./i18nProvider";
@@ -18,6 +19,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import AlbumIcon from "@mui/icons-material/PhotoAlbum";
 import PhotoIcon from "@mui/icons-material/Photo";
 import TodoIcon from "@mui/icons-material/Checklist";
+import StoreIcon from "@mui/icons-material/Store"; // NUEVA
 
 export const App = () => (
   <Admin dataProvider={dataProvider} authProvider={authProvider} dashboard={Dashboard} i18nProvider={i18nProvider} loginPage={LoginPage} >
@@ -27,9 +29,9 @@ export const App = () => (
     <Resource name="albums" list={AlbumList} edit={AlbumEdit} create={AlbumCreate} icon={AlbumIcon} />
     <Resource name="photos" list={PhotoList} edit={PhotoEdit} create={PhotoCreate} icon={PhotoIcon} />
     <Resource name="todos" list={ToDoList} edit={ToDoEdit} create={ToDoCreate} icon={TodoIcon} />
+    <Resource name="businesses" list={BusinessList} show={BusinessShow} icon={StoreIcon} />
   </Admin>
-);
- */
+);*/
 
 import { Routes, Route } from "react-router-dom";
 import Landing from "@/pages/Landing";
