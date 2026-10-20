@@ -1,0 +1,12 @@
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Local TLS material
+certs/
+*.key
+*.crt
+*.pem
+*.p12
+*.pfx

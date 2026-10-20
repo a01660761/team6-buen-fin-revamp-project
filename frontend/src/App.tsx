@@ -1,4 +1,4 @@
-import { Admin, Resource, ListGuesser, ShowGuesser } from "react-admin";
+/* import { Admin, Resource, ListGuesser, ShowGuesser } from "react-admin";
 import { Layout } from "./Layout";
 import { dataProvider } from "./dataProvider";
 import { UserList, UserEdit, UserCreate } from "./users";
@@ -29,6 +29,29 @@ export const App = () => (
     <Resource name="albums" list={AlbumList} edit={AlbumEdit} create={AlbumCreate} icon={AlbumIcon} />
     <Resource name="photos" list={PhotoList} edit={PhotoEdit} create={PhotoCreate} icon={PhotoIcon} />
     <Resource name="todos" list={ToDoList} edit={ToDoEdit} create={ToDoCreate} icon={TodoIcon} />
-    <Resource name="businesses" list={BusinessList} show={BusinessShow} icon={StoreIcon} /> {/* NUEVA */}
+    <Resource name="businesses" list={BusinessList} show={BusinessShow} icon={StoreIcon} />
   </Admin>
-);
+);*/
+
+import { Routes, Route } from "react-router-dom";
+import Landing from "@/pages/Landing";
+import Consumidores from "@/pages/Consumidores";
+import Comercios from "@/pages/Comercios";
+import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
+import CompraSegura from "@/pages/CompraSegura";
+import AcercaBuenFin from "@/pages/AcercaBuenFin";
+//import Avisos from "@/pages/Avisos";
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/acerca" element={<AcercaBuenFin />} />
+      <Route path="/consumidores" element={<Consumidores />} />
+      <Route path="/comercios" element={<Comercios />} />
+      <Route path="/preguntas-frecuentas"element={<PreguntasFrecuentes/>} />
+      <Route path="/compra-segura" element={<CompraSegura />} />
+      {/*<Route path="/avisos" element={<Avisos />} /> */}
+    </Routes>
+  );
+}
