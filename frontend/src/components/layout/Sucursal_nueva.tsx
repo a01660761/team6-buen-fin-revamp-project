@@ -1,10 +1,20 @@
 //import { useState } from "react";
+type Props = {
+    onCancelar?: () => void;
+    onGuardar?: (datos: Record <string, string>) => void;
+}
 
-export function Nueva_Surcursal(){
+export function Nueva_Surcursal( {onCancelar, onGuardar}: Props){
     // Add the connection with the backend here
 
     return(
-        <form className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-[var(--button-text-color)]">
+        <form 
+            onSubmit={(event) =>{
+                event.preventDefault();
+                const datos = Object.fromEntries(new FormData(event.currentTarget).entries()) as Record<string,string>;
+                onGuardar?.(datos);
+            }}
+            className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-[var(--button-text-color)]">
             <h2 className="text-center text-3xl font-bold"> 
                 Agregar nueva Sucursal
             </h2>
@@ -53,10 +63,10 @@ export function Nueva_Surcursal(){
             </div>
 
             <div>
-                <button className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                <button type="button" onClick={onCancelar} className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
                     Regresar
                 </button>
-                <button className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                <button type="submit" className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
                     Guardar Sucursal
                 </button>
             </div>
