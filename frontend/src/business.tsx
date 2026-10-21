@@ -7,7 +7,7 @@ import { useState } from "react"; // Hook de React para guardar lo que el usuari
 import type { FormEvent } from "react"; // NUEVO: tipo de TypeScript para el evento del formulario ("import type" no existía en el código del equipo)
 import {
     BooleanField, EmailField, Link, List, Show, SimpleShowLayout,
-    TextField as FieldText, UrlField, useGetList, useListContext,
+    TextField as FieldText, UrlField, useCreatePath, useGetList, useListContext,
     useRecordContext, useTranslate
 } from "react-admin"; // Patrón del equipo: componentes de React-Admin (List, Show, campos) y useGetList (como en Dashboard.tsx). FieldText es el TextField de React-Admin; se renombra porque TextField de MUI ya se usa en los filtros
 import type { RaRecord } from "react-admin"; // Tipo base de un registro de React-Admin
@@ -171,6 +171,7 @@ const BusinessSearchBar = () => {
 // Cuadrícula de comercios (4 columnas en pantalla grande, 2 en celular).
 const BusinessGrid = () => {
     const translate = useTranslate();
+    const createPath = useCreatePath(); // NUEVO: arma rutas con el prefijo /directorio
     const { data, isPending, error } = useListContext<Business>(); // Datos que React-Admin ya trajo del dataProvider
 
     // Estado de carga: mientras llegan los datos
@@ -211,7 +212,7 @@ const BusinessGrid = () => {
                 >
                     {/* NUEVO: toda la tarjeta es un enlace al detalle público (/businesses/:id/show) */}
                     <Link
-                        to={`/businesses/${business.id}/show`}
+                        to={createPath({ resource: "businesses", id: business.id, type: "show" })}
                         style={{ textDecoration: "none", color: "inherit" }}
                     >
                         <Box
@@ -571,6 +572,7 @@ const BusinessCatalog = () => {
 // Se registra en App.tsx con <Resource name="businesses" list={BusinessList} show={BusinessShow} />.
 export const BusinessShow = () => {
     const translate = useTranslate();
+    const createPath = useCreatePath(); // NUEVO: arma rutas con el prefijo /directorio
     return (
         <ThemeProvider theme={lightTheme}>
             <Box
@@ -580,7 +582,7 @@ export const BusinessShow = () => {
                     color: "text.primary",
                 }}
             >
-                <Link to="/businesses">{translate("directory.back")}</Link> {/* "Volver al buscador" */}
+                <Link to={createPath({ resource: "businesses", type: "list" })}>{translate("directory.back")}</Link> {/* "Volver al buscador" */}
                 <Show title={false} actions={false} disableAuthentication>
                     {/* disableAuthentication: el detalle es público, igual que el listado */}
                     <SimpleShowLayout>
