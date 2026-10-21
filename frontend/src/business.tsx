@@ -359,6 +359,7 @@ export const BusinessList = () => {
 // leyendo /public/products y /public/offers (docs/api-contract.md) con useGetList.
 const BusinessCatalog = () => {
     const translate = useTranslate();
+    const createPath = useCreatePath(); // NUEVO (#37): arma la ruta al detalle de la oferta con el prefijo /directorio
     const record = useRecordContext<Business>(); // Comercio que se está viendo
     const [name, setName] = useState<string>(""); // Texto escrito en el buscador
     const [category, setCategory] = useState<string>("all"); // "all" o el nombre de la categoría
@@ -530,7 +531,10 @@ const BusinessCatalog = () => {
                             sx={{ backgroundColor: "#ffffff", borderRadius: 1, p: 2 }}
                         >
                             <Typography variant="subtitle1" fontWeight="bold">
-                                {offer.title}
+                                {/* NUEVO (#37): el título lleva al detalle de la oferta */}
+                                <Link to={createPath({ resource: "catalogOffers", id: offer.id, type: "show" })}>
+                                    {offer.title}
+                                </Link>
                             </Typography>
                             <Typography variant="body2" sx={{ my: 1 }}>
                                 {offer.description}
