@@ -39,6 +39,7 @@ import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import CompraSegura from "@/pages/CompraSegura";
 import AcercaBuenFin from "@/pages/AcercaBuenFin";
 import EmpresasRegistradas from "./pages/EmpresasRegistradas";
+import SucursalesRegistradas from "./pages/SucuralesRegistradas";
 //import Avisos from "@/pages/Avisos";
 
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
       <Route path="/preguntas-frecuentas"element={<PreguntasFrecuentes/>} />
       <Route path="/compra-segura" element={<CompraSegura />} />
       <Route path="/empresas" element={<EmpresasRegistradas />} />
+      <Route path="sucursales" element={<SucursalesRegistradas/>} />
       {/*<Route path="/avisos" element={<Avisos />} /> */}
     </Routes>
   );
