@@ -46,6 +46,7 @@ import SucursalesRegistradas from "./pages/SucuralesRegistradas";
 import { dataProvider } from "./dataProvider"; // NUEVO
 import { i18nProvider } from "./i18nProvider"; // NUEVO
 import { BusinessList, BusinessShow } from "./business"; // NUEVO
+import { OfferShow } from "./offer"; // NUEVO (#37)
 import StoreIcon from "@mui/icons-material/Store"; // NUEVO
 //import Avisos from "@/pages/Avisos";
 
@@ -59,6 +60,7 @@ const Directorio = () => (
     requireAuth={false}
   >
     <Resource name="businesses" list={BusinessList} show={BusinessShow} icon={StoreIcon} />
+    <Resource name="catalogOffers" show={OfferShow} /> {/* NUEVO (#37): detalle de oferta, sin listado ni menú */}
   </Admin>
 );
 
