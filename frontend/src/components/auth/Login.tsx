@@ -2,15 +2,14 @@ import { useState } from "react";
 import { Registro } from "@/components/auth/Registro";
 
 export function Login(){
-    // Add the connection with the backend here
-
+    {/* Funcion que nos redirige a registro si es verdadero */}
     const[mostrarRegistro, setMostrarRegistro] = useState(false);
     if (mostrarRegistro){
         return <Registro/>
     }
 
     return(
-        <form className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-var(--button-text-color)]">
+        <form className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-[var(--button-text-color)]">
             <h2 className="text-center text-3xl font-bold"> 
                 Accede al registro de empresas
             </h2>
@@ -25,14 +24,14 @@ export function Login(){
                 <label htmlFor="email" className="font-bold">
                     Correo Electrónico
                 </label>
-                <input type="email" id="email" name="email" placeholder="Ingresa tu correo electronico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="email" id="email" name="email" autoComplete="email" placeholder="Ingresa tu correo electronico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
-                <label htmlFor="contraseña" className="font-bold">
+                <label htmlFor="password" className="font-bold">
                     Contraseña
                 </label>
-                <input type="password" required autoComplete="new-password" id="password" name="password" placeholder="Ingresa tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="password" required autoComplete="current-password" id="password" name="password" placeholder="Ingresa tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <p className="text-sm font-medium"> 

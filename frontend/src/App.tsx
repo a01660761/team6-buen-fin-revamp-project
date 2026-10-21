@@ -40,9 +40,10 @@ import Comercios from "@/pages/Comercios";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import CompraSegura from "@/pages/CompraSegura";
 import AcercaBuenFin from "@/pages/AcercaBuenFin";
-import EmpresasRegistradas from "./pages/EmpresasRegistradas";
-import SucursalesRegistradas from "./pages/SucuralesRegistradas";
+import EmpresasRegistradas from "@/pages/EmpresasRegistradas";
+import SucursalesRegistradas from "@/pages/SucuralesRegistradas";
 //import Avisos from "@/pages/Avisos";
+//import Fraudes from "@pages/Fraudes"; 
 
 export default function App() {
   return (
