@@ -18,7 +18,8 @@ const http = require("node:http");
 const https = require("node:https");
 const fs = require("node:fs");
 
-const { HttpError, createAccount, createAuth, publicUser } = require("./auth.js"); // importing custom authentication utilities
+const { HttpError, createAccount, createAuth, publicUser } = require("./auth.js"); // import custom authentication utilities
+const { createCompanyRouter, ensureCompanyIndexes } = require("./companies.js"); // import the company router for handling company related routes
 
 const app = express();
 
@@ -76,6 +77,11 @@ app.use(cors({
 // enable CORS for the specified origin and expose the X-Total-Count header
 
 app.use(express.json());
+
+app.use(createCompanyRouter({
+    getDb: () => db,
+    requireAuthentication,
+})); // use the company router for handling company related routes, passing in the database and authentication middleware
 
 async function connectToDB() {
     client = new MongoClient(MONGODB_URI, {
@@ -267,6 +273,7 @@ async function start() {
         : http.createServer(app); // Refactored to use HTTPS if enabled, otherwise use HTTP
 
     await connectToDB();
+    await ensureCompanyIndexes(db); // ensure that the necessary indexes for the companies collection are created in the database
 	auth = await createAuth({
         db,
         jwtSecret: JWT_SECRET,
