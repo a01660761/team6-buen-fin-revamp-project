@@ -248,11 +248,19 @@ as parallel configuration aliases.
 
 ### Authentication transition
 
-Environment configuration does not complete authentication or authorization.
+The backend implements business registration, credential verification,
+JWT authentication, current database role checks, and logout invalidation.
 
-The legacy Authentication header remains temporarily.
-The target Authorization: Bearer contract, roles, ownership checks, and
-logout invalidation belong to US-04.1 and US-04.2.
+Protected requests use Authorization: Bearer <token>.
+JWTs expire after 900 seconds. Logout increments tokenVersion and
+invalidates all previously issued tokens for that account.
+
+The legacy /Productos routes are temporarily administrator-only.
+Company ownership and the final Product CRUD contract remain pending
+under US-06.
+
+Frontend authentication integration remains pending under US-04.2.
+Legacy usuarios accounts are not migrated automatically to users.
 
 ### Local transport
 
@@ -290,3 +298,32 @@ Open findings:
 
 These checks do not establish complete CRUD, authorization, accessibility,
 performance, or release readiness.
+
+## 9. Backend authentication validation — US-04.1
+
+Local verification:
+
+| Scenario | Result |
+| --- | --- |
+| Valid business registration | 201 |
+| Duplicate normalized email | 409 |
+| Invalid registration fields or submitted role | 400 |
+| Valid login | 200 |
+| Incorrect password or nonexistent account | Same generic 401 |
+| Identity request without authentication | 401 |
+| Identity request with valid token | 200, sanitized user |
+| Invalid token | 401 |
+| Business access to administrator-only Products | 403 |
+| Logout | 204, empty body |
+| Reuse of revoked token | 401 |
+| Local administrator creation | Successful |
+| Administrator login and protected Product listing | 200 |
+
+Run administrator provisioning from backend/ using npm run create-admin.
+Set ADMIN_EMAIL, ADMIN_FIRST_NAME, ADMIN_LAST_NAME, and ADMIN_PASSWORD
+in the current shell before executing it.
+
+The script rejects duplicate emails and does not change existing roles!
+
+Frontend integration, Product CRUD corrections, and the remaining
+resource endpoints in the target API contract are separate pending work.
