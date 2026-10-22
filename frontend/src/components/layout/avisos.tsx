@@ -35,7 +35,7 @@ export function Avisos({ tipo }: Props) {
             </button>
 
             <Dialog open={abierto} onOpenChange={setAbierto}>
-                <DialogContent className="flex max-h-[90dvh] w-[calc(100vw-2rem)] overflow-hidden rounded-2xl bg-white p-4 text-[var(--default-text-color-2)] sm:max-w-2xl sm:p-8">
+                <DialogContent className="flex max-h-[90dvh] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl bg-white p-4 text-[var(--default-text-color-2)] sm:max-w-2xl sm:p-8">
 
                     <DialogTitle className="text-center text-xl font-extrabold text-[var(--topbar-background-color)] sm:text-2xl">
                         {privacidad
@@ -44,7 +44,7 @@ export function Avisos({ tipo }: Props) {
                     </DialogTitle>
 
                     <div tabIndex={0} role="region" aria-label={privacidad? "Contenido del aviso de privacidad" : "Contenido de términos y condiciones"}
-                        className="min-h-0 flex-1 overflow-y-auto border-y py-5 text-sm leading-relaxed focus-visible:outline-2 sm:text-base [&_h1]:text-2xl [&_h1]:font-bold [&_h2]:text-xl [&_h2]:font-bold [&_h3]:font-bold [&_h4]:font-semibold [&_p]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6 [&_a]:break-words [&_a]:underline">
+                        className="min-h-0 max-h-[55dvh] overflow-y-auto border-y py-5 text-sm leading-relaxed focus-visible:outline-2 sm:text-base [&_h1]:text-2xl [&_h1]:font-bold [&_h2]:text-xl [&_h2]:font-bold [&_h3]:font-bold [&_h4]:font-semibold [&_p]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6 [&_a]:break-words [&_a]:underline">
 
                         <ReactMarkdown>
                             {privacidad ? aviso : terminos}

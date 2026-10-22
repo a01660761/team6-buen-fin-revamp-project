@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { Registro } from "@/components/auth/Registro";
 
+/*
+ChatGPT-6 Luna se utilizo para lo siguiente:
+- prevent.Default : Para evitar que el navegador recargue la página cuando presionas <<Iniciar Sesión>>
+- Mejorar la accesibilidad y corrección Tailwind
+*/
+
 export function Login(){
-    {/* Funcion que nos redirige a registro si es verdadero */}
+    // Funcion que nos redirige a registro si es verdadero
     const[mostrarRegistro, setMostrarRegistro] = useState(false);
     if (mostrarRegistro){
         return <Registro/>
     }
 
     return(
-        <form className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-[var(--button-text-color)]">
+        <form  onSubmit={(event) =>{ event.preventDefault()
+            // Backend here
+        }} className="flex w-full min-w-0 flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-5 text-[var(--button-text-color)] sm:p-8">
             <h2 className="text-center text-3xl font-bold"> 
                 Accede al registro de empresas
             </h2>
@@ -24,7 +32,7 @@ export function Login(){
                 <label htmlFor="email" className="font-bold">
                     Correo Electrónico
                 </label>
-                <input type="email" id="email" name="email" autoComplete="email" placeholder="Ingresa tu correo electronico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="email" id="email" name="email" autoComplete="email" required placeholder="Ingresa tu correo electronico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
@@ -38,7 +46,7 @@ export function Login(){
                 ¿Olvidaste tu contraseña?
             </p>
 
-            <button className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+            <button type="submit" className="min-h-11 w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-4">
                 Iniciar sesión
             </button>
 
@@ -50,7 +58,7 @@ export function Login(){
 
             <hr className="flex-1 border-[var(--card-bottom-color)]" />
 
-            <button type="button" onClick={() => {setMostrarRegistro(true)}} className="w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+            <button type="button" onClick={() => {setMostrarRegistro(true)}} className="min-h-11 w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-4">
                 Crear una cuenta
             </button>
             <p className="text-center">

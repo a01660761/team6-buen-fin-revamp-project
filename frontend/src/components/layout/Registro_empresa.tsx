@@ -14,12 +14,12 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
         <form
             onSubmit={(event) => {
                 event.preventDefault();
-                const datos = Object.fromEntries(
-                    new FormData(event.currentTarget).entries()
+                const datos = Object.fromEntries( //convierte esos pares en un objeto de Javascript
+                    new FormData(event.currentTarget).entries() // entries : obtiene los datos 
                 ) as Record<string, string>;
                 onGuardar?.(datos);
             }}
-            className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-[var(--button-text-color)]"
+            className="flex w-full min-w-0 flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-5 text-[var(--button-text-color)] sm:p-8"
         >
             <h2 className="text-center text-3xl font-bold">
                 {inicial ? "Editar Empresa" : "Agregar nueva empresa"}
@@ -71,7 +71,7 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                 <label htmlFor="direccion" className="font-bold">
                     Dirección *
                 </label>
-                <input type="text" id="direccion" name="direccion" defaultValue={inicial?.direccion} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                <input type="text" id="direccion" name="direccion" defaultValue={inicial?.direccion} required autoComplete="street-address" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
 
             <div className="grid gap-2">
@@ -87,7 +87,7 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                         Entidad *
                     </label>         
                     <select id="entidad" name="entidad"
-                        defaultValue={inicial?.entidad ?? ""} required
+                        defaultValue={inicial?.entidad ?? ""} required autoComplete="address-level1"
                         className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3">
                         <option value="" disabled>Selecciona una entidad</option>
                         <option value="Aguascalientes">Aguascalientes</option>
@@ -129,7 +129,7 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                     <label htmlFor="codigoPostal" className="font-bold">
                         Código Postal *
                     </label>
-                    <input type="text" id="codigoPostal" name="codigoPostal" defaultValue={inicial?.codigoPostal} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                    <input type="text" id="codigoPostal" name="codigoPostal" autoComplete="postal-code" defaultValue={inicial?.codigoPostal} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
                 </div>
             </div>
 
@@ -137,7 +137,7 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                 <label htmlFor="municipio" className="font-bold">
                     Municipio *
                 </label>
-                <input type="text" id="municipio" name="municipio" defaultValue={inicial?.municipio} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                <input type="text" id="municipio" name="municipio" defaultValue={inicial?.municipio} required  autoComplete="address-level2" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
@@ -145,14 +145,14 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                     <label htmlFor="telefono" className="font-bold">
                         Teléfono *
                     </label>
-                    <input type="tel" id="telefono" name="telefono" defaultValue={inicial?.telefono} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                    <input type="tel" id="telefono" name="telefono" defaultValue={inicial?.telefono} required autoComplete="tel" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
                 </div>
 
                 <div className="grid gap-2">
                     <label htmlFor="correo" className="font-bold">
                         Correo electrónico *
                     </label>
-                    <input type="email" id="correo" name="correo" defaultValue={inicial?.correo} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                    <input type="email" id="correo" name="correo" defaultValue={inicial?.correo} required autoComplete="email" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
                 </div>
             </div>
 
@@ -186,10 +186,10 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                 ¿Quiere que se le notifique a la cámara o asociación a la que pertenece?
             </label>
 
-            <div className="grid gap-2">
-                <p className="font-bold">
+            <fieldset className="grid gap-2">
+                <legend className="font-bold">
                     ¿La empresa cuenta con redes sociales?
-                </p>
+                </legend>
                 <label className="flex gap-3">
                     <input type="radio" name="redesSociales" value="si" defaultChecked={inicial?.redesSociales === "si"}
                     onChange = {()=> setTieneRedes(true)}/>
@@ -210,7 +210,7 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                     </div>
                 )}
 
-            </div>
+            </fieldset>
 
             <div className="grid gap-2">
                 <label htmlFor="descripcion" className="font-bold">
@@ -219,8 +219,8 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                 <textarea id="descripcion" name="descripcion" rows={5} defaultValue={inicial?.descripcion} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
 
-            <div className="grid gap-2">
-                <p className="font-bold">Tipo de Comercio *</p>
+            <fieldset className="grid gap-2">
+                <legend className="font-bold">Tipo de Comercio *</legend>
                 <label className="flex gap-3">
                     <input type="radio" name="tipoComercio" value="fisica" defaultChecked={inicial?.tipoComercio === "fisica"} required />
                     Tienda física
@@ -233,14 +233,14 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                     <input type="radio" name="tipoComercio" value="ambas" defaultChecked={inicial?.tipoComercio === "ambas"} />
                     Ambas
                 </label>
-            </div>
+            </fieldset>
 
             <div className="grid gap-2">
                 <label htmlFor="categorias" className="font-bold">
                     Categorías *
                 </label>
                 <select id="categorias" name="categorias"
-                    value={categoria} onChange={(event)=> setCategoria(event.target.value)}
+                    value={categoria} onChange={(event)=> setCategoria(event.target.value)} required
                     className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3">
                     <option value="" disabled>Selecciona una categoría</option>
                     <option value="Tecnología">Tecnología</option>
@@ -279,12 +279,12 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
 
             <div className="grid gap-4 sm:grid-cols-2">
                 <button type="button" onClick={onCancelar}
-                    className="rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                    className="min-h-11 rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                     Regresar
                 </button>
 
                 <button type="submit"
-                    className="rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                    className="min-h-11 rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                     Guardar Empresa
                 </button>
             </div>
