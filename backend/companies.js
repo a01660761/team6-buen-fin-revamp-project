@@ -1,6 +1,9 @@
 /*
 * ChatGPT-6.1 Sol was used to review and edit this code.
-* 
+* Here we have the module that handles the company-related routes and 
+* operations in the backend. It includes functions for validating company 
+* data, creating and updating companies, and handling queries for 
+* retrieving company information.
 */
 
 const express = require("express");
