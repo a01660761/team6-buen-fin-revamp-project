@@ -1,6 +1,9 @@
 /*
 * ChatGPT-6.1 Sol was used to review and edit this code.
-* 
+* Now this module handles the offer-related routes and operations in the 
+* backend. It includes functions for validating offer data, 
+* creating and updating offers, and handling queries for retrieving 
+* offer information.
 */
 
 const express = require("express");

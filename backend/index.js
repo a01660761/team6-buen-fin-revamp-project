@@ -22,6 +22,7 @@ const { HttpError, createAccount, createAuth, publicUser } = require("./auth.js"
 const { createCompanyRouter, ensureCompanyIndexes } = require("./companies.js"); // import the company router for handling company related routes
 const { createProductRouter, ensureProductIndexes } = require("./products.js"); // import the product router for handling product related routes
 const { createOfferRouter, ensureOfferIndexes } = require("./offers.js"); // import the offer router for handling offer related routes
+const { createVacancyRouter, ensureVacancyIndexes } = require("./vacancies.js"); // import the vacancy router for handling vacancy related routes
 
 const app = express();
 
@@ -94,6 +95,11 @@ app.use(createOfferRouter({
     getDb: () => db,
     requireAuthentication,
 })); // use the offer router for handling offer related routes, passing in the database and authentication middleware
+
+app.use(createVacancyRouter({
+    getDb: () => db,
+    requireAuthentication,
+})); // use the vacancy router for handling vacancy related routes, passing in the database and authentication middleware
 
 async function connectToDB() {
     client = new MongoClient(MONGODB_URI, {
@@ -288,6 +294,7 @@ async function start() {
     await ensureCompanyIndexes(db); // ensure that the necessary indexes for the companies collection are created in the database
     await ensureProductIndexes(db); // ensure that the necessary indexes for the products collection are created in the database
     await ensureOfferIndexes(db); // ensure that the necessary indexes for the offers collection are created in the database
+    await ensureVacancyIndexes(db); // ensure that the necessary indexes for the vacancies collection are created in the database
     
 	auth = await createAuth({
         db,
