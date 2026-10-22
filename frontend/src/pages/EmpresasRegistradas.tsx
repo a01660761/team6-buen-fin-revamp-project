@@ -6,6 +6,21 @@ import { Footer } from "@/components/layout/Footer";
 import { RegistroEmpresa } from "@/components/layout/Registro_empresa";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
+/*
+ChatGPT-6 Luna se utilizo para lo siguiente:
+- Tailwind CSS (overflow)
+- Se utlizo para corregir los errores de sintaxis (typos)
+---------------------
+- subirLogotipo(empresa.id, event.target.files?.[0])
+    empresas id: identificador en donde la empresa pertenece 
+    event.tarjet.files?.[0] obtiene el primer archivo seleccionado por el usuario
+    ... : Sirven para copiar/expandir los elementos de arreglod y propiedades de objetos
+    ...empresas: copia los elementos del arreglo actual
+- readAsDataURL(archivo) : Empieza a leer la imagen seleccionada
+- lector.onload :  Se ejecuta cuando termina la lectura
+- setEmpresas() : actualiza el logotipo y react vuelve a mostrarlo
+*/
+
 type Empresa = {
     id: number;
     datos: Record<string, string>;
@@ -39,8 +54,8 @@ export default function EmpresasRegistradas() {
         if (!archivo) return;
 
         if (!["image/png", "image/jpeg"].includes(archivo.type) ||
-            archivo.size > 100 * 1024) {
-            alert("El logotipo debe ser PNG o JPG, máximo 100 KB.");
+            archivo.size > 500 * 1024) {
+            alert("El logotipo debe ser PNG o JPG, máximo 500 KB.");
             return;
         }
 
@@ -55,15 +70,15 @@ export default function EmpresasRegistradas() {
         <div className="min-h-screen bg-[var(--background-color)] text-[var(--default-text-color-2)]">
             <Topbar />
 
-            <main className="w-full px-8 py-12 lg:px-12">
+            <main className="w-full px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
                 <div className="flex justify-end">
                     <button type="button" onClick={() => { setEditando(null); setAbierto(true);}}
-                        className="rounded-lg bg-[var(--searching-background-color)] px-6 py-3 font-semibold text-[var(--button-text-color)]">
+                        className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-6 py-3 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                         Agregar nueva empresa
                     </button>
                 </div>
 
-                <section className="mt-8 rounded-xl bg-[var(--section-background-color)] p-8 text-[var(--default-text-color)]">
+                <section className="mt-8 rounded-xl bg-[var(--section-background-color)] p-4 text-[var(--default-text-color)] sm:p-8">
                     <h1 className="text-3xl font-extrabold">
                         Empresas Registradas
                     </h1>
@@ -84,20 +99,21 @@ export default function EmpresasRegistradas() {
                                 <div className="flex flex-col items-center gap-4">
                                     <div className="flex h-44 w-full items-center justify-center overflow-hidden rounded-lg bg-[var(--searching-background-color)]">
                                         {empresa.logotipo ? (
-                                            <img src={empresa.logotipo} alt="Logotipo de la empresa" className="h-full w-full object-contain" />) : (
+                                            <img src={empresa.logotipo} alt={`Logotipo de ${empresa.datos.nombreComercial}`} className="h-full w-full object-contain" />) : (
                                             <p className="text-[var(--button-text-color)]">
                                                 Logotipo
                                             </p>
                                         )}
                                     </div>
 
-                                    <label className="cursor-pointer rounded-lg bg-[var(--searching-background-color)] px-6 py-2 font-semibold text-[var(--button-text-color)]">
+                                    <label className="cursor-pointer rounded-lg bg-[var(--searching-background-color)] px-6 py-3 font-semibold text-[var(--button-text-color)] focus-within:outline-2 focus-within:outline-offset-2">
                                         Subir logotipo
-                                        <input type="file" accept=".png,.jpg,.jpeg" className="sr-only" onChange={(event) => subirLogotipo(empresa.id, event.target.files?.[0])} />
+                                        <span className="sr-only">de {empresa.datos.nombreComercial}</span>
+                                        <input type="file"  accept=".png,.jpg,.jpeg" className="sr-only" onChange={(event) => subirLogotipo(empresa.id, event.target.files?.[0])} />
                                     </label>
 
                                     <p className="text-sm">
-                                        Archivo PNG o JPG máximo 100 KB
+                                        Archivo PNG o JPG máximo 500 KB
                                     </p>
                                 </div>
 
@@ -112,7 +128,7 @@ export default function EmpresasRegistradas() {
                                     </div>
 
                                     <p className="text-sm leading-relaxed">
-                                        <a className="font-bold">Aviso:</a>{" "}
+                                        <strong className="font-bold">Aviso:</strong>{" "}
                                         El RFC que registrará será verificado.
                                         En caso de que no sea válido, su código QR
                                         devolverá un resultado NO EXITOSO.
@@ -122,35 +138,35 @@ export default function EmpresasRegistradas() {
                                 {/* Documentos */}
                                 <div className="flex flex-col gap-5">
                                     <button type="button" disabled
-                                        className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60">
+                                        className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2">
                                         Guía de integración del QR
                                     </button>
 
                                     <button type="button" disabled
-                                        className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60">
+                                        className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2">
                                         Manual de identidad del Buen Fin
                                     </button>
 
                                     <button type="button" disabled
-                                        className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60">
+                                        className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2">
                                         Descargar código QR
                                     </button>
                                 </div>
                             </div>
 
                             {/* Acciones */}
-                            <div className="mt-10 grid gap-6 sm:grid-cols-3">
-                                <button type="button" onClick={() => {setEditando(empresa); setAbierto(true);}} className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)]">
+                            <div className="mt-10 grid gap-6 lg:grid-cols-3">
+                                <button type="button" aria-label={`Editar empresa ${empresa.datos.nombreComercial}`} onClick={() => {setEditando(empresa); setAbierto(true);}} className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                                     Editar Empresa
                                 </button>
 
-                                <button type="button" onClick={() => navigate("/sucursales", { state: { empresa: empresa.datos.nombreComercial }})}
-                                    className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)]">
+                                <button type="button" aria-label={`Ver sucursales de ${empresa.datos.nombreComercial}`} onClick={() => navigate("/sucursales", { state: { empresa: empresa.datos.nombreComercial }})}
+                                    className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                                     Sucursales
                                 </button>
 
-                                <button type="button" onClick={() => setEmpresas(empresas.map((item) => item.id === empresa.id ? { ...item, activa: !item.activa }: item))}
-                                    className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)]">
+                                <button type="button" aria-label={`${empresa.activa ? "Inactivar" : "Reactivar"} empresa ${empresa.datos.nombreComercial}`} onClick={() => setEmpresas(empresas.map((item) => item.id === empresa.id ? { ...item, activa: !item.activa }: item))}
+                                    className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                                     {empresa.activa ? "Inactivar Empresa" : "Reactivar Empresa"}
                                 </button>
                             </div>
@@ -164,9 +180,9 @@ export default function EmpresasRegistradas() {
             <Footer />
 
             <Dialog open={abierto} onOpenChange={setAbierto}>
-                <DialogContent className="max-h-[90vh] overflow-y-auto p-0 sm:max-w-2xl">
+                <DialogContent className="max-h-[90dvh] w-[calc(100vw-2rem)] overflow-y-auto p-0 sm:max-w-2xl">
                     <DialogTitle className="sr-only">
-                        Registro de empresa
+                        {editando ? "Editar empresa" : "Registrar nueva empresa"}
                     </DialogTitle>
 
                     <RegistroEmpresa key={editando?.id ?? "nueva"} inicial={editando?.datos} onCancelar={() => { setAbierto(false); setEditando(null); }} onGuardar={guardarEmpresa}/>
