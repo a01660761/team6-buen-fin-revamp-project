@@ -1,5 +1,10 @@
 /*
 * ChatGPT-6.1 Sol was used to review and edit this code.
+* This module handles the product-related routes and operations in the 
+* backend. It includes functions for validating product data, creating 
+* and updating products, and handling queries for retrieving product 
+* information.
+* 
 */
 
 const express = require("express");
@@ -125,8 +130,8 @@ function validateProductCreation(body, user) {
             throw invalid("imageUrl", "Invalid image URL.");
         }
 
-        if (!["http:", "https:"].includes(url.protocol) || !url.hostname 
-        || url.username || url.password) {
+        if (!["http:", "https:"].includes(url.protocol) || !url.hostname || 
+        url.username || url.password) {
             throw invalid("imageUrl", "Invalid image URL.");
         } // the URL must use http or https, have a hostname, and not contain username or password
 
@@ -737,4 +742,5 @@ async function ensureProductIndexes(db) {
     await products.createIndex({ category: 1 });
 } // create indexes on the companyId and category fields to improve query performance
 
-module.exports = { createProductRouter, ensureProductIndexes };
+module.exports = { createProductRouter, ensureProductIndexes, invalid, text, 
+    parseId, requireManagedCompany };
