@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node --env-file=.env index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "create-admin": "node --env-file=.env scripts/create-admin.js"
+    "create-admin": "node --env-file=.env scripts/create-admin.js",
+    "seed:demo": "node --env-file=.env scripts/seed-demo.js"
   },
   "dependencies": {
     "argon2": "^0.45.1",

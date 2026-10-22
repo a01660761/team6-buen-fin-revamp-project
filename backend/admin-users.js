@@ -1,5 +1,11 @@
 /*
 * ChatGPT-6.1 Sol was used to review and edit this code.
+* This module is for managing administrative user operations in the site's backend.
+* It provides routes for querying and retrieving user data, with support
+* for filtering, sorting, and pagination. The module ensures that sensitive information
+* is excluded from responses and that only authenticated administrators
+* can access these endpoints.
+*
 */
 
 const express = require("express");
@@ -161,7 +167,7 @@ function createAdminUserRouter({
 }) { // with dependency injection for database access and authentication middleware
     const router = express.Router();
 
-    router.use(requireAuthentication, requireAdministrator); // we pass down that dependency injection 
+    router.use(requireAuthentication, requireAdministrator); // we pass down that dependency injection
 
     const projection = {
         passwordHash: 0,
