@@ -20,6 +20,7 @@ const fs = require("node:fs");
 
 const { HttpError, createAccount, createAuth, publicUser } = require("./auth.js"); // import custom authentication utilities
 const { createCompanyRouter, ensureCompanyIndexes } = require("./companies.js"); // import the company router for handling company related routes
+const { createProductRouter, ensureProductIndexes } = require("./products.js"); // import the product router for handling product related routes
 
 const app = express();
 
@@ -82,6 +83,11 @@ app.use(createCompanyRouter({
     getDb: () => db,
     requireAuthentication,
 })); // use the company router for handling company related routes, passing in the database and authentication middleware
+
+app.use(createProductRouter({
+    getDb: () => db,
+    requireAuthentication,
+})); // use the product router for handling product related routes, passing in the database and authentication middleware
 
 async function connectToDB() {
     client = new MongoClient(MONGODB_URI, {
@@ -274,6 +280,8 @@ async function start() {
 
     await connectToDB();
     await ensureCompanyIndexes(db); // ensure that the necessary indexes for the companies collection are created in the database
+    await ensureProductIndexes(db); // ensure that the necessary indexes for the products collection are created in the database
+    
 	auth = await createAuth({
         db,
         jwtSecret: JWT_SECRET,
