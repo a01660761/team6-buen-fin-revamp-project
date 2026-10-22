@@ -1,0 +1,293 @@
+import { useState } from 'react';
+
+type Props = {
+    onCancelar?: () => void;
+    onGuardar?: (datos: Record<string, string>) => void;
+    inicial?: Record<string, string>;
+};
+
+export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
+    const [tieneRedes, setTieneRedes] = useState(inicial?.redesSociales ==="si");
+    const [categoria, setCategoria] = useState(inicial?.categorias ?? "");
+
+    return (
+        <form
+            onSubmit={(event) => {
+                event.preventDefault();
+                const datos = Object.fromEntries(
+                    new FormData(event.currentTarget).entries()
+                ) as Record<string, string>;
+                onGuardar?.(datos);
+            }}
+            className="flex flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-8 text-[var(--button-text-color)]"
+        >
+            <h2 className="text-center text-3xl font-bold">
+                {inicial ? "Editar Empresa" : "Agregar nueva empresa"}
+            </h2>
+
+            <hr className="border-[var(--card-bottom-color)]" />
+
+            <p className="font-semibold">* Campos requeridos</p>
+
+            <div className="grid gap-2">
+                <label htmlFor="nombreComercial" className="font-bold">
+                    Nombre Comercial *
+                </label>
+                <input type="text" id="nombreComercial" name="nombreComercial" defaultValue={inicial?.nombreComercial} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+            </div>
+            
+            <div className="grid gap-2">
+                <label htmlFor="tipoPersona" className="font-bold">
+                    Tipo de contribuyente *
+                </label>
+                <select id="tipoPersona" name="tipoPersona" defaultValue={inicial?.tipoPersona ?? ""} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3">
+                    <option value="" disabled>Selecciona una opción</option>
+                    <option value="fisica">Persona física</option>
+                    <option value="moral">Persona moral</option>
+                </select>
+
+                <label htmlFor="razonSocial" className="font-bold">
+                    Nombre o Razón Social *
+                </label>
+                <input type="text" id="razonSocial" name="razonSocial" placeholder="Como aparece en tu Constancia de Situación Fiscal" defaultValue={inicial?.razonSocial} required maxLength={200}
+                    className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                <details className="text-sm">
+                    <summary className="cursor-pointer font-semibold underline underline-offset-4">
+                        ¿Qué debo escribir aquí?
+                    </summary>
+                    <p className="mt-2">
+                        Ingresa tu nombre completo si eres persona física, o la denominación o razón social registrada si eres persona moral.
+                        <b>Utiliza exactamente los datos de tu Constancia de Situación Fiscal.</b>
+                    </p>
+                </details>
+            </div>
+
+            <div className="grid gap-2">
+                <label htmlFor="rfc" className="font-bold">RFC *</label>
+                <input type="text" id="rfc" name="rfc" defaultValue={inicial?.rfc} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+            </div>
+
+            <div className="grid gap-2">
+                <label htmlFor="direccion" className="font-bold">
+                    Dirección *
+                </label>
+                <input type="text" id="direccion" name="direccion" defaultValue={inicial?.direccion} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+            </div>
+
+            <div className="grid gap-2">
+                <label htmlFor="colonia" className="font-bold">
+                    Colonia o Localidad *
+                </label>
+                <input type="text" id="colonia" name="colonia" defaultValue={inicial?.colonia} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-2">
+                    <label htmlFor="entidad" className="font-bold">
+                        Entidad *
+                    </label>         
+                    <select id="entidad" name="entidad"
+                        defaultValue={inicial?.entidad ?? ""} required
+                        className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3">
+                        <option value="" disabled>Selecciona una entidad</option>
+                        <option value="Aguascalientes">Aguascalientes</option>
+                        <option value="Baja California">Baja California</option>
+                        <option value="Baja California Sur">Baja California Sur</option>
+                        <option value="Campeche">Campeche</option>
+                        <option value="Chiapas">Chiapas</option>
+                        <option value="Chihuahua">Chihuahua</option>
+                        <option value="Ciudad de México">Ciudad de México</option>
+                        <option value="Coahuila">Coahuila</option>
+                        <option value="Colima">Colima</option>
+                        <option value="Durango">Durango</option>
+                        <option value="Estado de México">Estado de México</option>
+                        <option value="Guanajuato">Guanajuato</option>
+                        <option value="Guerrero">Guerrero</option>
+                        <option value="Hidalgo">Hidalgo</option>
+                        <option value="Jalisco">Jalisco</option>
+                        <option value="Michoacán">Michoacán</option>
+                        <option value="Morelos">Morelos</option>
+                        <option value="Nayarit">Nayarit</option>
+                        <option value="Nuevo León">Nuevo León</option>
+                        <option value="Oaxaca">Oaxaca</option>
+                        <option value="Puebla">Puebla</option>
+                        <option value="Querétaro">Querétaro</option>
+                        <option value="Quintana Roo">Quintana Roo</option>
+                        <option value="San Luis Potosí">San Luis Potosí</option>
+                        <option value="Sinaloa">Sinaloa</option>
+                        <option value="Sonora">Sonora</option>
+                        <option value="Tabasco">Tabasco</option>
+                        <option value="Tamaulipas">Tamaulipas</option>
+                        <option value="Tlaxcala">Tlaxcala</option>
+                        <option value="Veracruz">Veracruz</option>
+                        <option value="Yucatán">Yucatán</option>
+                        <option value="Zacatecas">Zacatecas</option>
+                    </select>
+                </div>
+
+                <div className="grid gap-2">
+                    <label htmlFor="codigoPostal" className="font-bold">
+                        Código Postal *
+                    </label>
+                    <input type="text" id="codigoPostal" name="codigoPostal" defaultValue={inicial?.codigoPostal} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                </div>
+            </div>
+
+            <div className="grid gap-2">
+                <label htmlFor="municipio" className="font-bold">
+                    Municipio *
+                </label>
+                <input type="text" id="municipio" name="municipio" defaultValue={inicial?.municipio} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-2">
+                    <label htmlFor="telefono" className="font-bold">
+                        Teléfono *
+                    </label>
+                    <input type="tel" id="telefono" name="telefono" defaultValue={inicial?.telefono} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                </div>
+
+                <div className="grid gap-2">
+                    <label htmlFor="correo" className="font-bold">
+                        Correo electrónico *
+                    </label>
+                    <input type="email" id="correo" name="correo" defaultValue={inicial?.correo} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                </div>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-2">
+                    <label htmlFor="sucursales" className="font-bold">
+                        Sucursales *
+                    </label>
+                    <input type="number" min="0" id="sucursales" name="sucursales" defaultValue={inicial?.sucursales} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                </div>
+
+                <div className="grid gap-2">
+                    <label htmlFor="organismo" className="font-bold">
+                        Organismo Empresarial 
+                    </label>
+                    <select id="organismo" name="organismo"
+                        defaultValue={inicial?.organismo ?? ""}
+                        className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3">
+                        <option value="">Selecciona una opción</option>
+                        <option value="Ninguno">No pertenezco a ninguno</option>
+                        <option value="CANACO">CANACO</option>
+                        <option value="CANACINTRA">CANACINTRA</option>
+                        <option value="COPARMEX">COPARMEX</option>
+                        <option value="Otro">Otro organismo</option>
+                    </select>
+                </div>
+            </div>
+
+            <label className="flex items-center gap-3 text-sm">
+                <input type="checkbox" name="notificaciones" value="si" defaultChecked={inicial?.notificaciones === "si"} />
+                ¿Quiere que se le notifique a la cámara o asociación a la que pertenece?
+            </label>
+
+            <div className="grid gap-2">
+                <p className="font-bold">
+                    ¿La empresa cuenta con redes sociales?
+                </p>
+                <label className="flex gap-3">
+                    <input type="radio" name="redesSociales" value="si" defaultChecked={inicial?.redesSociales === "si"}
+                    onChange = {()=> setTieneRedes(true)}/>
+                    Sí
+                </label>
+                <label className="flex gap-3">
+                    <input type="radio" name="redesSociales" value="no" defaultChecked={!inicial || inicial.redesSociales === "no"} 
+                    onChange={()=> setTieneRedes(false)}/>
+                    No
+                </label>
+
+                {tieneRedes && (
+                    <div className='grid gap-2'>
+                        <label htmlFor='linkRedes' className='font-bold'>
+                            Enlace de la red social *
+                        </label>
+                        <input type='url' id='linkRedes' name='linkRedes' placeholder='https://www.instagram.com/...' defaultValue={inicial?.linkRedes} required className='w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3'/>
+                    </div>
+                )}
+
+            </div>
+
+            <div className="grid gap-2">
+                <label htmlFor="descripcion" className="font-bold">
+                    Descripción *
+                </label>
+                <textarea id="descripcion" name="descripcion" rows={5} defaultValue={inicial?.descripcion} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+            </div>
+
+            <div className="grid gap-2">
+                <p className="font-bold">Tipo de Comercio *</p>
+                <label className="flex gap-3">
+                    <input type="radio" name="tipoComercio" value="fisica" defaultChecked={inicial?.tipoComercio === "fisica"} required />
+                    Tienda física
+                </label>
+                <label className="flex gap-3">
+                    <input type="radio" name="tipoComercio" value="virtual" defaultChecked={inicial?.tipoComercio === "virtual"} />
+                    Tienda virtual
+                </label>
+                <label className="flex gap-3">
+                    <input type="radio" name="tipoComercio" value="ambas" defaultChecked={inicial?.tipoComercio === "ambas"} />
+                    Ambas
+                </label>
+            </div>
+
+            <div className="grid gap-2">
+                <label htmlFor="categorias" className="font-bold">
+                    Categorías *
+                </label>
+                <select id="categorias" name="categorias"
+                    value={categoria} onChange={(event)=> setCategoria(event.target.value)}
+                    className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3">
+                    <option value="" disabled>Selecciona una categoría</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Ropa">Ropa</option>
+                    <option value="Hogar">Hogar</option>
+                    <option value="Alimentos">Alimentos</option>
+                    <option value="Servicios">Servicios</option>
+                    <option value="Otros">Otros</option>
+                </select>
+                {categoria === "Otros" &&(
+                    <div className='grid gap-2'>
+                        <label htmlFor='categoriaOtra' className='font-bold'>
+                            Especifica la categoría * 
+                        </label>
+                        <input type='text' id='categoriaOtra' name='categoriaOtra' placeholder='Ej. Deportes' defaultValue={inicial?.categoriaOtra} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3"/>
+                    </div>
+                )}
+            </div>
+
+            <div className="grid gap-2">
+                <label htmlFor="sitioWeb" className="font-bold">
+                    Sitio Web
+                </label>
+                <input type="url" id="sitioWeb" name="sitioWeb" defaultValue={inicial?.sitioWeb} placeholder="https://www.miempresa.com.mx" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+            </div>
+
+            <label className="flex items-center gap-3">
+                <input type="checkbox" name="mipyme" value="si" defaultChecked={inicial?.mipyme === "si"} />
+                ¿Te consideras MIPYME?
+            </label>
+
+            <label className="flex items-center gap-3 text-sm font-semibold">
+                <input type="checkbox" name="aceptaTerminos" value="si" defaultChecked={Boolean(inicial)} required />
+                Acepto los términos y condiciones y el aviso de privacidad.
+            </label>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+                <button type="button" onClick={onCancelar}
+                    className="rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                    Regresar
+                </button>
+
+                <button type="submit"
+                    className="rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)]">
+                    Guardar Empresa
+                </button>
+            </div>
+        </form>
+    );
+}
