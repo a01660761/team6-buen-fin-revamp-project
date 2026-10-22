@@ -433,6 +433,18 @@ const spanishMessages: TranslationMessages = {
                 websiteUrl: "Sitio web",
             },
         },
+
+        vacancies: {
+            name: "Vacante |||| Vacantes",
+            fields: {
+                id: "ID",
+                position: "Puesto",
+                type: "Tipo",
+                description: "Descripción",
+                location: "Ubicación",
+                applicationUrl: "Enlace para aplicar",
+            },
+        },
     },
 
     dashboard: {
@@ -468,6 +480,26 @@ const spanishMessages: TranslationMessages = {
         offers_empty: "No encontramos ofertas con esa búsqueda.",
         valid_until: "Válida hasta el",
         view_offer: "Ver oferta",
+        offer_back: "Volver al comercio",
+        offer_company: "Comercio",
+        offer_validity: "Vigencia",
+        offer_terms: "Términos y condiciones",
+        offer_external_notice: "Este enlace abre el sitio del vendedor en otra pestaña.",
+        offer_go_seller: "Ir al sitio del vendedor",
+        offer_no_link: "El vendedor aún no proporcionó un enlace para esta oferta.",
+        vacancies_title: "Vacantes de empleo",
+        search_vacancy: "Buscar vacante",
+        vacancy_type: "Tipo de vacante",
+        vacancy_temporary: "Temporal",
+        vacancy_permanent: "Permanente",
+        vacancy_company: "Comercio",
+        vacancy_location: "Ubicación",
+        vacancy_empty: "No encontramos vacantes con esa búsqueda.",
+        vacancy_error: "No pudimos cargar las vacantes. Intenta de nuevo más tarde.",
+        vacancy_back: "Volver a las vacantes",
+        vacancy_apply: "Aplicar en el sitio del comercio",
+        vacancy_external_notice: "Este enlace abre el sitio del comercio en otra pestaña. En este portal no se pide CV.",
+        vacancy_no_link: "El comercio aún no proporcionó un enlace para aplicar.",
     },
 };
 
