@@ -248,11 +248,22 @@ as parallel configuration aliases.
 
 ### Authentication transition
 
-Environment configuration does not complete authentication or authorization.
+The backend implements business registration, credential verification,
+JWT authentication, current database role checks, and logout invalidation.
 
-The legacy Authentication header remains temporarily.
-The target Authorization: Bearer contract, roles, ownership checks, and
-logout invalidation belong to US-04.1 and US-04.2.
+Protected requests use Authorization: Bearer <token>.
+JWTs expire after 900 seconds. Logout increments tokenVersion and
+invalidates all previously issued tokens for that account.
+
+The legacy /Productos routes remain temporarily administrator-only.
+Companies, products, offers, and vacancies implement private CRUD with
+ownership checks. Administrators can manage all records.
+
+Administrators can change isHidden on companies, products, and offers.
+Public endpoints enforce visibility, parent visibility, and offer validity.
+
+Frontend authentication integration remains pending under US-04.2.
+Legacy usuarios accounts are not migrated automatically to users.
 
 ### Local transport
 
@@ -290,3 +301,135 @@ Open findings:
 
 These checks do not establish complete CRUD, authorization, accessibility,
 performance, or release readiness.
+
+## 9. Backend authentication validation — US-04.1
+
+Local verification:
+
+| Scenario | Result |
+| --- | --- |
+| Valid business registration | 201 |
+| Duplicate normalized email | 409 |
+| Invalid registration fields or submitted role | 400 |
+| Valid login | 200 |
+| Incorrect password or nonexistent account | Same generic 401 |
+| Identity request without authentication | 401 |
+| Identity request with valid token | 200, sanitized user |
+| Invalid token | 401 |
+| Business access to administrator-only Products | 403 |
+| Logout | 204, empty body |
+| Reuse of revoked token | 401 |
+| Local administrator creation | Successful |
+| Administrator login and protected Product listing | 200 |
+
+Run administrator provisioning from backend/ using npm run create-admin.
+Set ADMIN_EMAIL, ADMIN_FIRST_NAME, ADMIN_LAST_NAME, and ADMIN_PASSWORD
+in the current shell before executing it.
+
+The script rejects duplicate emails and does not change existing roles!
+
+The resource APIs are implemented. Frontend integration, browser-based
+end-to-end validation, and release verification remain pending.
+
+## 10. Backend integration handoff
+
+Use the API contract and data model linked at the beginning of this guide
+for request fields and validation rules.
+
+| Purpose | Routes | Access |
+| --- | --- | --- |
+| Registration and login | POST /registrarse, POST /login | Public |
+| Current identity and logout | GET /users/me, POST /logout | Authenticated |
+| User listing and detail | GET /users, GET /users/:id | Administrator |
+| Resource management | /companies, /products, /offers, /vacancies | Owner or administrator |
+| Public listings and details | /public/companies, /public/products, /public/offers, /public/vacancies | Public |
+
+Private resource routes support GET list/detail, POST, PUT, and DELETE.
+PUT accepts partial updates. DELETE deactivates the record.
+
+Send Authorization: Bearer <token> on protected requests.
+Tokens expire after 900 seconds.
+
+List responses contain an array. Paginated lists expose X-Total-Count,
+which contains the filtered total before pagination.
+Use _start=0&_end=1 when only a dashboard count is needed.
+
+IDs and reference fields are strings. Monetary values use priceCents
+and currency MXN.
+
+Business accounts manage their own companies and associated resources.
+Administrator user reads support company owner selection.
+
+Public visibility depends on the resource and its parent records.
+Offers must also be within their validity period.
+Vacancies use isActive and do not have an isHidden field.
+
+Each developer must configure their own environment and database.
+Pulling the repository does not copy local accounts or demonstration data.
+
+## 11. Local demonstration data
+
+Run these commands from backend/, with the backend already running
+in another terminal using the local HTTP configuration.
+
+An administrator account must already exist. See section 9 for
+administrator provisioning.
+
+Set the existing administrator email:
+
+```bash
+export ADMIN_EMAIL="your-admin@example.com"
+```
+
+Read and export its existing password:
+
+```bash
+read -r -s -p "Administrator password: " ADMIN_PASSWORD
+printf '\n'
+export ADMIN_PASSWORD
+```
+
+Choose a 12–128-character password for the demo representative.
+On subsequent executions, enter the same password:
+
+```bash
+read -r -s -p "Demo representative password: " DEMO_PASSWORD
+printf '\n'
+export DEMO_PASSWORD
+```
+
+Prepare the demonstration records:
+
+```bash
+npm run seed:demo
+```
+
+The script creates or updates:
+
+- The business account demo.representante@example.com.
+- One fictitious company.
+- One product belonging to that company.
+- One offer linked to the product.
+- One vacancy belonging to the company.
+
+Repeated executions reuse the demonstration resource IDs, restore their
+active/visible state, and renew the offer validity for seven days.
+
+Keep [T6_DEMO_V1] at the beginning of the demonstration descriptions.
+The script uses that marker to identify its records.
+
+The script does not change an existing account password.
+If interrupted, correct the reported problem and run it again.
+Completed operations remain saved.
+
+Seller and application links use example.com as demonstration destinations.
+These records do not represent real businesses, offers, or vacancies.
+
+Clear the password variables after use:
+
+```bash
+unset ADMIN_PASSWORD DEMO_PASSWORD
+```
+
+Each developer runs this command against their own local backend/database.
+Git does not distribute MongoDB records.

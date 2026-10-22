@@ -11,12 +11,19 @@ The following changes were made:
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const cors = require("cors");
-const argon2 = require("argon2");
-const jwt = require("jsonwebtoken");
-// Importing necessary modules for HTTP and HTTPS servers, as well as file system operations.
+// const argon2 = require("argon2"); --since we are now using the auth.js module for authentication
+// const jwt = require("jsonwebtoken"); -- also handled in auth.js
+// importing necessary modules for HTTP and HTTPS servers, as well as file system operations.
 const http = require("node:http");
 const https = require("node:https");
 const fs = require("node:fs");
+
+const { HttpError, createAccount, createAuth, publicUser } = require("./auth.js"); // import custom authentication utilities
+const { createCompanyRouter, ensureCompanyIndexes } = require("./companies.js"); // import the company router for handling company related routes
+const { createProductRouter, ensureProductIndexes } = require("./products.js"); // import the product router for handling product related routes
+const { createOfferRouter, ensureOfferIndexes } = require("./offers.js"); // import the offer router for handling offer related routes
+const { createVacancyRouter, ensureVacancyIndexes } = require("./vacancies.js"); // import the vacancy router for handling vacancy related routes
+const { createAdminUserRouter } = require("./admin-users.js"); // import the admin user router for handling admin user related routes
 
 const app = express();
 
@@ -57,14 +64,43 @@ if (HTTPS_ENABLED === "true" &&
 
 let db;
 let client;
+let auth;
+
+// two middleware functions are defined to enforce authentication
+// and role-based access control on specific routes
+const requireAuthentication = (req, res, next) =>
+    auth.requireAuth(req, res, next);
+
+const requireAdministrator = (req, res, next) =>
+    auth.requireRole("admin")(req, res, next);
 
 app.use(cors({
     origin: CORS_ORIGIN,
     exposedHeaders: ["X-Total-Count"],
 }));
-// Enable CORS for the specified origin and expose the X-Total-Count header.
+// enable CORS for the specified origin and expose the X-Total-Count header
 
 app.use(express.json());
+
+app.use(createCompanyRouter({
+    getDb: () => db,
+    requireAuthentication,
+})); // use the company router for handling company related routes, passing in the database and authentication middleware
+
+app.use(createProductRouter({
+    getDb: () => db,
+    requireAuthentication,
+})); // use the product router for handling product related routes, passing in the database and authentication middleware
+
+app.use(createOfferRouter({
+    getDb: () => db,
+    requireAuthentication,
+})); // use the offer router for handling offer related routes, passing in the database and authentication middleware
+
+app.use(createVacancyRouter({
+    getDb: () => db,
+    requireAuthentication,
+})); // use the vacancy router for handling vacancy related routes, passing in the database and authentication middleware
 
 async function connectToDB() {
     client = new MongoClient(MONGODB_URI, {
@@ -130,33 +166,46 @@ async function deleteData(collection, id, req, res){
 async function createData(collection, req, res){
 	let valores=req.body;
 	valores["id"]=Number(valores["id"]);
-	let data=db.collection(collection).insertOne(valores);
+	let data = await db.collection(collection).insertOne(valores); // insert the new document into the specified collection
 	res.json(data);
 
 }
 
-app.get("/Productos", async (req,res)=>{
-	try{
-		let token=req.get("Authentication");
-		jwt.verify(token, JWT_SECRET); // Verify the JWT token for authentication; previously, this was done with a hardcoded secret, now it uses the environment variable.
+app.get(
+    "/users/me",
+    requireAuthentication,
+    (req, res) => {
+        res.json(publicUser(req.auth.user));
+    }
+); // route to get the authenticated user's public information, using the requireAuthentication middleware to ensure the user is logged in
 
-		if("_sort" in req.query){
-			await getList("productos", req, res);
-		}
+app.use(
+    "/users", 
+    createAdminUserRouter({
+    getDb: () => db,
+    requireAuthentication,
+    requireAdministrator
+})); // use the admin user router for handling admin user related routes, passing in the database and authentication middleware
 
-		else if("id" in req.query){
-			await getMany("productos", req, res);
-		}
+app.use(
+    "/Productos",
+    requireAuthentication,
+    requireAdministrator
+); // middleware to ensure that only authenticated users with the 'admin' role can access the '/Productos' routes
 
-		else{
-			await getManyReference("productos", req, res);
-		}
-	}
+app.get("/Productos", async (req, res) => {
+    if ("_sort" in req.query) {
+        await getList("productos", req, res);
+    }
 
-	catch {
-		res.sendStatus(401);
-	}
-});
+    else if ("id" in req.query) {
+        await getMany("productos", req, res);
+    }
+
+    else {
+        await getManyReference("productos", req, res);
+    }
+}); // route to get products, with different behaviors based on query parameters: sorting, filtering by IDs, or getting references
 
 app.get("/Productos/:id", async(req, res)=>{
 	await getOne("productos", Number(req.params.id), req, res);
@@ -175,41 +224,71 @@ app.post("/Productos/", async(req, res)=>{
 });
 
 
-app.post("/registrarse", async(req, res)=>{
-	let user=req.body.username;
-	let pass=req.body.password;
+app.post("/registrarse", async (req, res) => {
+    const user = await createAccount(
+        db,
+        req.body,
+        "business"
+    ); // now it uses the createAccount function from auth.js to handle user registration, which includes validation and password hashing
 
-	let data=await db.collection("usuarios").findOne({"usuario":user});
-
-	if (data==null){
-		const hash=await argon2.hash(pass, {type: argon2.argon2id, memoryCost: 64*1024, timeCost:3, parallelism:1, saltLength:128});
-		let usuarioAgregar={"usuario": user, "password": hash}
-		data=await db.collection("usuarios").insertOne(usuarioAgregar);
-		res.sendStatus(201);
-	}
-
-	else{
-		res.sendStatus(403);
-	}
+    res.status(201).json(user); // respond with the created user object, which includes public information but excludes sensitive data like the password hash
 });
 
-app.post("/login", async (req, res)=>{
-	let user=req.body.username;
-	let pass=req.body.password;
-	let data=await db.collection("usuarios").findOne({"usuario":user});
-	if(data==null){
-		res.sendStatus(401);
-	}
+// instead of handling login directly in the route, we now delegate it
+// to the auth.login function, which encapsulates the logic for verifying
+// credentials and generating JWTs
+app.post("/login", async (req, res) => {
+    const session = await auth.login(req.body);
 
-	else if(await argon2.verify(data.password, pass)){
-		let token=jwt.sign({usuario: data.usuario}, JWT_SECRET, {expiresIn:900});
-		res.json({"token": token, "id":data.usuario});
-	}
+    res.json(session); // respond with the session object, which includes the JWT and any other relevant session information
+});
 
-	else{
-		res.sendStatus(401);
-	}
-})
+app.post("/logout", requireAuthentication, async (req, res) => {
+    await auth.logout(req.auth);
+
+    res.status(204).end(); // respond with a 204 No Content status to indicate successful logout without returning any content
+
+}); // route to handle user logout, which requires the user to be authenticated and calls the auth.logout function to invalidate the session or token
+
+app.use((error, req, res, next) => {
+    if (res.headersSent) {
+        return next(error);
+    } // check if the response headers have already been sent; if so, pass the error to the next middleware
+
+    if (error instanceof HttpError) {
+        const body = {
+            message: error.message,
+            code: error.code,
+        };
+
+        if (error.errors !== undefined) {
+            body.errors = error.errors;
+        } // include any additional error details if they exist
+
+        return res.status(error.status).json(body);
+    }
+
+    if (error.type === "entity.parse.failed") {
+        return res.status(400).json({
+            message: "Invalid JSON body.",
+            code: "validation_error",
+        });
+    }
+
+    if (error.type === "entity.too.large") {
+        return res.status(413).json({
+            message: "Request body is too large.",
+            code: "payload_too_large",
+        });
+    }
+
+    console.error("An unexpected request error occurred.");
+
+    return res.status(500).json({
+        message: "An unexpected server error occurred.",
+        code: "internal_error",
+    });
+});
 
 
 async function start() {
@@ -218,9 +297,18 @@ async function start() {
             key: fs.readFileSync(process.env.TLS_KEY_PATH),
             cert: fs.readFileSync(process.env.TLS_CERT_PATH),
         }, app)
-        : http.createServer(app); // Refactored to use HTTPS if enabled, otherwise use HTTP.
+        : http.createServer(app); // Refactored to use HTTPS if enabled, otherwise use HTTP
 
     await connectToDB();
+    await ensureCompanyIndexes(db); // ensure that the necessary indexes for the companies collection are created in the database
+    await ensureProductIndexes(db); // ensure that the necessary indexes for the products collection are created in the database
+    await ensureOfferIndexes(db); // ensure that the necessary indexes for the offers collection are created in the database
+    await ensureVacancyIndexes(db); // ensure that the necessary indexes for the vacancies collection are created in the database
+    
+	auth = await createAuth({
+        db,
+        jwtSecret: JWT_SECRET,
+    }); // we now create an auth object using the createAuth function from auth.js, which encapsulates authentication logic and JWT handling
 
     await new Promise((resolve, reject) => {
         server.once("error", reject);
@@ -236,11 +324,18 @@ async function start() {
     );
 }
 
-start().catch(async () => {
+start().catch(async (error) => {
     console.error(
         "Backend startup failed. Check the environment, " +
         "MongoDB and TLS files."
     );
+
+	console.error("Failure type:", error.name);
+
+	console.error(
+		"Failure code:",
+		error.code ?? error.cause?.code ?? "not_available"
+	);
 
     if (client) {
         await client.close().catch(() => {});
