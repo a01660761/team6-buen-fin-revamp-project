@@ -255,9 +255,12 @@ Protected requests use Authorization: Bearer <token>.
 JWTs expire after 900 seconds. Logout increments tokenVersion and
 invalidates all previously issued tokens for that account.
 
-The legacy /Productos routes are temporarily administrator-only.
-Company ownership and the final Product CRUD contract remain pending
-under US-06.
+The legacy /Productos routes remain temporarily administrator-only.
+Companies, products, offers, and vacancies implement private CRUD with
+ownership checks. Administrators can manage all records.
+
+Administrators can change isHidden on companies, products, and offers.
+Public endpoints enforce visibility, parent visibility, and offer validity.
 
 Frontend authentication integration remains pending under US-04.2.
 Legacy usuarios accounts are not migrated automatically to users.
@@ -325,5 +328,41 @@ in the current shell before executing it.
 
 The script rejects duplicate emails and does not change existing roles!
 
-Frontend integration, Product CRUD corrections, and the remaining
-resource endpoints in the target API contract are separate pending work.
+The resource APIs are implemented. Frontend integration, browser-based
+end-to-end validation, and release verification remain pending.
+
+## 10. Backend integration handoff
+
+Use the API contract and data model linked at the beginning of this guide
+for request fields and validation rules.
+
+| Purpose | Routes | Access |
+| --- | --- | --- |
+| Registration and login | POST /registrarse, POST /login | Public |
+| Current identity and logout | GET /users/me, POST /logout | Authenticated |
+| User listing and detail | GET /users, GET /users/:id | Administrator |
+| Resource management | /companies, /products, /offers, /vacancies | Owner or administrator |
+| Public listings and details | /public/companies, /public/products, /public/offers, /public/vacancies | Public |
+
+Private resource routes support GET list/detail, POST, PUT, and DELETE.
+PUT accepts partial updates. DELETE deactivates the record.
+
+Send Authorization: Bearer <token> on protected requests.
+Tokens expire after 900 seconds.
+
+List responses contain an array. Paginated lists expose X-Total-Count,
+which contains the filtered total before pagination.
+Use _start=0&_end=1 when only a dashboard count is needed.
+
+IDs and reference fields are strings. Monetary values use priceCents
+and currency MXN.
+
+Business accounts manage their own companies and associated resources.
+Administrator user reads support company owner selection.
+
+Public visibility depends on the resource and its parent records.
+Offers must also be within their validity period.
+Vacancies use isActive and do not have an isHidden field.
+
+Each developer must configure their own environment and database.
+Pulling the repository does not copy local accounts or demonstration data.

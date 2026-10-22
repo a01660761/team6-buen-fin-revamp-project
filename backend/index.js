@@ -23,6 +23,7 @@ const { createCompanyRouter, ensureCompanyIndexes } = require("./companies.js");
 const { createProductRouter, ensureProductIndexes } = require("./products.js"); // import the product router for handling product related routes
 const { createOfferRouter, ensureOfferIndexes } = require("./offers.js"); // import the offer router for handling offer related routes
 const { createVacancyRouter, ensureVacancyIndexes } = require("./vacancies.js"); // import the vacancy router for handling vacancy related routes
+const { createAdminUserRouter } = require("./admin-users.js"); // import the admin user router for handling admin user related routes
 
 const app = express();
 
@@ -177,6 +178,14 @@ app.get(
         res.json(publicUser(req.auth.user));
     }
 ); // route to get the authenticated user's public information, using the requireAuthentication middleware to ensure the user is logged in
+
+app.use(
+    "/users", 
+    createAdminUserRouter({
+    getDb: () => db,
+    requireAuthentication,
+    requireAdministrator
+})); // use the admin user router for handling admin user related routes, passing in the database and authentication middleware
 
 app.use(
     "/Productos",
