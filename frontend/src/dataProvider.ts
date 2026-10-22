@@ -8,6 +8,7 @@ const publicAliases: Record<string, string> = {
   businesses: "public/companies",
   catalogProducts: "public/products",
   catalogOffers: "public/offers",
+  vacancies: "public/vacancies", // NUEVO (#43): vacantes públicas
 };
 
 const resolveResource = (resource: string): string =>

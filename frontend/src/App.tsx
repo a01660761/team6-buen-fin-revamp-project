@@ -47,6 +47,7 @@ import { dataProvider } from "./dataProvider"; // NUEVO
 import { i18nProvider } from "./i18nProvider"; // NUEVO
 import { BusinessList, BusinessShow } from "./business"; // NUEVO
 import { OfferShow } from "./offer"; // NUEVO (#37)
+import { VacancyList, VacancyShow } from "./vacancy"; // NUEVO (#43)
 import StoreIcon from "@mui/icons-material/Store"; // NUEVO
 //import Avisos from "@/pages/Avisos";
 
@@ -61,6 +62,7 @@ const Directorio = () => (
   >
     <Resource name="businesses" list={BusinessList} show={BusinessShow} icon={StoreIcon} />
     <Resource name="catalogOffers" show={OfferShow} /> {/* NUEVO (#37): detalle de oferta, sin listado ni menú */}
+    <Resource name="vacancies" list={VacancyList} show={VacancyShow} /> {/* NUEVO (#43): vacantes públicas, listado y detalle */}
   </Admin>
 );
 
