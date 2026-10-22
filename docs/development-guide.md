@@ -366,3 +366,70 @@ Vacancies use isActive and do not have an isHidden field.
 
 Each developer must configure their own environment and database.
 Pulling the repository does not copy local accounts or demonstration data.
+
+## 11. Local demonstration data
+
+Run these commands from backend/, with the backend already running
+in another terminal using the local HTTP configuration.
+
+An administrator account must already exist. See section 9 for
+administrator provisioning.
+
+Set the existing administrator email:
+
+```bash
+export ADMIN_EMAIL="your-admin@example.com"
+```
+
+Read and export its existing password:
+
+```bash
+read -r -s -p "Administrator password: " ADMIN_PASSWORD
+printf '\n'
+export ADMIN_PASSWORD
+```
+
+Choose a 12–128-character password for the demo representative.
+On subsequent executions, enter the same password:
+
+```bash
+read -r -s -p "Demo representative password: " DEMO_PASSWORD
+printf '\n'
+export DEMO_PASSWORD
+```
+
+Prepare the demonstration records:
+
+```bash
+npm run seed:demo
+```
+
+The script creates or updates:
+
+- The business account demo.representante@example.com.
+- One fictitious company.
+- One product belonging to that company.
+- One offer linked to the product.
+- One vacancy belonging to the company.
+
+Repeated executions reuse the demonstration resource IDs, restore their
+active/visible state, and renew the offer validity for seven days.
+
+Keep [T6_DEMO_V1] at the beginning of the demonstration descriptions.
+The script uses that marker to identify its records.
+
+The script does not change an existing account password.
+If interrupted, correct the reported problem and run it again.
+Completed operations remain saved.
+
+Seller and application links use example.com as demonstration destinations.
+These records do not represent real businesses, offers, or vacancies.
+
+Clear the password variables after use:
+
+```bash
+unset ADMIN_PASSWORD DEMO_PASSWORD
+```
+
+Each developer runs this command against their own local backend/database.
+Git does not distribute MongoDB records.
