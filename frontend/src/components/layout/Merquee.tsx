@@ -1,4 +1,3 @@
-/* */
 const folders = {
     comercios:Object.values(
         import.meta.glob<string>(

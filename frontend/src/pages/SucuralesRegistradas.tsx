@@ -6,6 +6,12 @@ import { Footer } from "@/components/layout/Footer";
 import { Nueva_Surcursal } from "@/components/layout/Sucursal_nueva";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
+/*
+ChatGPT-6 Luna se utilizo para lo siguiente:
+- Tailwind CSS (overflow), max-h-[90dvh] w-[calc(100vw-2rem)]
+- Se utlizo para corregir los errores de sintaxis (typos)
+*/
+
 type Sucursal = {
     id: number;
     datos: Record<string, string>;
@@ -35,14 +41,14 @@ export default function SucursalesRegistradas() {
         <div className="min-h-screen bg-[var(--background-color)] text-[var(--default-text-color-2)]">
             <Topbar />
 
-            <main className="w-full px-8 py-12 lg:px-12">
+            <main className="w-full px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
                 <div className="flex justify-end">
-                    <button type="button" onClick={() => { setEditando(null); setAbierto(true);}} className="rounded-lg bg-[var(--searching-background-color)] px-6 py-3 font-semibold text-[var(--button-text-color)]">
+                    <button type="button" onClick={() => { setEditando(null); setAbierto(true);}} className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-6 py-3 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                         Agregar nueva sucursal
                     </button>
                 </div>
 
-                <section className="mt-8 rounded-xl bg-[var(--section-background-color)] p-8 text-[var(--default-text-color)]">
+                <section className="mt-8 rounded-xl bg-[var(--section-background-color)] p-4 text-[var(--default-text-color)] sm:p-8">
                     <h1 className="text-3xl font-extrabold">
                         Sucursales
                     </h1>
@@ -55,7 +61,7 @@ export default function SucursalesRegistradas() {
 
                     <hr className="my-6" />
 
-                    <div className="grid grid-cols-3 gap-4 border-b pb-4 text-xl font-semibold">
+                    <div className="hidden grid-cols-3 gap-4 border-b pb-4 text-xl font-semibold lg:grid">
                         <p>Nombre</p>
                         <p>Teléfono</p>
                         <p>Acciones</p>
@@ -68,32 +74,37 @@ export default function SucursalesRegistradas() {
                     )}
 
                     {sucursales.map((sucursal) => (
-                        <div key={sucursal.id} className="grid grid-cols-3 items-center gap-4 border-b py-5">
-                            <p>{sucursal.datos.nombre_sucursal}</p>
-                            <p>{sucursal.datos.telefono}</p>
+                        <div key={sucursal.id} className="grid grid-cols-1 items-center gap-4 border-b py-5 lg:grid-cols-3">
+                            <p>
+                                <span className="font-semibold lg:hidden">Nombre:</span>
+                                {sucursal.datos.nombre_sucursal}
+                            </p>
+                            <p>
+                                <span className="font-semibold lg:hidden">Teléfono</span>
+                                {sucursal.datos.telefono}</p>
 
                             <div className="flex flex-wrap gap-3">
-                                <button type="button" onClick={() => { setEditando(sucursal); setAbierto(true); }} className="rounded-lg bg-[var(--searching-background-color)] px-4 py-2 font-semibold text-[var(--button-text-color)]">
+                                <button type="button" aria-label={`Editar sucursal ${sucursal.datos.nombre_sucursal}`} onClick={() => { setEditando(sucursal); setAbierto(true); }} className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-4 py-2 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                                     Editar
                                 </button>
 
-                                <button type="button" onClick={() => setSucursales(sucursales.filter((item) => item.id !== sucursal.id))} className="rounded-lg bg-[var(--searching-background-color)] px-4 py-2 font-semibold text-[var(--button-text-color)]">
+                                <button type="button" aria-label={`Eliminar sucursal ${sucursal.datos.nombre_sucursal}`} onClick={() => setSucursales(sucursales.filter((item) => item.id !== sucursal.id))} className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-4 py-2 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                                     Eliminar
                                 </button>
                             </div>
                         </div>
                     ))}
 
-                    <div className="mt-10 grid gap-6 sm:grid-cols-3">
-                        <button type="button" onClick={() => navigate("/empresas")} className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)]">
+                    <div className="mt-10 grid gap-6 lg:grid-cols-3">
+                        <button type="button" onClick={() => navigate("/empresas")} className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                             Regresar
                         </button>
 
-                        <button type="button" onClick={() => { setEditando(null); setAbierto(true); }} className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)]">
+                        <button type="button" onClick={() => { setEditando(null); setAbierto(true); }} className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
                             Agregar una sola sucursal
                         </button>
 
-                        <button type="button" disabled title="Pendiente de conectar la importación de Excel" className="rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60">
+                        <button type="button" disabled title="Pendiente de conectar la importación de Excel" className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2">
                             Agregar varias sucursales con Excel
                         </button>
                     </div>
@@ -105,11 +116,10 @@ export default function SucursalesRegistradas() {
             <Footer />
 
             <Dialog open={abierto} onOpenChange={setAbierto}>
-                <DialogContent className="max-h-[90vh] overflow-y-auto p-0 sm:max-w-2xl">
+                <DialogContent className="max-h-[90dvh] w-[calc(100vw-2rem)] overflow-y-auto p-0 sm:max-w-2xl">
                     <DialogTitle className="sr-only">
-                        Registro de sucursal
+                        {editando ? "Editar sucursal" : "Registrar nueva sucursal"}
                     </DialogTitle>
-
                     <Nueva_Surcursal key={editando?.id ?? "nueva"} inicial={editando?.datos} onCancelar={() => { setAbierto(false); setEditando(null);}} onGuardar={guardarSucursal}/>
                 </DialogContent>
             </Dialog>

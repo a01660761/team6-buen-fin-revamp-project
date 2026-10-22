@@ -1,6 +1,6 @@
 // import { useState } from 'react';
 import { Card,CardContent} from '@/components/ui/card';
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogTitle, DialogContent } from "@/components/ui/dialog";
 import { Files, MailOpen, Store, Settings, Scale, Mail} from "lucide-react";
 import {Topbar} from "@/components/layout/Topbar"; 
 import { Footer } from '@/components/layout/Footer';
@@ -12,11 +12,11 @@ export default function Comercios(){
         <div className= "min-h-screen bg-[var(--background-color)] text-[var(--default-text-color-2)]">
             <Topbar/>
     
-            <main className= "w-full px-8 py-12 lg:px-12">
+            <main className= "w-full px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
                 <h1 className='bg-[var(--card-title-background-color)] px-10 py-8 text-center text-3xl font-extrabold'> Comercios</h1>
                 
                 <section className="mt-8 grid items-center gap-10 lg:grid-cols-2">
-                    <img src={comercio_banner} alt="Comerciante preparando pedidos" className='h-[500px] w-full rounded-3xl object-cover lg:h-[550px]'/>
+                    <img src={comercio_banner} alt="Comerciante preparando pedidos" className='h-auto w-full rounded-3xl object-contain'/>
                     <div className='flex flex-col gap-5'>
                         <Card className='border-0 bg-[var(--card-middle-background-color)] shadow-none'>
                             <CardContent className='p-8 text-center'>
@@ -33,7 +33,10 @@ export default function Comercios(){
                                 }
                             />
 
-                            <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg bg-[var(--card-background-2)]">
+                            <DialogContent className="max-h-[90dvh] w-[calc(100vw-2rem)] overflow-y-auto bg-[var(--card-background-2)] sm:max-w-lg">
+                                <DialogTitle className='sr-only'>
+                                    Registro de usuario
+                                </DialogTitle>
                                 <Registro />
                             </DialogContent>
                         </Dialog>
@@ -121,9 +124,9 @@ export default function Comercios(){
                 </section>
                         
                 {/* Vende mejor */}
-                <section className='m-12'>
+                <section className='mt-12'>
                     <h2 className='bg-[var(--card-title-background-color)] px-10 py-5 text-3xl font-extrabold'>Vende mejor con El Buen Fin</h2>
-                    <div className='grid gap-10 p-8 sm:grid-cols-2'>
+                    <div className='grid gap-10 p-4 sm:grid-cols-2 sm:p-8'>
                         <div className='flex flex-col items-center gap-6 text-center'>
                             <Scale size={120}/>
                             <a href='https://www.elbuenfin.org/assets/documents/GUIA_DE_USO_DEL_CODIGO_QR.pdf' className='text-xl font-semibold hover:underline lg:text-2xl'>Revisa la guía de uso del QR obligatorio</a>

@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import { Login } from "../auth/Login";
 /*
-
 ChatGPT-6 Luna se utilizo para lo siguiente:
 - Tailwind CSS (sticky, shadow-sm, order-1, hidden, z-50focus-visible:outline-offset-4)
 - Se utilizo para renderizar las condiciones en React como "Type Props" y en Dialog

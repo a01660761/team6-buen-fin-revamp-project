@@ -42,8 +42,8 @@ import CompraSegura from "@/pages/CompraSegura";
 import AcercaBuenFin from "@/pages/AcercaBuenFin";
 import EmpresasRegistradas from "@/pages/EmpresasRegistradas";
 import SucursalesRegistradas from "@/pages/SucuralesRegistradas";
-//import Avisos from "@/pages/Avisos";
-//import Fraudes from "@pages/Fraudes"; 
+import BuscarEmpresas, { DetalleComercio } from "./pages/BusquedaEmpresa";//import Avisos from "@/pages/Avisos";
+import Fraudes from "@/pages/Fraudes"; 
 
 export default function App() {
   return (
@@ -52,10 +52,14 @@ export default function App() {
       <Route path="/acerca" element={<AcercaBuenFin />} />
       <Route path="/consumidores" element={<Consumidores />} />
       <Route path="/comercios" element={<Comercios />} />
-      <Route path="/preguntas-frecuentas"element={<PreguntasFrecuentes/>} />
+      <Route path="/preguntas-frecuentes"element={<PreguntasFrecuentes/>} />
       <Route path="/compra-segura" element={<CompraSegura />} />
       <Route path="/empresas" element={<EmpresasRegistradas />} />
-      <Route path="sucursales" element={<SucursalesRegistradas/>} />
+      <Route path="/sucursales" element={<SucursalesRegistradas/>} />
+      <Route path="/fraudes" element={<Fraudes/>} />
+      <Route path="/empresas-busqueda" element={<BuscarEmpresas/>} />
+      <Route path="/businesses" element={<BuscarEmpresas />}/>
+      <Route path="/businesses/:id/show" element={<DetalleComercio />}/>
       {/*<Route path="/avisos" element={<Avisos />} /> */}
     </Routes>
   );

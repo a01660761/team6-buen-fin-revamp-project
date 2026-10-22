@@ -11,7 +11,6 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 /*
 
 ChatGPT-6 Luna se utilizo para lo siguiente:
-- Tailwind CSS (overflow)
 - Se utlizo para corregir los errores de sintaxis (typos)
 */
 
@@ -51,7 +50,7 @@ export function Footer(){
                         <Avisos tipo='terminos'/>
                         <a href='https://www.elbuenfin.org/assets/documents/REGLAS_DE_OPERACION_BUEN_FIN.pdf' className='hover:underline'>Reglas de Operación</a>
                         <a href='https://www.elbuenfin.org/assets/documents/ANEXO_2_DERECHOS_Y_OBLIGACIONES_2026.pdf ' className='hover:underline'>Anexo 2. Derechos y obligaciones</a>
-                        <a href='/preguntas-frecuentas'>Preguntas frecuentes</a>
+                        <a href='/preguntas-frecuentes' className='hover:underline'>Preguntas frecuentes</a>
                     </div>
                 </div>
 

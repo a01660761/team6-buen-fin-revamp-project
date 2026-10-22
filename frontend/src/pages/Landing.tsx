@@ -252,7 +252,8 @@ export default function Landing() {
                                 <p className='text-sm font-semibold'>
                                     Mantente informado con las últimas novedades, comunicados y actualizaciones oficiales relacionadas con El Buen Fin.
                                 </p>
-                                <a href='/avisos' className="mt-auto rounded-full bg-[var(--section-background-color)] px-6 py-2 font-semibold text-[var(--default-text-color)]"> 
+                                {/* La pagina de avisos de momento no existe, para probar la funcionalidad regresará al inicio */}
+                                <a href='/' className="mt-auto rounded-full bg-[var(--section-background-color)] px-6 py-2 font-semibold text-[var(--default-text-color)]"> 
                                     Ver avisos y noticias
                                 </a>
                             </CardContent>
