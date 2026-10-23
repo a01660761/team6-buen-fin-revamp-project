@@ -175,7 +175,7 @@ export const AdminCompanyList = () => (
         <DataTable
             bulkActionButtons={false}
             rowClick="edit"
-        > // disable bulk actions and enable row click to edit
+        >
             <DataTable.Col
                 source="name"
                 label="Empresa"

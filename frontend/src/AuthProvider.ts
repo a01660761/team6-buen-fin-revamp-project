@@ -1,33 +1,115 @@
-import { AuthProvider } from "react-admin";
+/*
+* NOTE: we use sessionStorage instead of localStorage to store the token, 
+* because sessionStorage is cleared when the browser tab is closed, which is a 
+* security measure to prevent unauthorized access to the application after the user 
+* has logged out or closed the tab.
+*/
+
+import type { AuthProvider } from "react-admin";
+
+import {
+    API_URL,
+    TOKEN_KEY,
+    getCurrentUser,
+    httpClient,
+} from "./apiClient";
 
 export const authProvider: AuthProvider = {
-    // called when the user attempts to log in
     async login({ username, password }) {
-        // accept all username/password combinations
-        if (username !== 'A01660761' || password !== 'TC2007B') {
-            throw new Error("Failed login");
+        sessionStorage.removeItem(TOKEN_KEY); // remove any existing token before logging in
+
+        const { json } = await httpClient(
+            `${API_URL}/login`,
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    email: username,
+                    password,
+                }),
+            }
+        ); // send a POST request to the login endpoint with the username and password
+
+        if (typeof json.token !== "string") {
+            throw new Error(
+                "Respuesta de login inválida."
+            );
         }
-        // accept all username/password combinations
-        if (false) {
-            throw new Error("Invalid credentials, please try again");
-        }
-        localStorage.setItem("username", username);
+
+        sessionStorage.setItem(TOKEN_KEY, json.token); // store the token in sessionStorage
     },
-    // called when the user clicks on the logout button
+
     async logout() {
-        localStorage.removeItem("username");
+        try {
+            if (sessionStorage.getItem(TOKEN_KEY)) {
+                await httpClient(
+                    `${API_URL}/logout`,
+                    { method: "POST" }
+                );
+            } // if a token is present, send a POST request to the logout endpoint
+        } 
+        
+        catch {
+            console.warn(
+                "No se pudo confirmar el cierre de sesión en el servidor."
+            );
+        } 
+        
+        finally {
+            sessionStorage.removeItem(TOKEN_KEY);
+        } // remove the token from sessionStorage regardless of whether the logout request succeeded or failed
     },
-    // called when the API returns an error
+
     async checkError({ status }: { status: number }) {
-        if (status === 401 || status === 403) {
-            localStorage.removeItem("username");
-            throw new Error("Session expired");
+        if (status === 401) {
+            sessionStorage.removeItem(TOKEN_KEY);
+
+            throw new Error(
+                "La sesión terminó. Inicia sesión nuevamente."
+            );
         }
     },
-    // called when the user navigates to a new location, to check for authentication
+
     async checkAuth() {
-        if (!localStorage.getItem("username")) {
-            throw new Error("Authentication required");
+        if (!sessionStorage.getItem(TOKEN_KEY)) {
+            throw new Error("Inicia sesión.");
         }
+
+        try {
+            await getCurrentUser();
+        } catch (error) {
+            if (
+                (error as { status?: number }).status === 401
+            ) {
+                sessionStorage.removeItem(TOKEN_KEY);
+
+                throw new Error("La sesión terminó.");
+            }
+
+            throw Object.assign(
+                new Error(
+                    "No se pudo verificar la sesión."
+                ),
+                { logoutUser: false }
+            );
+        }
+    },
+
+    async getIdentity() {
+        const user = await getCurrentUser();
+
+        return {
+            id: user.id,
+            fullName:
+                `${user.firstName} ${user.lastName}`.trim() ||
+                user.email,
+        };
+    },
+
+    async getPermissions() {
+        return (await getCurrentUser()).role;
+    },
+
+    async canAccess() {
+        return (await getCurrentUser()).role === "admin";
     },
 };

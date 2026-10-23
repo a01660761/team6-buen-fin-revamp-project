@@ -1,7 +1,8 @@
 import jsonServerProvider from "ra-data-json-server";
 import type { DataProvider } from "react-admin";
+import { API_URL, httpClient } from "./apiClient";
 
-const jsonProvider = jsonServerProvider(import.meta.env.VITE_JSON_SERVER_URL);
+const jsonProvider = jsonServerProvider(API_URL, httpClient); // create a data provider using the API URL and the custom httpClient
 
 // NUEVO: nombres de la app -> rutas públicas del contrato (docs/api-contract.md, sección 9)
 const publicAliases: Record<string, string> = {

@@ -30,7 +30,9 @@ export const LoginPage = () => {
                 </Typography>
 
                 <TextField 
-                    label={translate("ra.auth.username")}
+                    label="Correo electrónico"
+                    type="email"
+                    required
                     value={username} 
                     onChange={(event) => setUsername(event.target.value)} 
                     fullWidth
