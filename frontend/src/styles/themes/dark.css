@@ -1,1 +1,75 @@
 /* De momento está pendiente */
+/* Dark Theme */
+
+.dark {
+    /* Fondo principal */
+    --background-color: #1B2427;
+
+    /* Topbar */
+    --topbar-background-color: #11191C;
+    --default-text-color: #F9F3F0;
+
+    /* Botones de navegación */
+    --bottoms-background-color: #303C42;
+
+    /* Toggle */
+    --toggle-background-color: #3B4B52;
+
+    /* Círculos del carrusel */
+    --carrousel-circles-color: #D77D78;
+
+    /* Cronómetro */
+    --background-cronometro-color: #842D34;
+    --elise-background-color: #29373C;
+    --contrast-color: #8D2B34;
+    --cronometro-text-color: #FFF0E8;
+
+    /* Detalles y notificaciones */
+    --rectangle-back-color: #344347;
+    --default-text-color-2: #F7F1EB;
+
+    /* Tarjetas */
+    --card-title-background-color: #39484E;
+    --card-background: #29363B;
+    --card-middle-background-color: #344247;
+    --card-text-color-3: #AABAC0;
+    --card-line-color: #8FA6AE;
+    --card-background-2: #344247;
+
+    --card-bottom-color: #36494F;
+    --card-text-color: #F9ECE5;
+
+    /* Secciones */
+    --title-background-color: #BBCDD0;
+    --section-background-color: #121C20;
+    --section-contrast-color: #32434A;
+    --searching-background-color: #405159;
+
+    /* Botones */
+    --button-background-color: #40545B;
+    --button-bakcgorund-color-2: #485C64;
+    --button-text-color: #F9ECE5;
+
+    /* Marquee */
+    --mergue-background-color: #344347;
+    --mergue-bottom-line-color-: #8FA6AE;
+    --merge-top-line-color: #C9D4D7;
+
+    /* Tarjetas de contraste */
+    --contrast-card-background-color: #36464B;
+    --square-card-background-color: #8A3036;
+    --strok-button-color: #E18A83;
+
+    /* Información */
+    --info-background-color: #2B393E;
+    --infro-title-background-color: #394A50;
+
+    /* Patrocinadores */
+    --alies-background-color: #344449;
+
+    /* Chatbot */
+    --chatbot-buton-background-color: #364A50;
+
+    /* Banner */
+    --baner-background-color: #640714;
+}
