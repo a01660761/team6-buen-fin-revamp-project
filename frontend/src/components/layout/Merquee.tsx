@@ -1,4 +1,3 @@
-/* */
 const folders = {
     comercios:Object.values(
         import.meta.glob<string>(
@@ -9,7 +8,7 @@ const folders = {
 
     aliados:Object.values(
         import.meta.glob<string>(
-            "../../assets/alies/*{png,jpg,jpeg,webp,svg}",
+            "../../assets/alies/*.{png,jpg,jpeg,webp,svg}",
             {eager:true, query:"?url", import:"default"}
         )
     ),
@@ -28,10 +27,10 @@ export function MarqueeComponent({tipo,titulo, high=90, wide=90}: MarqueeProps){
     if(logos.length===0) return null;
 
     return(
-        <section className="w-full bg-[var(--mergue-background-color]) px py-6">
+        <section className="w-full bg-[var(--mergue-background-color)] px-4 py-6 sm:px-8">
             <h2 className="mb-5 text-center text-xl font-extrabold">{titulo}</h2>
             <div className="overflow-hidden">
-                <div className="flex w-max animate-[marquee_85s_linear_infinite] hover:[animation-play-state:paused">
+                <div className="flex w-max animate-[marquee_85s_linear_infinite] hover:[animation-play-state:paused]">
                     {[0,1].map((copia)=>(
                         <div key={copia} aria-hidden={copia ===1} className="flex shrink-0 items-center gap-6 pr-6">
                             {logos.map((logo,index) =>(

@@ -1,4 +1,5 @@
 // import { useState } from 'react';
+import { Link } from "react-router-dom";
 import { Card,CardContent } from '@/components/ui/card';
 import { UserRoundGroup, CalendarCheck, TrendingUp, ShoppingBag, Scale, ShoppingCart, Lightbulb, BellRing, Megaphone } from "lucide-react";
 import { Topbar} from "@/components/layout/Topbar";
@@ -10,12 +11,13 @@ import { FlipCard } from '@/components/layout/FlipCard';
 import { MarqueeComponent } from '@/components/layout/Merquee';
 import inconvenientephoto from '@/assets/photos_promotion/inconveniente.jpg';
 
+
 export default function Landing() {
     return (
         <div className= "min-h-screen bg-[var(--background-color)]">
             <Topbar/>
 
-            <main className= "mx-auto max-w-10x1 px-6 py-12">
+            <main className= "w-full p-5 py-8 sm:px-8 lg:px-8 lg:py-12 ">
                 <section className="grid gap-6 lg:grid-cols-3">
                     
                     { /* Carrusel */ }
@@ -44,7 +46,7 @@ export default function Landing() {
                                     Crea una cuenta o inicia sesión para registrar tu empresa
                                 </p>
 
-                                <div className="mt-4 flex-wrap grap-3">
+                                <div className="mt-4 flex flex-wrap gap-3">
                                     <AuthDialog/>
                                 </div>
                             </CardContent>
@@ -57,7 +59,7 @@ export default function Landing() {
                     <h2 className="px-10 py-5 text-2xl font-extrabold text-[var(--section-background-color)] lg:text-2xl">
                         Comercios
                     </h2>
-                    <div className="grid grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                         <div className="bg-[var(--card-background)] p-6">
                             <FlipCard 
                                 title="Forma parte de El Buen Fin"
@@ -91,7 +93,7 @@ export default function Landing() {
                         </div>
                     </div>
                     
-                    <p className="px-10 py-4 text-m font-semibold italic"> 
+                    <p className="px-10 py-4 text-base font-semibold italic"> 
                         Gira las tarjetas {""}
                         <a className='font-normal'>
                             para obtener más información 
@@ -111,18 +113,18 @@ export default function Landing() {
                             </h1>
                             <label htmlFor="store" className="font-bold text-[var(--default-text-color)]">
                                 Ingresa el nombre de la {" "}
-                                <a className="underline font-bold">
+                                <a  href='/empresas-busqueda' className="underline font-bold">
                                     tienda fisica 
                                 </a> {" "} o {" "}
-                                <a className="underline font-bold">
+                                <a href='/empresas-busqueda' className="underline font-bold">
                                     en línea
                                 </a>
                             </label>
-                            <div className="flex item-center gap-4">
+                            <div className="flex flex-col items-center gap-4 sm:flex-row">
                                 <input type="text" id="store" name="store" placeholder="Ej. Aeromexico ..." className="min-w-0 flex-1 rounded-lg border p-4 bg-[var(--title-background-color)] text-[var(--section-background-color)]"/>
-                                <button type="button" className="shrink-0 w-28 rounded-xl bg-[var(--button-bakcgorund-color-2)] p-3 font-semibold text-[var(--button-text-color)] border p-0.5 border-[var(--button-background-color)]">
+                                <Link to="/empresas-busqueda"className="flex min-h-11 w-full items-center justify-center rounded-xl bg-[var(--button-background-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-28">
                                     Buscar
-                                </button>
+                                </Link>
                             </div>      
                         </div>
                     </div>
@@ -172,7 +174,7 @@ export default function Landing() {
 
                 {/* Recursos para consumidores*/}
                 <section className="mt-12 w-full bg-[var(--background-cronometro-color)]">
-                    <div className="grid grid-cols-2 lg:grid-cols-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
 
                         {/* Sorteo */}
                         <div className="flex flex-col items-center gap-4 bg-[var(--square-card-background-color)] p-6 text-center text-[var(--default-text-color)]">
@@ -206,7 +208,7 @@ export default function Landing() {
                             <Lightbulb size={64}/>
                             <h3 className="font-extrabold">Tips para prevenir fraudes</h3>
                             {/* a href="" className */}
-                            <a href="" className="mt-auto rounded-full bg-[var(--bottoms-background-color)] px-6 py-2 font-semibold">
+                            <a href="/fraudes"className="mt-auto rounded-full bg-[var(--bottoms-background-color)] px-6 py-2 font-semibold">
                                 Descubrir
                             </a>
                         </div>
@@ -251,7 +253,8 @@ export default function Landing() {
                                 <p className='text-sm font-semibold'>
                                     Mantente informado con las últimas novedades, comunicados y actualizaciones oficiales relacionadas con El Buen Fin.
                                 </p>
-                                <a href='/avisos' className="mt-auto rounded-full bg-[var(--section-background-color)] px-6 py-2 font-semibold text-[var(--default-text-color)]"> 
+                                {/* La pagina de avisos de momento no existe, para probar la funcionalidad regresará al inicio */}
+                                <a href='/' className="mt-auto rounded-full bg-[var(--section-background-color)] px-6 py-2 font-semibold text-[var(--default-text-color)]"> 
                                     Ver avisos y noticias
                                 </a>
                             </CardContent>
