@@ -1,5 +1,5 @@
 /*
-* ChatGPT-6.1 Sol was used to review and edit this code.
+* ChatGPT-6.1 Sol was used to review, validate and improve the code.
 * This module handles the product-related routes and operations in the 
 * backend. It includes functions for validating product data, creating 
 * and updating products, and handling queries for retrieving product 

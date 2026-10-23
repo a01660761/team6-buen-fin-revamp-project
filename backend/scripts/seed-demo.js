@@ -1,5 +1,6 @@
 /*
-* ChatGPT-6.1 Sol was used to review and edit this code; also used 
+* ChatGPT-6.1 Sol was used to review, validate and improve the code.
+* Also used 
 * by providing all the sample data that allows us to test the backend and 
 * frontend of the application.
 * 

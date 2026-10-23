@@ -6,8 +6,26 @@ import { Footer } from '@/components/layout/Footer';
 import sorteophoto from '@/assets/photos_promotion/sorteo.png';
 import consumidores_banner from '@/assets/photos_promotion/consumidores.jpg';
 import soporte from '@/assets/photos_promotion/conciliacion.jpg';
+// both these two serve mainly for hitting Enter on the search input on the bar
+import type { FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Consumidores(){
+    const navigate = useNavigate();
+
+    function buscarComercios(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault(); // prevent the default form submission behavior
+
+        const datos = new FormData(event.currentTarget);
+        const texto = String(datos.get("comercio") ?? "").trim();
+
+        const parametros = new URLSearchParams({
+            filter: JSON.stringify(texto ? { q: texto } : {}),
+            page: "1", // reset to the first page on new search
+        });
+
+        navigate(`/businesses?${parametros.toString()}`);
+    }
     return (
     <div className= "min-h-screen bg-[var(--background-color)] text-[var(--default-text-color-2)]">
         <Topbar/>
@@ -17,7 +35,10 @@ export default function Consumidores(){
             
             <section className="mt-8 grid items-center gap-10 lg:grid-cols-2">
                 <img src={consumidores_banner} alt="Compras durante El Buen Fin" className='h-auto w-full rounded-3xl object-contain'/>
-                <div className="flex flex-col gap-5 rounded-3xl bg-[var(--background-cronometro-color)] p-8  shadow-sm">
+                <form
+                    onSubmit={buscarComercios}
+                    className="flex flex-col gap-5 rounded-3xl bg-[var(--background-cronometro-color)] p-8 shadow-sm"
+                >
                     <h2 className='text-2xl font-extrabold text-center text-[var(--default-text-color)]'>
                         Buscador de comercios participantes
                     </h2>
@@ -26,9 +47,9 @@ export default function Consumidores(){
                     </label>
                     <input id='comercio' name='comercio' type='search' placeholder='Ej. Aeroméxico...' className='w-full min-w-0 rounded-lg border-2 border-[var(--contrast-color)] bg-[var(--card-background)] p-3 text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2'/>
                     <div className='flex justify-center'>
-                        <button type='button' className='rounded-md bg-[var(--contrast-color)] px-10 py-2 font-semibold text-[var(--default-text-color)]'>Buscar</button>
+                        <button type='submit' className='rounded-md bg-[var(--contrast-color)] px-10 py-2 font-semibold text-[var(--default-text-color)]'>Buscar</button>
                     </div>
-                 </div>
+                 </form>
             </section >
 
             {/* Sorteo del SAT */}

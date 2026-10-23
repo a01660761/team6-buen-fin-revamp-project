@@ -1,6 +1,6 @@
 /**
  * 
- * ChatGPT-6.1 Sol was used to review and edit this code.
+ * ChatGPT-6.1 Sol was used to review, validate and improve the code.
  * This is the main entry point for the admin interface of the app, 
  * which allows users to manage products and companies.
  * 

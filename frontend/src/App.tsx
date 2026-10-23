@@ -19,6 +19,7 @@ import { VacancyList, VacancyShow } from "./vacancy"; // NUEVO (#43)
 import StoreIcon from "@mui/icons-material/Store"; // NUEVO
 import Jobs, { DetalleVacante } from "./pages/Jobs";
 import { DatosCuenta } from "@/components/layout/DatosCuenta";
+import DetalleOferta from "./pages/DetalleOferta";
 //import Avisos from "@/pages/Avisos";
 
 // NUEVO (issues #19 y #34): directorio público y catálogo de comercios, dentro de React-Admin.
@@ -43,10 +44,7 @@ export default function App() {
       <Route path="/acerca" element={<AcercaBuenFin />} />
       <Route path="/consumidores" element={<Consumidores />} />
       <Route path="/comercios" element={<Comercios />} />
-      <Route
-        path="/preguntas-frecuentes"
-        element={<PreguntasFrecuentes />}
-      />
+      <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
       <Route path="/compra-segura" element={<CompraSegura />} />
       <Route path="/empresas" element={<EmpresasRegistradas />} />
       <Route path="/sucursales" element={<SucursalesRegistradas />} />
@@ -57,6 +55,7 @@ export default function App() {
       <Route path="/businesses/:id/show" element={<DetalleComercio />} />
       <Route path="/datos-personales" element={<DatosCuenta />} />
       <Route path="/directorio/*" element={<Directorio />} />
+      <Route path="/directorio/catalogOffers/:id/show" element={<DetalleOferta />} />
       <Route path="/jobs" element={<Jobs />} />
       <Route path="/vacancies" element={<Jobs />} />
       <Route path="/vacancies/:id/show/" element={<DetalleVacante />} />

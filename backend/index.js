@@ -1,6 +1,6 @@
 /*
 
-ChatGPT-6.1 Sol was used to review and edit this code.
+ChatGPT-6.1 Sol was used to review, validate and improve the code.
 The following changes were made:
 - Added comments to explain the purpose of the code and its functionality.
 - Improved error handling for database connection and JWT verification.

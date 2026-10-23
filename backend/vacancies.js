@@ -1,5 +1,5 @@
 /*
-* ChatGPT-6.1 Sol was used to review and edit this code.
+* ChatGPT-6.1 Sol was used to review, validate and improve the code.
 * Now this module provides a router for managing job vacancies, 
 * including routes for creating, retrieving, and listing vacancies. 
 * It also includes validation functions for vacancy creation and 

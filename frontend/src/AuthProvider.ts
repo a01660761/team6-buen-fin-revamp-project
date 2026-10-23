@@ -1,4 +1,5 @@
 /*
+* ChatGPT-6.1 Sol was used to review, validate and improve the code.
 * NOTE: we use sessionStorage instead of localStorage to store the token, 
 * because sessionStorage is cleared when the browser tab is closed, which is a 
 * security measure to prevent unauthorized access to the application after the user 
