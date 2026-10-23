@@ -245,12 +245,12 @@ export const AdminCompanyCreate = () => (
                     isActive: true,
                 }}
                 sort={{ field: "email", order: "ASC" }}
-            > // only show active business users in the dropdown, sorted by email
+            >
                 <AutocompleteInput
                     label="Representante"
                     optionText="email"
                     validate={required()}
-                /> // validate that the representative is required
+                />
             </ReferenceInput>
 
             <CompanyInputs />
@@ -271,7 +271,7 @@ export const AdminCompanyEdit = () => (
                     source="ownerUserId"
                     reference="users"
                     link={false}
-                > // show the representative's email, but don't link to the user record
+                >
                     <EmailField source="email" />
                 </ReferenceField>
             </Labeled>
