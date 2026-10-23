@@ -1,5 +1,7 @@
 //import { useState } from "react";
 import { Avisos } from "@/components/layout/avisos";
+import { useState, type FormEvent } from "react";
+import { API_URL, httpClient } from "@/apiClient"; // connect with the backend
 
 /*
 ChatGPT-6 Luna se utilizo para lo siguiente:
@@ -13,10 +15,84 @@ ChatGPT-6 Luna se utilizo para lo siguiente:
 
 
 export function Registro(){
+    const [enviando, setEnviando] = useState(false); // set this state to true when the form is being submitted
+    const [error, setError] = useState(""); // error message to display if the form submission fails
+    const [mensaje, setMensaje] = useState("");
+
+    async function registrarCuenta(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        if (enviando) return; // prevent multiple submissions
+
+        setError("");
+        setMensaje("");
+
+        const formulario = event.currentTarget;
+        const datos = new FormData(formulario);
+
+        // validation for password and confirmation
+        const password = String(datos.get("password") ?? "");
+        const confirmacion = String(datos.get("confirmation") ?? "");
+
+        if (password !== confirmacion) {
+            setError("Las contraseñas no coinciden.");
+            return;
+        }
+
+        if (!datos.has("terminos")) {
+            setError("Debes aceptar los términos para registrarte!");
+            return;
+        }
+
+        const telefono = String(datos.get("telefono") ?? "").trim();
+
+        setEnviando(true);
+
+        try {
+            await httpClient(`${API_URL}/registrarse`, {
+                method: "POST",
+                body: JSON.stringify({
+                    firstName: String(datos.get("nombre") ?? "").trim(),
+                    lastName: String(datos.get("apellidos") ?? "").trim(),
+                    email: String(datos.get("email") ?? "").trim().toLowerCase(),
+                    password,
+                    ...(telefono ? { phone: telefono } : {}),
+                }),
+            });
+
+            formulario.reset();
+            setMensaje("Cuenta creada correctamente.");
+        } 
+        
+        catch (errorRecibido) {
+            const estado = (
+                errorRecibido as { status?: number }
+            ).status; // get the status code from the error object
+
+            if (estado === 409) {
+                setError("Ya existe una cuenta con ese correo.");
+            }
+            
+            else if (estado === 400) {
+                setError(
+                    "Revisa los campos. La contraseña debe tener entre 12 y 128 caracteres."
+                );
+            } 
+            
+            else {
+                setError(
+                    "No pudimos crear la cuenta. Intenta nuevamente."
+                );
+            }
+        } 
+        
+        finally {
+            setEnviando(false);
+        } // reset the sending state
+    }
+
     return(
-        <form onSubmit={(event)=> {event.preventDefault();
-            // Backend
-        }}
+        <form onSubmit={registrarCuenta} // handle form submission
         className="flex w-full min-w-0 flex-col gap-5 rounded-3xl bg-[var(--card-background-2)] p-5 text-[var(--button-text-color)] sm:p-8">
             <h2 className="text-center text-3xl font-bold"> 
                 Registrarse
@@ -33,48 +109,35 @@ export function Registro(){
                 <label htmlFor="nombre" className="font-bold">
                     Nombre*
                 </label>
-                <input type="text" id="nombre" name="nombre" required autoComplete="given-name" placeholder="Ingresa tu nombre" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="text" id="nombre" name="nombre" required maxLength={100} autoComplete="given-name" placeholder="Ingresa tu nombre" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
                 <label htmlFor="apellidos" className="font-bold">
                     Apellidos*
                 </label>
-                <input type="text" id="apellidos" name="apellidos" required autoComplete="family-name" placeholder="Ingresa tus apellidos" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="text" id="apellidos" name="apellidos" required maxLength={100} autoComplete="family-name" placeholder="Ingresa tus apellidos" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
                 <label htmlFor="telefono" className="font-bold">
                     Teléfono*
                 </label>
-                <input type="tel" id="telefono" name="telefono" autoComplete="tel"  placeholder="Ingresa tu número telefónico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
-            </div>
-
-            <div className="grid gap-2">
-                <label htmlFor="puesto" className="font-bold">
-                    Puesto * 
-                </label>
-                <select id="puesto" name="puesto" defaultValue="" required className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]">
-                    <option value="" disabled>Selecciona tu puesto</option>
-                    <option value="administrador">Administrador</option>
-                    <option value="empleado">Propietario/Dueño</option>
-                    <option value="cliente">Cliente</option>
-                    <option value="otro">Otro cargo</option>
-                </select>
+                <input type="tel" id="telefono" name="telefono" autoComplete="tel" required maxLength={32} placeholder="Ingresa tu número telefónico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
                 <label htmlFor="email" className="font-bold">
                     Correo Electrónico *
                 </label>
-                <input type="email" id="email" name="email" placeholder="Ingresa tu correo electronico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="email" id="email" name="email" required autoComplete="email" maxLength={250} placeholder="Ingresa tu correo electronico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
                 <label htmlFor="password" className="font-bold">
                     Contraseña *
                 </label>
-                <input type="password" required autoComplete="new-password" id="password" name="password" placeholder="Ingresa tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="password" required  minLength={8} maxLength={128} autoComplete="new-password" id="password" name="password" placeholder="Ingresa tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
@@ -85,7 +148,6 @@ export function Registro(){
             </div>
 
             <div className="my-5 flex items-start gap-3">
-                <input id= "terminos" name="terminos" type="checkbox" required className="mt-2 size-8 accent-[var(--card-bottom-color)]"/>
                 <div className="my-5 flex items-start gap-3">
                     <input id="terminos" name="terminos" type="checkbox" required
                     aria-label="Al registrarme acepto los términos y condiciones y he leído el aviso de privacidad"
@@ -106,18 +168,24 @@ export function Registro(){
             </div>
 
             <p className="text-center text-m">
-                Al momento de registrate para el uso de marca de {" "}
-                <strong className="font-bold">
-                    El Buen Fin
-                </strong> {" "},también se procesará tu inscripción al {" "}
-                <p className="underline font-bold">
-                    Sorteo SAT
-                </p> {""} en el marco de El Buen Fin para que las compras realizadas
-                en tu negocio participante en el sorteo.
+                Esta cuenta te permitirá registrar y administrar tus empresas
+                dentro de este portal.
             </p>
 
-            <button type="submit" className="min-h-11 w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-4">
-                Registrarse
+            {error && (
+                <p role="alert" className="font-semibold">
+                    {error}
+                </p>
+            )} {/* display error message if there is one */}
+
+            {mensaje && (
+                <p role="status" className="font-semibold">
+                    {mensaje}
+                </p>
+            )} {/* display success message if there is one */}
+
+            <button type="submit" className="min-h-11 w-full rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-4" disabled={enviando}>
+                {enviando ? "Creando cuenta…" : "Registrarse"}
             </button>
         </form>
     )
