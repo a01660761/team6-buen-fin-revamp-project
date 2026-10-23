@@ -52,7 +52,7 @@ import { OfferShow } from "./offer"; // NUEVO (#37)
 import { VacancyList, VacancyShow } from "./vacancy"; // NUEVO (#43)
 import StoreIcon from "@mui/icons-material/Store"; // NUEVO
 import Jobs, { DetalleVacante } from "./pages/Jobs";
-import { DatosCuenta } from "./components/layout/DatosCuenta";
+import { DatosCuenta } from "@/components/layout/DatosCuenta";
 //import Avisos from "@/pages/Avisos";
 
 // NUEVO (issues #19 y #34): directorio público y catálogo de comercios, dentro de React-Admin.
@@ -85,7 +85,7 @@ export default function App() {
       <Route path="/empresas-busqueda" element={<BuscarEmpresas/>} />
       <Route path="/businesses" element={<BuscarEmpresas />}/>
       <Route path="/businesses/:id/show" element={<DetalleComercio />}/>
-      <Route path="datos-personales" element={<DatosCuenta/>}/>
+      <Route path="/datos-personales" element={<DatosCuenta/>}/>
       <Route path="/directorio/*" element={<Directorio />} />
       <Route path="/jobs" element={<Jobs/>} />
       <Route path="/vacancies" element={<Jobs/>} />

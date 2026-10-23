@@ -4,6 +4,7 @@ import buenFinLogo from "@/assets/top_bar/logo.png";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle} from '@/components/ui/dialog';
 import { Login } from "../auth/Login";
+import { DatosCuenta } from "./DatosCuenta";
 /*
 ChatGPT-6 Luna se utilizo para lo siguiente:
 - Tailwind CSS (sticky, shadow-sm, order-1, hidden, z-50focus-visible:outline-offset-4)
@@ -32,6 +33,7 @@ type Props= {
 
 export function Topbar({sesionIniciada = false, onCerrarSesion}:Props) {
     const[loginAbierto, setLoginAbierto] = useState(false);
+    const[misDatosAbierto, setMisDatosAbierto] = useState(false);
 
     return (
         <header className= "sticky top-0 z-50 w-full bg-[var(--topbar-background-color)] text-[var(--default-text-color)] shadow-sm">
@@ -72,20 +74,21 @@ export function Topbar({sesionIniciada = false, onCerrarSesion}:Props) {
                                 <CircleUser size={32}/>
                             </summary>
                             <div className="absolute right-0 top-full mt-3 flex w-56 flex-col overflow-hidden rounded-lg border border-[var(--contrast-color)] bg-[var(--bottoms-background-color)] text-center shadow-lg">
-                                <a href="/empresas-registradas" className="px-5 py-4 font-bold hover:opacity-80 focus-visible:outline-2">
+                                <a href="/empresas" className="px-5 py-4 font-bold hover:opacity-80 focus-visible:outline-2">
                                     Mis empresas
                                 </a>
 
-                                <a href="/mis-datos" className="bg-[var(--contrast-color)] px-5 py-4 font-bold hover:opacity-80 focus-visible:outline-2">
+                                <button type="button" onClick={()=> setMisDatosAbierto(true)} className="bg-[var(--contrast-color)] px-5 py-4 font-bold hover:opacity-80 focus-visible:outline-2">
                                     Mis datos
-                                </a>
+                                </button>
+
                                 <button type="button" onClick={onCerrarSesion} disabled={!onCerrarSesion} className="px-5 py-4 font-bold hover:opacity-80 focus-visible:outline-2 disabled:opacity-60">
                                     Cerrar sesión
                                 </button>
                             </div>
                         </details>
                         ) : (
-                        <button type="button" onClick={() =>setLoginAbierto(true)} aria-label="Iniciar sesion" className="cursor-pont roundedn-lg focus-visible:ouline-2 focus-visible:ouline-offset-4">
+                        <button type="button" onClick={() =>setLoginAbierto(true)} aria-label="Iniciar sesion" className="cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4">
                             <CircleUser size={32}/>
                         </button>
                     )}
@@ -96,8 +99,16 @@ export function Topbar({sesionIniciada = false, onCerrarSesion}:Props) {
                     <DialogTitle className="sr-only">
                         Iniciar sesión
                     </DialogTitle>
-
                     <Login />
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open= {misDatosAbierto} onOpenChange={setMisDatosAbierto}>
+                <DialogContent className="max-h-[90dvh] w-[calc(100vw-2rem)] overflow-y-auto p-0 sm:max-w-3xl">
+                    <DialogTitle className="sr-only">
+                        Mis datos personales
+                    </DialogTitle>
+                    <DatosCuenta/>
                 </DialogContent>
             </Dialog>
 
