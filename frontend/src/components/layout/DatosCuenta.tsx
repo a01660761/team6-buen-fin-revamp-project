@@ -49,7 +49,6 @@ export function DatosCuenta({ inicial, onGuardar, onActualizarContrasena}: Props
                         const datos = Object.fromEntries(
                             new FormData(event.currentTarget).entries()
                         ) as Record<string, string>;
-
                         onGuardar?.(datos);
                     }}
                     className="flex flex-col gap-5"

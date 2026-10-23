@@ -7,7 +7,6 @@ type Props = {
 
 }
 
-
 export function Nueva_Surcursal( {onCancelar, onGuardar, inicial}: Props){
     // Add the connection with the backend here
 

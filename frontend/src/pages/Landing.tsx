@@ -1,4 +1,5 @@
 // import { useState } from 'react';
+import { Link } from "react-router-dom";
 import { Card,CardContent } from '@/components/ui/card';
 import { UserRoundGroup, CalendarCheck, TrendingUp, ShoppingBag, Scale, ShoppingCart, Lightbulb, BellRing, Megaphone } from "lucide-react";
 import { Topbar} from "@/components/layout/Topbar";
@@ -112,18 +113,18 @@ export default function Landing() {
                             </h1>
                             <label htmlFor="store" className="font-bold text-[var(--default-text-color)]">
                                 Ingresa el nombre de la {" "}
-                                <a className="underline font-bold">
+                                <a  href='/empresas-busqueda' className="underline font-bold">
                                     tienda fisica 
                                 </a> {" "} o {" "}
-                                <a className="underline font-bold">
+                                <a href='/empresas-busqueda' className="underline font-bold">
                                     en línea
                                 </a>
                             </label>
                             <div className="flex flex-col items-center gap-4 sm:flex-row">
                                 <input type="text" id="store" name="store" placeholder="Ej. Aeromexico ..." className="min-w-0 flex-1 rounded-lg border p-4 bg-[var(--title-background-color)] text-[var(--section-background-color)]"/>
-                                <button type="button" className="w-full rounded-xl bg-[var(--button-background-color)] p-3 font-semibold text-[var(--default-text-color)] sm:w-28">
+                                <Link to="/empresas-busqueda"className="flex min-h-11 w-full items-center justify-center rounded-xl bg-[var(--button-background-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-28">
                                     Buscar
-                                </button>
+                                </Link>
                             </div>      
                         </div>
                     </div>

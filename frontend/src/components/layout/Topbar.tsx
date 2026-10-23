@@ -46,6 +46,9 @@ export function Topbar({sesionIniciada = false, onCerrarSesion}:Props) {
 
                 {/* Botones de navegacion : Comercios/Consumidores*/}
                 <nav aria-label="Navegación principal" className="order-3 flex w-full gap-2 sm:order-2 sm:ml-auto sm:w-auto lg:gap-4">
+                    <a href="/jobs" className="flex-1 rounded-lg bg-[var(--bottoms-background-color)] px-3 py-2 text-center text-sm font-semibold hover:opacity-90 focus-visible:outline-2 sm:flex-none lg:px-5 lg:text-base">
+                        Empleos
+                    </a>
                     <a href="/consumidores" className="flex-1 rounded-lg bg-[var(--bottoms-background-color)] px-3 py-2 text-center text-sm font-semibold hover:opacity-90 focus-visible:outline-2 sm:flex-none lg:px-5 lg:text-base">
                         Consumidores
                     </a>
