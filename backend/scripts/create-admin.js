@@ -1,6 +1,6 @@
 /*
 
-ChatGPT-6.1 Sol was used to review and edit this code.
+ChatGPT-6.1 Sol was used to review, validate and improve the code.
 This is the module that's responsible for creating an administrator
 account in the MongoDB database. It connects to the database,
 ensures that the necessary indexes are in place, and creates an

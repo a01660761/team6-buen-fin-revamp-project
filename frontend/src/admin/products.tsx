@@ -1,6 +1,6 @@
 /*
  * 
- * ChatGPT-6.1 Sol was used to review and edit this code.
+ * ChatGPT-6.1 Sol was used to review, validate and improve the code.
  * This code is part of the admin interface for managing products 
  * in the app.
  */

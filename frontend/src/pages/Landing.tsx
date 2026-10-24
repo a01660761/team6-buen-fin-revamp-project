@@ -1,5 +1,9 @@
+/**
+ * ChatGPT-6.1 Sol was used to review, validate and improve the code.
+*/
 // import { useState } from 'react';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import type { FormEvent } from "react";
 import { Card,CardContent } from '@/components/ui/card';
 import { UserRoundGroup, CalendarCheck, TrendingUp, ShoppingBag, Scale, ShoppingCart, Lightbulb, BellRing, Megaphone } from "lucide-react";
 import { Topbar} from "@/components/layout/Topbar";
@@ -13,6 +17,22 @@ import inconvenientephoto from '@/assets/photos_promotion/inconveniente.jpg';
 
 
 export default function Landing() {
+    const navigate = useNavigate();
+
+    function buscarComercios(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        const datos = new FormData(event.currentTarget);
+        const texto = String(datos.get("store") ?? "").trim();
+
+        const parametros = new URLSearchParams({
+            filter: JSON.stringify(texto ? { q: texto } : {}),
+            page: "1",
+        });
+
+        navigate(`/businesses?${parametros.toString()}`); // redirect to the search results page with the query parameters
+    }
+
     return (
         <div className= "min-h-screen bg-[var(--background-color)]">
             <Topbar/>
@@ -120,12 +140,25 @@ export default function Landing() {
                                     en línea
                                 </a>
                             </label>
-                            <div className="flex flex-col items-center gap-4 sm:flex-row">
-                                <input type="text" id="store" name="store" placeholder="Ej. Aeromexico ..." className="min-w-0 flex-1 rounded-lg border p-4 bg-[var(--title-background-color)] text-[var(--section-background-color)]"/>
-                                <Link to="/empresas-busqueda"className="flex min-h-11 w-full items-center justify-center rounded-xl bg-[var(--button-background-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-28">
+                            <form
+                                onSubmit={buscarComercios}
+                                className="flex flex-col items-center gap-4 sm:flex-row"
+                            >
+                                <input
+                                    type="search"
+                                    id="store"
+                                    name="store"
+                                    placeholder="Ej. Aeroméxico..."
+                                    className="min-w-0 flex-1 rounded-lg border p-4 bg-[var(--title-background-color)] text-[var(--section-background-color)]"
+                                /> {/* we previously had a button that didin't do the redirection properlu */}
+
+                                <button
+                                    type="submit"
+                                    className="flex min-h-11 w-full items-center justify-center rounded-xl bg-[var(--button-background-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-28"
+                                >
                                     Buscar
-                                </Link>
-                            </div>      
+                                </button>
+                            </form>      
                         </div>
                     </div>
                 </section>

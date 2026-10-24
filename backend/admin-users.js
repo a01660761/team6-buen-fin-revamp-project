@@ -1,5 +1,5 @@
 /*
-* ChatGPT-6.1 Sol was used to review and edit this code.
+* ChatGPT-6.1 Sol was used to review, validate and improve the code.
 * This module is for managing administrative user operations in the site's backend.
 * It provides routes for querying and retrieving user data, with support
 * for filtering, sorting, and pagination. The module ensures that sensitive information
