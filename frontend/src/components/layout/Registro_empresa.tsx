@@ -1,21 +1,31 @@
+/**
+ *
+ * NOTE: some of the fields in the corresponding form for adding businesses were ultimately not implemented in the backend; we decided to keep them
+ * in case we want to implement them in the future.
+ */
+
+
 import { useState } from 'react';
 
 type Props = {
     onCancelar?: () => void;
     onGuardar?: (datos: Record<string, string>) => void;
     inicial?: Record<string, string>;
+    guardando?: boolean;
+    error?: string;
 };
 
-export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
-    const [tieneRedes, setTieneRedes] = useState(inicial?.redesSociales ==="si");
+export function RegistroEmpresa({ onCancelar, onGuardar, inicial, guardando = false, error = "" }: Props) {
+    const [tipoComercio, setTipoComercio] = useState(inicial?.tipoComercio ?? "fisica");
     const [categoria, setCategoria] = useState(inicial?.categorias ?? "");
 
     return (
         <form
             onSubmit={(event) => {
                 event.preventDefault();
+                if (guardando) return;
                 const datos = Object.fromEntries( //convierte esos pares en un objeto de Javascript
-                    new FormData(event.currentTarget).entries() // entries : obtiene los datos 
+                    new FormData(event.currentTarget).entries() // entries : obtiene los datos
                 ) as Record<string, string>;
                 onGuardar?.(datos);
             }}
@@ -33,10 +43,10 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                 <label htmlFor="nombreComercial" className="font-bold">
                     Nombre Comercial *
                 </label>
-                <input type="text" id="nombreComercial" name="nombreComercial" defaultValue={inicial?.nombreComercial} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                <input type="text" id="nombreComercial" name="nombreComercial" defaultValue={inicial?.nombreComercial} required maxLength={200} className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
-            
-            <div className="grid gap-2">
+
+            {/* <div className="grid gap-2">
                 <label htmlFor="tipoPersona" className="font-bold">
                     Tipo de contribuyente *
                 </label>
@@ -60,23 +70,23 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                         <b>Utiliza exactamente los datos de tu Constancia de Situación Fiscal.</b>
                     </p>
                 </details>
-            </div>
+            </div>*/}
 
             <div className="grid gap-2">
                 <label htmlFor="rfc" className="font-bold">RFC *</label>
-                <input type="text" id="rfc" name="rfc" defaultValue={inicial?.rfc} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                <input type="text" id="rfc" name="rfc" defaultValue={inicial?.rfc} required maxLength={13} className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
 
             <div className="grid gap-2">
                 <label htmlFor="direccion" className="font-bold">
-                    Dirección *
+                    Dirección {tipoComercio === "fisica" ? "*" : "(opcional)"}
                 </label>
-                <input type="text" id="direccion" name="direccion" defaultValue={inicial?.direccion} required autoComplete="street-address" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                <input type="text" id="direccion" name="direccion" defaultValue={inicial?.direccion} required={tipoComercio === "fisica"} maxLength={500} autoComplete="street-address" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
 
-            <div className="grid gap-2">
+            {/*<div className="grid gap-2">
                 <label htmlFor="colonia" className="font-bold">
-                    Colonia o Localidad *
+                    Colonia o Localidad {tipoComercio === "fisica" ? "*" : "(opcional)"}
                 </label>
                 <input type="text" id="colonia" name="colonia" defaultValue={inicial?.colonia} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
@@ -85,7 +95,7 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                 <div className="grid gap-2">
                     <label htmlFor="entidad" className="font-bold">
                         Entidad *
-                    </label>         
+                    </label>
                     <select id="entidad" name="entidad"
                         defaultValue={inicial?.entidad ?? ""} required autoComplete="address-level1"
                         className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3">
@@ -138,25 +148,25 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                     Municipio *
                 </label>
                 <input type="text" id="municipio" name="municipio" defaultValue={inicial?.municipio} required  autoComplete="address-level2" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
-            </div>
+            </div>*/}
 
             <div className="grid gap-5 sm:grid-cols-2">
                 <div className="grid gap-2">
                     <label htmlFor="telefono" className="font-bold">
                         Teléfono *
                     </label>
-                    <input type="tel" id="telefono" name="telefono" defaultValue={inicial?.telefono} required autoComplete="tel" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                    <input type="tel" id="telefono" name="telefono" defaultValue={inicial?.telefono} maxLength={30} autoComplete="tel" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
                 </div>
 
                 <div className="grid gap-2">
                     <label htmlFor="correo" className="font-bold">
                         Correo electrónico *
                     </label>
-                    <input type="email" id="correo" name="correo" defaultValue={inicial?.correo} required autoComplete="email" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                    <input type="email" id="correo" name="correo" defaultValue={inicial?.correo} maxLength={250} autoComplete="email" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
                 </div>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2">
+            {/*<div className="grid gap-5 sm:grid-cols-2">
                 <div className="grid gap-2">
                     <label htmlFor="sucursales" className="font-bold">
                         Sucursales *
@@ -166,7 +176,7 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
 
                 <div className="grid gap-2">
                     <label htmlFor="organismo" className="font-bold">
-                        Organismo Empresarial 
+                        Organismo Empresarial
                     </label>
                     <select id="organismo" name="organismo"
                         defaultValue={inicial?.organismo ?? ""}
@@ -184,9 +194,9 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
             <label className="flex items-center gap-3 text-sm">
                 <input type="checkbox" name="notificaciones" value="si" defaultChecked={inicial?.notificaciones === "si"} />
                 ¿Quiere que se le notifique a la cámara o asociación a la que pertenece?
-            </label>
+            </label>*/}
 
-            <fieldset className="grid gap-2">
+            {/* <fieldset className="grid gap-2">
                 <legend className="font-bold">
                     ¿La empresa cuenta con redes sociales?
                 </legend>
@@ -196,7 +206,7 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                     Sí
                 </label>
                 <label className="flex gap-3">
-                    <input type="radio" name="redesSociales" value="no" defaultChecked={!inicial || inicial.redesSociales === "no"} 
+                    <input type="radio" name="redesSociales" value="no" defaultChecked={!inicial || inicial.redesSociales === "no"}
                     onChange={()=> setTieneRedes(false)}/>
                     No
                 </label>
@@ -210,28 +220,24 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                     </div>
                 )}
 
-            </fieldset>
+            </fieldset> */}
 
             <div className="grid gap-2">
                 <label htmlFor="descripcion" className="font-bold">
                     Descripción *
                 </label>
-                <textarea id="descripcion" name="descripcion" rows={5} defaultValue={inicial?.descripcion} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                <textarea id="descripcion" name="descripcion" rows={5} defaultValue={inicial?.descripcion} required maxLength={5000} className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
 
             <fieldset className="grid gap-2">
                 <legend className="font-bold">Tipo de Comercio *</legend>
                 <label className="flex gap-3">
-                    <input type="radio" name="tipoComercio" value="fisica" defaultChecked={inicial?.tipoComercio === "fisica"} required />
+                    <input type="radio" name="tipoComercio" value="fisica"checked={tipoComercio === "fisica"} onChange={() => setTipoComercio("fisica")} required />
                     Tienda física
                 </label>
                 <label className="flex gap-3">
-                    <input type="radio" name="tipoComercio" value="virtual" defaultChecked={inicial?.tipoComercio === "virtual"} />
+                    <input type="radio" name="tipoComercio" value="virtual" checked={tipoComercio === "virtual"} onChange={() => setTipoComercio("virtual")} />
                     Tienda virtual
-                </label>
-                <label className="flex gap-3">
-                    <input type="radio" name="tipoComercio" value="ambas" defaultChecked={inicial?.tipoComercio === "ambas"} />
-                    Ambas
                 </label>
             </fieldset>
 
@@ -243,49 +249,47 @@ export function RegistroEmpresa({ onCancelar, onGuardar, inicial }: Props) {
                     value={categoria} onChange={(event)=> setCategoria(event.target.value)} required
                     className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3">
                     <option value="" disabled>Selecciona una categoría</option>
-                    <option value="Tecnología">Tecnología</option>
-                    <option value="Ropa">Ropa</option>
-                    <option value="Hogar">Hogar</option>
                     <option value="Alimentos">Alimentos</option>
+                    <option value="Moda">Moda</option>
+                    <option value="Electrónica">Electrónica</option>
+                    <option value="Hogar">Hogar</option>
                     <option value="Servicios">Servicios</option>
-                    <option value="Otros">Otros</option>
+                    <option value="Salud">Salud</option>
                 </select>
-                {categoria === "Otros" &&(
-                    <div className='grid gap-2'>
-                        <label htmlFor='categoriaOtra' className='font-bold'>
-                            Especifica la categoría * 
-                        </label>
-                        <input type='text' id='categoriaOtra' name='categoriaOtra' placeholder='Ej. Deportes' defaultValue={inicial?.categoriaOtra} required className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3"/>
-                    </div>
-                )}
             </div>
 
             <div className="grid gap-2">
                 <label htmlFor="sitioWeb" className="font-bold">
                     Sitio Web
                 </label>
-                <input type="url" id="sitioWeb" name="sitioWeb" defaultValue={inicial?.sitioWeb} placeholder="https://www.miempresa.com.mx" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
+                <input type="url" id="sitioWeb" name="sitioWeb" defaultValue={inicial?.sitioWeb} maxLength={2048} placeholder="https://www.miempresa.com.mx" className="w-full rounded-lg border border-[var(--card-line-color)] bg-white p-3" />
             </div>
 
-            <label className="flex items-center gap-3">
+            {/*<label className="flex items-center gap-3">
                 <input type="checkbox" name="mipyme" value="si" defaultChecked={inicial?.mipyme === "si"} />
                 ¿Te consideras MIPYME?
-            </label>
+            </label>*/}
 
             <label className="flex items-center gap-3 text-sm font-semibold">
                 <input type="checkbox" name="aceptaTerminos" value="si" defaultChecked={Boolean(inicial)} required />
                 Acepto los términos y condiciones y el aviso de privacidad.
             </label>
 
+            {error && <p role="alert">{error}</p>}
+
+            {!inicial && (
+                <p>Al guardar, tu empresa se publicará en el directorio.</p>
+            )}
+
             <div className="grid gap-4 sm:grid-cols-2">
                 <button type="button" onClick={onCancelar}
-                    className="min-h-11 rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
+                    className="min-h-11 rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2" disabled={guardando}>
                     Regresar
                 </button>
 
                 <button type="submit"
-                    className="min-h-11 rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
-                    Guardar Empresa
+                    className="min-h-11 rounded-xl bg-[var(--card-bottom-color)] p-3 font-semibold text-[var(--default-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2" disabled={guardando}>
+                    {guardando ? "Guardando…" : "Guardar Empresa"}
                 </button>
             </div>
         </form>
