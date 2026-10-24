@@ -143,11 +143,13 @@ mongosh "mongodb://127.0.0.1:27017/buenfin" --quiet --eval 'db.runCommand({ ping
 
 Expected results: active and a MongoDB response containing ok: 1.
 
-If systemctl reports that systemd is not running, see Troubleshooting below.
+If systemctl reports that systemd is not running, follow Microsoft's
+instructions to enable systemd in WSL, restart the distribution, and
+repeat the MongoDB service commands:
+
+https://learn.microsoft.com/en-us/windows/wsl/systemd
 
 ### 5. Clone the repository and install application dependencies
-
-
 
 ~~~bash
 git clone https://github.com/a01660761/team6-buen-fin-revamp-project.git
@@ -236,10 +238,14 @@ VITE_ variables are public browser configuration. Never commit the local
 
 ### 7. Start the API and frontend in separate terminals
 
+Open each new terminal in the root directory of the cloned repository:
+the folder containing backend/ and frontend/. If the terminal opens
+elsewhere, first use cd with the absolute path where you cloned it.
+
 **Terminal A — API:**
 
 ~~~bash
-cd "$HOME/dev/team6-buen-fin-revamp-project/backend"
+cd backend
 npm start
 ~~~
 
@@ -255,7 +261,7 @@ Keep this terminal running.
 **Terminal B — frontend:**
 
 ~~~bash
-cd "$HOME/dev/team6-buen-fin-revamp-project/frontend"
+cd frontend
 npm run dev
 ~~~
 
