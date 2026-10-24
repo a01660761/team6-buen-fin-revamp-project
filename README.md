@@ -1,8 +1,8 @@
 # El Buen Fin: Web Revamp
 
-An academic redesign of the El Buen Fin web portal, built with the use 
-of React, React-Admin, Express and MongoDB. The final delivery is a local 
-functional demonstration. Fictitious demonstration records are identified 
+An academic redesign of the El Buen Fin web portal, built with the use
+of React, React-Admin, Express and MongoDB. The final delivery is a local
+functional demonstration. Fictitious demonstration records are identified
 with 'DEMO' in their names.
 
 This prototype does not perform  any official participant accreditation, SAT registration,
@@ -434,3 +434,83 @@ Restart the relevant process after changing its .env.
 - [Minimum MongoDB data model](docs/data-model.md)
 - [Minimum API contract](docs/api-contract.md)
 - [Initial backend audit](backend/README.md)
+
+## Final infrastructure verification
+
+The local development environment was recorded using an Intel Core
+i7-12700, 20 logical processors visible to WSL2, 7.6 GiB of memory
+available to the Linux environment, Node.js 20.20.0 and npm 10.8.2.
+
+Environment information, process identification and collected resource
+measurement outputs are stored in docs/evidence/. The monitored services
+are the Express backend, Vite development server, MongoDB and esbuild.
+
+These observations describe the local development environment. They do
+not establish minimum hardware requirements or production capacity.
+
+### Verified local HTTPS setup
+
+Local HTTPS was enabled for both the Express API and the Vite development
+server using certificates generated with mkcert.
+
+From Ubuntu/WSL, install mkcert and prepare the local certificate authority:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y mkcert libnss3-tools
+mkcert -install
+```
+
+From the repository root, generate the server certificates:
+
+```bash
+mkdir -p backend/certs frontend/certs
+
+mkcert -key-file backend/certs/backend.key \
+  -cert-file backend/certs/backend.crt \
+  localhost 127.0.0.1 ::1
+
+mkcert -key-file frontend/certs/frontend.key \
+  -cert-file frontend/certs/frontend.crt \
+  localhost 127.0.0.1 ::1
+
+cp "$(mkcert -CAROOT)/rootCA.pem" backend/certs/buenfin-local-ca.crt
+```
+
+Configure these values in backend/.env, preserving the existing database
+connection and JWT secret:
+
+```dotenv
+CORS_ORIGIN=https://localhost:5173
+HTTPS_ENABLED=true
+TLS_KEY_PATH=./certs/backend.key
+TLS_CERT_PATH=./certs/backend.crt
+```
+
+Configure frontend/.env:
+
+```dotenv
+VITE_JSON_SERVER_URL=https://localhost:3000
+DEV_SERVER_PORT=5173
+HTTPS_ENABLED=true
+TLS_KEY_PATH=./certs/frontend.key
+TLS_CERT_PATH=./certs/frontend.crt
+```
+
+For Firefox running on Windows, import backend/certs/buenfin-local-ca.crt
+through Settings → Privacy & Security → Certificates → View Certificates
+→ Authorities → Import, and trust it to identify websites.
+
+Restart both application servers:
+
+- From backend/: npm start
+- From frontend/: npm run dev
+
+Open https://localhost:5173/. The API uses https://localhost:3000.
+
+Local HTTPS operation was manually verified successfully in Firefox.
+This configuration provides HTTPS for the local demonstration; production
+deployment was not evaluated.
+
+Certificates, private keys and private environment files are excluded
+from version control.

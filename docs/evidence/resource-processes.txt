@@ -1,0 +1,5 @@
+    PID    PPID COMMAND         COMMAND
+   1198       1 mongod          /usr/bin/mongod --config /etc/mongod.conf
+   7968    7967 node            node --env-file=.env index.js
+   7994    7993 node            node /mnt/c/dev/team6-buen-fin-revamp-project/frontend/node_modules/.bin/vite
+   8005    7994 esbuild         /mnt/c/dev/team6-buen-fin-revamp-project/frontend/node_modules/@esbuild/linux-x64/bin/esbuild --service=0.28.2 --ping
