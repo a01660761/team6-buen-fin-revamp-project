@@ -1,0 +1,70 @@
+# npm audit report
+
+body-parser  2.0.0 - 2.3.0
+Severity: high
+body-parser vulnerable to Denial of Service via trailing bytes after a compressed request body - https://github.com/advisories/GHSA-27r3-jxmh-p828
+fix available via `npm audit fix`
+node_modules/body-parser
+
+decode-uri-component  <=0.4.2
+Severity: moderate
+decode-uri-component: Denial of service via exponential decoding of malformed percent-encoded input - https://github.com/advisories/GHSA-vcc3-ghjq-m6fr
+fix available via `npm audit fix --force`
+Will install react-admin@3.0.2, which is a breaking change
+node_modules/decode-uri-component
+  query-string  5.0.0 - 9.4.1
+  Depends on vulnerable versions of decode-uri-component
+  node_modules/query-string
+    ra-core  *
+    Depends on vulnerable versions of query-string
+    node_modules/ra-core
+      ra-data-json-server  *
+      Depends on vulnerable versions of query-string
+      Depends on vulnerable versions of ra-core
+      node_modules/ra-data-json-server
+      ra-i18n-polyglot  *
+      Depends on vulnerable versions of ra-core
+      node_modules/ra-i18n-polyglot
+        react-admin  >=2.0.0-RC1
+        Depends on vulnerable versions of ra-core
+        Depends on vulnerable versions of ra-i18n-polyglot
+        Depends on vulnerable versions of ra-language-english
+        Depends on vulnerable versions of ra-ui-materialui
+        node_modules/react-admin
+      ra-language-english  >=3.4.0
+      Depends on vulnerable versions of ra-core
+      node_modules/ra-language-english
+      ra-ui-materialui  *
+      Depends on vulnerable versions of query-string
+      Depends on vulnerable versions of ra-core
+      node_modules/ra-ui-materialui
+
+fast-uri  3.0.0 - 3.1.8
+Severity: moderate
+fast-uri vulnerable to URI scheme spoofing via percent-encoded scheme decoding - https://github.com/advisories/GHSA-w74x-v6f9-j3xg
+fast-uri vulnerable to improper path equivalence in relative reference normalization - https://github.com/advisories/GHSA-xhq7-xmqj-769h
+fast-uri vulnerable to host confusion via unchecked WHATWG host canonicalization - https://github.com/advisories/GHSA-wjr9-j795-jxcr
+fast-uri vulnerable to scheme injection via an unescaped first-segment colon in suffix references - https://github.com/advisories/GHSA-333x-w4r6-6crp
+fix available via `npm audit fix`
+node_modules/fast-uri
+
+vite  7.0.0 - 7.3.6
+Severity: high
+launch-editor: escapeCmdArgs() omits % escaping on Windows - https://github.com/advisories/GHSA-698v-4r3x-3vcv
+launch-editor: Editor CLI flag misinterpretation causing arbitrary command execution for some editors - https://github.com/advisories/GHSA-r825-w8mm-5pxw
+launch-editor: `fs.existsSync()` existence check can be bypassed on Windows - https://github.com/advisories/GHSA-587h-7wmj-h5pm
+Vite: Cross origin script execution through Vite custom middleware - https://github.com/advisories/GHSA-9jrq-w75r-8gcw
+Vite: Files outside `server.fs.allow` could be served when project paths match system paths on non-Windows machine - https://github.com/advisories/GHSA-rq7h-c2jc-7f22
+fix available via `npm audit fix`
+node_modules/vite
+
+11 vulnerabilities (9 moderate, 2 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
