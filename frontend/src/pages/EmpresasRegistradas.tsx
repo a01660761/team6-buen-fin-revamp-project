@@ -6,7 +6,7 @@ import {
     httpClient,
     TOKEN_KEY,
 } from "@/apiClient";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Topbar } from "@/components/layout/Topbar";
 import { Footer } from "@/components/layout/Footer";
 import { RegistroEmpresa } from "@/components/layout/Registro_empresa";
@@ -67,7 +67,7 @@ function adaptarEmpresa(empresa: EmpresaRespuesta): Empresa {
 }
 
 export default function EmpresasRegistradas() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [empresas, setEmpresas] = useState<Empresa[]>([]);
     const [abierto, setAbierto] = useState(false);
@@ -379,9 +379,8 @@ export default function EmpresasRegistradas() {
                                     Editar Empresa
                                 </button>
 
-                                <button type="button" aria-label={`Ver sucursales de ${empresa.datos.nombreComercial}`} onClick={() => navigate("/sucursales", { state: { empresa: empresa.datos.nombreComercial }})}
-                                    className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] focus-visible:outline-2 focus-visible:outline-offset-2">
-                                    Sucursales
+                                <button type="button" disabled title="La gestión de sucursales no está disponible." className="min-h-11 rounded-lg bg-[var(--searching-background-color)] px-5 py-3 font-semibold text-[var(--button-text-color)] disabled:opacity-60">
+                                    Sucursales - no disponible
                                 </button>
 
                                 <button type="button" aria-label={`${empresa.activa ? "Inactivar" : "Reactivar"} empresa ${empresa.datos.nombreComercial}`} onClick={() => cambiarEstado(empresa)} disabled={cargando || guardando}

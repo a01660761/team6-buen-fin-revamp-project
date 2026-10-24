@@ -121,7 +121,7 @@ export function Registro(){
 
             <div className="grid gap-2">
                 <label htmlFor="telefono" className="font-bold">
-                    Teléfono*
+                    Teléfono (opcional)
                 </label>
                 <input type="tel" id="telefono" name="telefono" autoComplete="tel" required maxLength={32} placeholder="Ingresa tu número telefónico" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
@@ -137,14 +137,14 @@ export function Registro(){
                 <label htmlFor="password" className="font-bold">
                     Contraseña *
                 </label>
-                <input type="password" required  minLength={8} maxLength={128} autoComplete="new-password" id="password" name="password" placeholder="Ingresa tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="password" required  minLength={12} maxLength={128} autoComplete="new-password" id="password" name="password" placeholder="Ingresa tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="grid gap-2">
                 <label htmlFor="confirmation" className="font-bold">
                     Confirmación *
                 </label>
-                <input type="password" required autoComplete="new-password" id="confirmation" name="confirmation" placeholder="Confirma tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
+                <input type="password" required autoComplete="new-password" id="confirmation" minLength={12} maxLength={128} name="confirmation" placeholder="Confirma tu contraseña" className="w-full rounded-lg border p-4 border-[var(--card-text-color-3)]"/>
             </div>
 
             <div className="my-5 flex items-start gap-3">
